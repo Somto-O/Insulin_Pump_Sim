@@ -23,5 +23,5 @@ The **Tandem t:slim X2 Insulin Pump** is designed to **deliver precise insulin d
 ## Installation  
 1. Clone the repository:  
    ```sh
-   git clone https://github.com/your-username/Qt-Tslim-Simulation.git
+   git clone https://github.com/Somto-O/Insulin_Pump_Sim.git
 
