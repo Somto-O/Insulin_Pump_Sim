@@ -4,8 +4,14 @@
 
 class SystemAlerts
 {
+
 public:
     SystemAlerts();
+    void triggerAlert();
+    void logAlert();
+    void escalateAlert();
+
+
 };
 
 #endif // SYSTEMALERTS_H

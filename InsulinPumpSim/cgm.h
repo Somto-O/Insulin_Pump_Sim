@@ -4,8 +4,13 @@
 
 class CGM
 {
-public:
-    CGM();
+    public:
+        CGM();
+        void monitorGlucose();
+        void detectDisconnection();
+
+    private:
+        float sensorData;
 };
 
 #endif // CGM_H

@@ -6,6 +6,12 @@ class BolusCalculator
 {
 public:
     BolusCalculator();
+    void calculateBolus();
+    void confirmBolus();
+
+private:
+    float glucoseLevel;
+    float carbohydrateIntake;
 };
 
 #endif // BOLUSCALCULATOR_H

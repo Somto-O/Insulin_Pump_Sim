@@ -6,6 +6,9 @@ class History
 {
 public:
     History();
+    void logEvent();
+    void viewData();
+    void generateGraph();
 };
 
 #endif // HISTORY_H
