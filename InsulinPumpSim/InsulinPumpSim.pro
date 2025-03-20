@@ -27,7 +27,8 @@ SOURCES += \
     mainwindow.cpp \
     profile.cpp \
     systemalerts.cpp \
-    user.cpp
+    user.cpp \
+    test.cpp
 
 HEADERS += \
     boluscalculator.h \
@@ -37,7 +38,8 @@ HEADERS += \
     mainwindow.h \
     profile.h \
     systemalerts.h \
-    user.h
+    user.h \
+    test.h
 
 FORMS += \
     mainwindow.ui
