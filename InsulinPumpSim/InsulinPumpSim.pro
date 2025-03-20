@@ -8,15 +8,35 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+SOURCES += \QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++11
+
+# You can make your code fail to compile if it uses deprecated APIs.
+# In order to do so, uncomment the following line.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
 SOURCES += \
+    boluscalculator.cpp \
+    cgm.cpp \
+    history.cpp \
+    insulinpump.cpp \
     main.cpp \
     mainwindow.cpp \
-    test.cpp \
+    profile.cpp \
+    systemalerts.cpp \
     user.cpp
 
 HEADERS += \
+    boluscalculator.h \
+    cgm.h \
+    history.h \
+    insulinpump.h \
     mainwindow.h \
-    test.h \
+    profile.h \
+    systemalerts.h \
     user.h
 
 FORMS += \
