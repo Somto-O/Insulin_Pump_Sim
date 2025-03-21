@@ -7,12 +7,14 @@ using namespace std;
 class Profile {
 
 public:
-    Profile();
+    Profile(string n, float bRate, float carbRatio,float cFactor);
     void saveProfile();
     void updateProfile();
     void deleteProfile();
     void viewProfile();
 
+    // helper function (test)
+    string GetName();
 
 
 private:
