@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "user.h"
 
-#include <iostream>
-#include <string>
 #include <QApplication>
 
 using namespace std;
@@ -14,11 +12,13 @@ int main(int argc, char *argv[])
     w.show();
 
     User user;
-    user.createProfile("test", 0.5f, 4.3f, 2.3f);
 
-    Profile* p = user.GetProfiles()[0];
+    // when option button is pressed, it calls navigate profiles
+    user.navigateProfiles();
 
-    cout << "name: " << p->GetName() << endl;
+    /*Profile* p = user.GetProfiles()[0];
+
+    cout << "name: " << p->GetName() << endl;*/
 
 
     return a.exec();

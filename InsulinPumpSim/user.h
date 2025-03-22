@@ -3,6 +3,9 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+#include <cctype>
+#include <limits>
 
 #include "profile.h"
 
@@ -12,7 +15,7 @@ class User
 {
 public:
     User();
-    void createProfile(string n, float bRate, float carbRatio,float cFactor);
+    void createProfile();
     void navigateProfiles();
     void startInsulinDelivery();
     void stopInsulinDelivery();
