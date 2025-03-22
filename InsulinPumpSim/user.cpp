@@ -34,7 +34,7 @@ void User::createProfile()
 
 void User::navigateProfiles()
 {
-    char crud = '0';
+    char crud;
 
     cout << "C - Create Profile" << endl;
     cout << "R - Read Profile" << endl;
@@ -42,9 +42,9 @@ void User::navigateProfiles()
     cout << "D - Delete Profile" << endl;
     cout << "Enter your choice: ";
 
-    // clear the buffer and convert to uppercase
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    crud = toupper(crud);
+    cin >> crud; // Read input from user
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear buffer
+    crud = toupper(crud); // Convert to uppercase
 
     switch (crud)
     {
@@ -52,7 +52,15 @@ void User::navigateProfiles()
             cout << "Creating profile..." << endl;
             createProfile();
             break;
-
+        case 'R':
+            cout << "Reading profile (not implemented yet)." << endl;
+            break;
+        case 'U':
+            cout << "Updating profile (not implemented yet)." << endl;
+            break;
+        case 'D':
+            cout << "Deleting profile (not implemented yet)." << endl;
+            break;
         default:
             cout << "Invalid option! Please enter C, R, U, or D." << endl;
     }
