@@ -1,11 +1,11 @@
 #ifndef USER_H
 #define USER_H
 
-#include <string>
 #include <vector>
-#include <iostream>
-#include <cctype>
-#include <limits>
+
+#include <QString>
+#include <QInputDialog>
+#include <QMessageBox>
 
 #include "profile.h"
 
@@ -14,7 +14,16 @@ using namespace std;
 class User
 {
 public:
+    // constructor
     User();
+
+    // destructor
+    ~User();
+
+    // getters
+    std::vector<Profile*>& GetProfiles();
+
+    // functions
     void createProfile();
     void navigateProfiles();
     void startInsulinDelivery();
@@ -24,11 +33,8 @@ public:
     void viewPumpStatus();
     void setAlerts();
 
-    // helper function (test)
-    vector<Profile*>& GetProfiles();
-
 private:
-    vector<Profile*> profiles; // contains all the profiles
+    std::vector<Profile*> profiles;
 };
 
 #endif // USER_H
