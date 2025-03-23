@@ -1,8 +1,6 @@
 #ifndef USER_H
 #define USER_H
 
-#include <vector>
-
 #include <QString>
 #include <QInputDialog>
 #include <QMessageBox>
@@ -20,11 +18,7 @@ public:
     // destructor
     ~User();
 
-    // getters
-    std::vector<Profile*>& GetProfiles();
-
     // functions
-    void createProfile();
     void navigateProfiles();
     void startInsulinDelivery();
     void stopInsulinDelivery();
@@ -32,9 +26,6 @@ public:
     void viewDeliveryData();
     void viewPumpStatus();
     void setAlerts();
-
-private:
-    std::vector<Profile*> profiles;
 };
 
 #endif // USER_H

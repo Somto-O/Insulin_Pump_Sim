@@ -1,5 +1,9 @@
 #include "mainwindow.h"
 #include "user.h"
+#include "profile.h"
+
+#include <iostream>
+#include <string>
 
 #include <QApplication>
 
@@ -16,10 +20,14 @@ int main(int argc, char *argv[])
     // when option button is pressed, it calls navigate profiles
     user.navigateProfiles();
 
-    /*Profile* p = user.GetProfiles()[0];
+    vector<Profile*>& profiles = Profile::GetProfiles();
 
-    cout << "name: " << p->GetName() << endl;*/
-
+    if (!profiles.empty()) {
+        Profile* profile = profiles[0];
+        cout << "Name: " << profile->GetName() << endl;
+    } else {
+        cout << "No profiles found!" << endl;
+    }
 
     return a.exec();
 }
