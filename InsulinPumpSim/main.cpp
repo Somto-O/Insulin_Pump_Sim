@@ -20,11 +20,11 @@ int main(int argc, char *argv[])
     // when option button is pressed, it calls navigate profiles
     user.navigateProfiles();
 
-    vector<Profile*>& profiles = Profile::GetProfiles();
+    vector<Profile*>& profiles = Profile::getProfiles();
 
     if (!profiles.empty()) {
         Profile* profile = profiles[0];
-        cout << "Name: " << profile->GetName() << endl;
+        cout << "Name: " << profile->getName() << endl;
     } else {
         cout << "No profiles found!" << endl;
     }

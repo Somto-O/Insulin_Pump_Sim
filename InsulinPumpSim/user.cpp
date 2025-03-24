@@ -6,18 +6,18 @@ User::User() {}
 // destructor
 User::~User()
 {
-    for (Profile* profile : Profile::GetProfiles())
+    for (Profile* profile : Profile::getProfiles())
     {
         delete profile;
     }
 
-    Profile::GetProfiles().clear();
+    Profile::getProfiles().clear();
 }
 
 // functions
 void User::navigateProfiles()
 {
-    QStringList options = {"Create Profile", "Read Profile", "Update Profile", "Delete Profile"};
+    QStringList options = {"Create Profile", "View Profile", "Update Profile", "Delete Profile"};
     bool ok;
     QString choice = QInputDialog::getItem(nullptr, "Profile Options", "Select an option:", options, 0, false, &ok);
 
@@ -27,16 +27,16 @@ void User::navigateProfiles()
     {
         Profile::createProfile();
     }
-    else if (choice == "Read Profile")
+    else if (choice == "View Profile")
     {
-        QMessageBox::information(nullptr, "Read Profile", "not implemented yet.");
+         Profile::viewProfile();
     }
     else if (choice == "Update Profile")
     {
-        QMessageBox::information(nullptr, "Update Profile", "not implemented yet.");
+         Profile::updateProfile();
     }
     else if (choice == "Delete Profile")
     {
-        QMessageBox::information(nullptr, "Delete Profile", "not implemented yet.");
+         Profile::deleteProfile();
     }
 }

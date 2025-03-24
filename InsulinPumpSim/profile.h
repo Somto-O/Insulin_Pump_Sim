@@ -20,14 +20,14 @@ public:
     ~Profile();
 
     // getters
-    string GetName();
-    static vector<Profile*>& GetProfiles();
+    string getName()const;
+    static vector<Profile*>& getProfiles();
 
     // functions
     static void createProfile();
-    void updateProfile();
-    void deleteProfile();
-    void viewProfile();
+    static void updateProfile();
+    static void deleteProfile();
+    static void viewProfile();
 
 private:
     // variables

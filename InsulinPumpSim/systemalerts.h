@@ -1,15 +1,17 @@
 #ifndef SYSTEMALERTS_H
 #define SYSTEMALERTS_H
 
+#include <string>
 
+using namespace std;
 class SystemAlerts
 {
 
 public:
     SystemAlerts();
-    void triggerAlert();
-    void logAlert();
-    void escalateAlert();
+    void triggerAlert(const string& alertMessage);
+    void logAlert(const string& alertMessage);
+    void escalateAlert(const string& alertMessage);
 
 
 };

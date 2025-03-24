@@ -15,16 +15,14 @@ Profile::Profile(string n, float bRate, float carbRatio,float cFactor):
 
 // destructor
 Profile::~Profile()
-{
-
-}
+{}
 
 // getters
-string Profile::GetName() {
+string Profile::getName()const {
     return name;
 }
 
-vector<Profile*>& Profile::GetProfiles() {
+vector<Profile*>& Profile::getProfiles() {
     return profiles;
 }
 
@@ -51,4 +49,90 @@ void Profile::createProfile()
 }
 
 
+void Profile::updateProfile() {
+    if (profiles.empty()) {
+        QMessageBox::warning(nullptr, "Update Profile", "No profiles available to update.");
+        return;
+    }
+
+    QStringList profileNames;
+    for (Profile* profile : profiles) {
+        profileNames.append(QString::fromStdString(profile->getName()));
+    }
+
+    bool ok;
+    QString selectedProfile = QInputDialog::getItem(nullptr, "Update Profile", "Select a profile:", profileNames, 0, false, &ok);
+    if (!ok || selectedProfile.isEmpty()) return;
+
+    // Find the selected profile
+    for (Profile* profile : profiles) {
+        if (profile->getName() == selectedProfile.toStdString()) {
+            profile->basalRate = QInputDialog::getDouble(nullptr, "Update Profile", "Enter new basal rate:", profile->basalRate, 0.0, 10.0, 2, &ok);
+            if (!ok) return;
+
+            profile->carbohydrateRatio = QInputDialog::getDouble(nullptr, "Update Profile", "Enter new carb ratio:", profile->carbohydrateRatio, 0.0, 20.0, 2, &ok);
+            if (!ok) return;
+
+            profile->correctionFactor = QInputDialog::getDouble(nullptr, "Update Profile", "Enter new correction factor:", profile->correctionFactor, 0.0, 10.0, 2, &ok);
+            if (!ok) return;
+
+            QMessageBox::information(nullptr, "Success", "Profile updated successfully!");
+            return;
+        }
+    }
+}
+
+void Profile::deleteProfile() {
+    if (profiles.empty()) {
+        QMessageBox::warning(nullptr, "Delete Profile", "No profiles available to delete.");
+        return;
+    }
+
+    QStringList profileNames;
+    for (Profile* profile : profiles) {
+        profileNames.append(QString::fromStdString(profile->getName()));
+    }
+
+    bool ok;
+    QString selectedProfile = QInputDialog::getItem(nullptr, "Delete Profile", "Select a profile to delete:", profileNames, 0, false, &ok);
+    if (!ok || selectedProfile.isEmpty()) return;
+
+    for (auto it = profiles.begin(); it != profiles.end(); ++it) {
+        if ((*it)->getName() == selectedProfile.toStdString()) {
+            delete *it; // Free memory
+            profiles.erase(it);
+            QMessageBox::information(nullptr, "Success", "Profile deleted successfully!");
+            return;
+        }
+    }
+}
+
+void Profile::viewProfile() {
+    if (profiles.empty()) {
+        QMessageBox::warning(nullptr, "View Profile", "No profiles available to view.");
+        return;
+    }
+
+    QStringList profileNames;
+    for (Profile* profile : profiles) {
+        profileNames.append(QString::fromStdString(profile->getName()));
+    }
+
+    bool ok;
+    QString selectedProfile = QInputDialog::getItem(nullptr, "View Profile", "Select a profile to view:", profileNames, 0, false, &ok);
+    if (!ok || selectedProfile.isEmpty()) return;
+
+    for (Profile* profile : profiles) {
+        if (profile->getName() == selectedProfile.toStdString()) {
+            QString profileInfo = QString("Name: %1\nBasal Rate: %2\nCarb Ratio: %3\nCorrection Factor: %4")
+                                      .arg(QString::fromStdString(profile->getName()))
+                                      .arg(profile->basalRate)
+                                      .arg(profile->carbohydrateRatio)
+                                      .arg(profile->correctionFactor);
+
+            QMessageBox::information(nullptr, "Profile Details", profileInfo);
+            return;
+        }
+    }
+}
 
