@@ -77,7 +77,7 @@ void Profile::updateProfile() {
 
             profile->correctionFactor = QInputDialog::getDouble(nullptr, "Update Profile", "Enter new correction factor:", profile->correctionFactor, 0.0, 10.0, 2, &ok);
             if (!ok) return;
-
+            saveProfiles(); // update profiles
             QMessageBox::information(nullptr, "Success", "Profile updated successfully!");
             return;
         }
