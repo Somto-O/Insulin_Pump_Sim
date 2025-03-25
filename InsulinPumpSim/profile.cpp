@@ -45,6 +45,9 @@ void Profile::createProfile()
     Profile* profile = new Profile(n.toStdString(), bRate, carbRatio, cFactor);
     profiles.push_back(profile);
 
+    // save profiles to file
+    saveProfiles();
+
     QMessageBox::information(nullptr, "Success", "Profile created successfully!");
 }
 
@@ -100,6 +103,7 @@ void Profile::deleteProfile() {
         if ((*it)->getName() == selectedProfile.toStdString()) {
             delete *it; // Free memory
             profiles.erase(it);
+            saveProfiles(); // update profiles after deletion
             QMessageBox::information(nullptr, "Success", "Profile deleted successfully!");
             return;
         }
@@ -134,4 +138,48 @@ void Profile::viewProfile() {
         }
     }
 }
+
+void Profile::saveProfiles()
+{
+    ofstream file("profiles.txt");
+
+    if(!file) {
+        QMessageBox::warning(nullptr, "Error", "Could not open save file.");
+        return;
+    }
+
+    for(Profile* profile : profiles)
+    {
+        file << profile->name << " "
+             << profile->basalRate << " "
+             << profile->carbohydrateRatio << " "
+             << profile->correctionFactor << endl;
+    }
+
+    file.close();
+}
+
+void Profile::loadProfiles()
+{
+    ifstream file("profiles.txt");
+
+    if(!file) {
+        QMessageBox::warning(nullptr, "Error", "Could not open file to load profiles!");
+        return;
+    }
+
+    profiles.clear();
+
+    string name;
+    float bRate, carbRatio, cFactor;
+
+    while (file >> name >> bRate >> carbRatio >> cFactor) {
+        profiles.push_back(new Profile(name, bRate, carbRatio, cFactor));
+    }
+
+    file.close();
+}
+
+
+
 

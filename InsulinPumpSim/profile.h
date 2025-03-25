@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include <vector>
+#include <fstream>
 
 #include <QString>
 #include <QInputDialog>
@@ -28,6 +29,9 @@ public:
     static void updateProfile();
     static void deleteProfile();
     static void viewProfile();
+
+    static void saveProfiles();
+    static void loadProfiles();
 
 private:
     // variables

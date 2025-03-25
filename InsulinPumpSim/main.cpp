@@ -3,7 +3,6 @@
 #include "profile.h"
 
 #include <iostream>
-#include <string>
 
 #include <QApplication>
 
@@ -14,6 +13,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
+
+    // load saved profiles
+    Profile::loadProfiles();
 
     User user;
 
