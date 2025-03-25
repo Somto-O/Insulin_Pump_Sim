@@ -18,7 +18,7 @@ Profile::~Profile()
 {}
 
 // getters
-string Profile::getName()const {
+string Profile::getName() const {
     return name;
 }
 
@@ -47,7 +47,6 @@ void Profile::createProfile()
 
     QMessageBox::information(nullptr, "Success", "Profile created successfully!");
 }
-
 
 void Profile::updateProfile() {
     if (profiles.empty()) {

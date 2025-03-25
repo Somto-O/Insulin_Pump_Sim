@@ -20,7 +20,7 @@ public:
     ~Profile();
 
     // getters
-    string getName()const;
+    string getName() const;
     static vector<Profile*>& getProfiles();
 
     // functions
