@@ -34,6 +34,12 @@ private slots:
 
     void on_backButton_4_clicked();
 
+    void on_addProfileButton_clicked();
+
+    void on_viewProfilesButton_clicked();
+
+    void on_backButton_5_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
