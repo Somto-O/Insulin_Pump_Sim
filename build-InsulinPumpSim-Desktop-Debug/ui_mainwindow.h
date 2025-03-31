@@ -17,6 +17,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
@@ -80,13 +81,32 @@ public:
     QPushButton *backButton_3;
     QWidget *verticalLayoutWidget_5;
     QVBoxLayout *verticalLayout_6;
-    QPushButton *pushButton_17;
+    QPushButton *pumpSettingsButton;
     QPushButton *addProfileButton;
-    QPushButton *pushButton_19;
-    QPushButton *pushButton_20;
+    QPushButton *updateProfileButton;
+    QPushButton *deleteProfileButton;
     QPushButton *viewProfilesButton;
     QWidget *viewProfilePage;
     QPushButton *backButton_5;
+    QWidget *selectProfilePage;
+    QPushButton *sppBackButton;
+    QLabel *updateProfileLabel_2;
+    QListWidget *spDisplayBox;
+    QDialogButtonBox *spButtonBox;
+    QWidget *updateProfilePage;
+    QPushButton *uppBackButton;
+    QDialogButtonBox *uppConfirmProfileButtonBox;
+    QWidget *formLayoutWidget_3;
+    QFormLayout *formLayout_3;
+    QLabel *uppBasalLabel;
+    QSpinBox *uppBasalInput;
+    QLabel *uppCorrectionFactorLabel;
+    QSpinBox *uppCorrectionFactorInput;
+    QLabel *uppCarbRatioLabel;
+    QSpinBox *uppCarbRatioInput;
+    QLabel *uppTargetBGLabel;
+    QSpinBox *uppTargetBGInput;
+    QLabel *updateProfileLabel;
     QWidget *addProfilePage;
     QPushButton *backButton_4;
     QWidget *formLayoutWidget;
@@ -97,8 +117,10 @@ public:
     QSpinBox *basalInput;
     QLabel *carbRatioLabel;
     QSpinBox *carbRatioInput;
-    QLabel *carbRatioLabel_2;
-    QSpinBox *carbRatioInput_2;
+    QLabel *targetBGLabel;
+    QSpinBox *targetBGInput;
+    QSpinBox *correctionFactorInput;
+    QLabel *correctionFactorLabel;
     QDialogButtonBox *confirmProfileButtonBox;
     QLabel *optionsLabel_2;
 
@@ -338,12 +360,12 @@ public:
         verticalLayout_6 = new QVBoxLayout(verticalLayoutWidget_5);
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         verticalLayout_6->setContentsMargins(0, 0, 0, 0);
-        pushButton_17 = new QPushButton(verticalLayoutWidget_5);
-        pushButton_17->setObjectName(QString::fromUtf8("pushButton_17"));
-        sizePolicy.setHeightForWidth(pushButton_17->sizePolicy().hasHeightForWidth());
-        pushButton_17->setSizePolicy(sizePolicy);
+        pumpSettingsButton = new QPushButton(verticalLayoutWidget_5);
+        pumpSettingsButton->setObjectName(QString::fromUtf8("pumpSettingsButton"));
+        sizePolicy.setHeightForWidth(pumpSettingsButton->sizePolicy().hasHeightForWidth());
+        pumpSettingsButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_6->addWidget(pushButton_17);
+        verticalLayout_6->addWidget(pumpSettingsButton);
 
         addProfileButton = new QPushButton(verticalLayoutWidget_5);
         addProfileButton->setObjectName(QString::fromUtf8("addProfileButton"));
@@ -352,19 +374,19 @@ public:
 
         verticalLayout_6->addWidget(addProfileButton);
 
-        pushButton_19 = new QPushButton(verticalLayoutWidget_5);
-        pushButton_19->setObjectName(QString::fromUtf8("pushButton_19"));
-        sizePolicy.setHeightForWidth(pushButton_19->sizePolicy().hasHeightForWidth());
-        pushButton_19->setSizePolicy(sizePolicy);
+        updateProfileButton = new QPushButton(verticalLayoutWidget_5);
+        updateProfileButton->setObjectName(QString::fromUtf8("updateProfileButton"));
+        sizePolicy.setHeightForWidth(updateProfileButton->sizePolicy().hasHeightForWidth());
+        updateProfileButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_6->addWidget(pushButton_19);
+        verticalLayout_6->addWidget(updateProfileButton);
 
-        pushButton_20 = new QPushButton(verticalLayoutWidget_5);
-        pushButton_20->setObjectName(QString::fromUtf8("pushButton_20"));
-        sizePolicy.setHeightForWidth(pushButton_20->sizePolicy().hasHeightForWidth());
-        pushButton_20->setSizePolicy(sizePolicy);
+        deleteProfileButton = new QPushButton(verticalLayoutWidget_5);
+        deleteProfileButton->setObjectName(QString::fromUtf8("deleteProfileButton"));
+        sizePolicy.setHeightForWidth(deleteProfileButton->sizePolicy().hasHeightForWidth());
+        deleteProfileButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_6->addWidget(pushButton_20);
+        verticalLayout_6->addWidget(deleteProfileButton);
 
         viewProfilesButton = new QPushButton(personalProfiles);
         viewProfilesButton->setObjectName(QString::fromUtf8("viewProfilesButton"));
@@ -378,6 +400,96 @@ public:
         backButton_5->setObjectName(QString::fromUtf8("backButton_5"));
         backButton_5->setGeometry(QRect(30, 20, 81, 31));
         stackedWidget->addWidget(viewProfilePage);
+        selectProfilePage = new QWidget();
+        selectProfilePage->setObjectName(QString::fromUtf8("selectProfilePage"));
+        sppBackButton = new QPushButton(selectProfilePage);
+        sppBackButton->setObjectName(QString::fromUtf8("sppBackButton"));
+        sppBackButton->setGeometry(QRect(30, 20, 81, 31));
+        updateProfileLabel_2 = new QLabel(selectProfilePage);
+        updateProfileLabel_2->setObjectName(QString::fromUtf8("updateProfileLabel_2"));
+        updateProfileLabel_2->setGeometry(QRect(450, 100, 131, 20));
+        updateProfileLabel_2->setAlignment(Qt::AlignCenter);
+        spDisplayBox = new QListWidget(selectProfilePage);
+        spDisplayBox->setObjectName(QString::fromUtf8("spDisplayBox"));
+        spDisplayBox->setGeometry(QRect(270, 130, 511, 211));
+        spButtonBox = new QDialogButtonBox(selectProfilePage);
+        spButtonBox->setObjectName(QString::fromUtf8("spButtonBox"));
+        spButtonBox->setGeometry(QRect(440, 350, 166, 25));
+        spButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        stackedWidget->addWidget(selectProfilePage);
+        updateProfilePage = new QWidget();
+        updateProfilePage->setObjectName(QString::fromUtf8("updateProfilePage"));
+        uppBackButton = new QPushButton(updateProfilePage);
+        uppBackButton->setObjectName(QString::fromUtf8("uppBackButton"));
+        uppBackButton->setGeometry(QRect(30, 20, 81, 31));
+        uppConfirmProfileButtonBox = new QDialogButtonBox(updateProfilePage);
+        uppConfirmProfileButtonBox->setObjectName(QString::fromUtf8("uppConfirmProfileButtonBox"));
+        uppConfirmProfileButtonBox->setGeometry(QRect(430, 270, 171, 51));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(uppConfirmProfileButtonBox->sizePolicy().hasHeightForWidth());
+        uppConfirmProfileButtonBox->setSizePolicy(sizePolicy2);
+        uppConfirmProfileButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        formLayoutWidget_3 = new QWidget(updateProfilePage);
+        formLayoutWidget_3->setObjectName(QString::fromUtf8("formLayoutWidget_3"));
+        formLayoutWidget_3->setGeometry(QRect(150, 140, 721, 131));
+        formLayout_3 = new QFormLayout(formLayoutWidget_3);
+        formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
+        formLayout_3->setContentsMargins(0, 0, 0, 0);
+        uppBasalLabel = new QLabel(formLayoutWidget_3);
+        uppBasalLabel->setObjectName(QString::fromUtf8("uppBasalLabel"));
+
+        formLayout_3->setWidget(0, QFormLayout::LabelRole, uppBasalLabel);
+
+        uppBasalInput = new QSpinBox(formLayoutWidget_3);
+        uppBasalInput->setObjectName(QString::fromUtf8("uppBasalInput"));
+        sizePolicy.setHeightForWidth(uppBasalInput->sizePolicy().hasHeightForWidth());
+        uppBasalInput->setSizePolicy(sizePolicy);
+
+        formLayout_3->setWidget(0, QFormLayout::FieldRole, uppBasalInput);
+
+        uppCorrectionFactorLabel = new QLabel(formLayoutWidget_3);
+        uppCorrectionFactorLabel->setObjectName(QString::fromUtf8("uppCorrectionFactorLabel"));
+
+        formLayout_3->setWidget(1, QFormLayout::LabelRole, uppCorrectionFactorLabel);
+
+        uppCorrectionFactorInput = new QSpinBox(formLayoutWidget_3);
+        uppCorrectionFactorInput->setObjectName(QString::fromUtf8("uppCorrectionFactorInput"));
+        sizePolicy.setHeightForWidth(uppCorrectionFactorInput->sizePolicy().hasHeightForWidth());
+        uppCorrectionFactorInput->setSizePolicy(sizePolicy);
+
+        formLayout_3->setWidget(1, QFormLayout::FieldRole, uppCorrectionFactorInput);
+
+        uppCarbRatioLabel = new QLabel(formLayoutWidget_3);
+        uppCarbRatioLabel->setObjectName(QString::fromUtf8("uppCarbRatioLabel"));
+
+        formLayout_3->setWidget(2, QFormLayout::LabelRole, uppCarbRatioLabel);
+
+        uppCarbRatioInput = new QSpinBox(formLayoutWidget_3);
+        uppCarbRatioInput->setObjectName(QString::fromUtf8("uppCarbRatioInput"));
+        sizePolicy.setHeightForWidth(uppCarbRatioInput->sizePolicy().hasHeightForWidth());
+        uppCarbRatioInput->setSizePolicy(sizePolicy);
+
+        formLayout_3->setWidget(2, QFormLayout::FieldRole, uppCarbRatioInput);
+
+        uppTargetBGLabel = new QLabel(formLayoutWidget_3);
+        uppTargetBGLabel->setObjectName(QString::fromUtf8("uppTargetBGLabel"));
+
+        formLayout_3->setWidget(3, QFormLayout::LabelRole, uppTargetBGLabel);
+
+        uppTargetBGInput = new QSpinBox(formLayoutWidget_3);
+        uppTargetBGInput->setObjectName(QString::fromUtf8("uppTargetBGInput"));
+        sizePolicy.setHeightForWidth(uppTargetBGInput->sizePolicy().hasHeightForWidth());
+        uppTargetBGInput->setSizePolicy(sizePolicy);
+
+        formLayout_3->setWidget(3, QFormLayout::FieldRole, uppTargetBGInput);
+
+        updateProfileLabel = new QLabel(updateProfilePage);
+        updateProfileLabel->setObjectName(QString::fromUtf8("updateProfileLabel"));
+        updateProfileLabel->setGeometry(QRect(450, 100, 131, 20));
+        updateProfileLabel->setAlignment(Qt::AlignCenter);
+        stackedWidget->addWidget(updateProfilePage);
         addProfilePage = new QWidget();
         addProfilePage->setObjectName(QString::fromUtf8("addProfilePage"));
         backButton_4 = new QPushButton(addProfilePage);
@@ -385,7 +497,7 @@ public:
         backButton_4->setGeometry(QRect(30, 20, 81, 31));
         formLayoutWidget = new QWidget(addProfilePage);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(150, 140, 721, 131));
+        formLayoutWidget->setGeometry(QRect(150, 140, 721, 155));
         formLayout = new QFormLayout(formLayoutWidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setContentsMargins(0, 0, 0, 0);
@@ -396,11 +508,11 @@ public:
 
         nameInput = new QLineEdit(formLayoutWidget);
         nameInput->setObjectName(QString::fromUtf8("nameInput"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(nameInput->sizePolicy().hasHeightForWidth());
-        nameInput->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(nameInput->sizePolicy().hasHeightForWidth());
+        nameInput->setSizePolicy(sizePolicy3);
 
         formLayout->setWidget(0, QFormLayout::FieldRole, nameInput);
 
@@ -419,35 +531,44 @@ public:
         carbRatioLabel = new QLabel(formLayoutWidget);
         carbRatioLabel->setObjectName(QString::fromUtf8("carbRatioLabel"));
 
-        formLayout->setWidget(2, QFormLayout::LabelRole, carbRatioLabel);
+        formLayout->setWidget(3, QFormLayout::LabelRole, carbRatioLabel);
 
         carbRatioInput = new QSpinBox(formLayoutWidget);
         carbRatioInput->setObjectName(QString::fromUtf8("carbRatioInput"));
         sizePolicy.setHeightForWidth(carbRatioInput->sizePolicy().hasHeightForWidth());
         carbRatioInput->setSizePolicy(sizePolicy);
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, carbRatioInput);
+        formLayout->setWidget(3, QFormLayout::FieldRole, carbRatioInput);
 
-        carbRatioLabel_2 = new QLabel(formLayoutWidget);
-        carbRatioLabel_2->setObjectName(QString::fromUtf8("carbRatioLabel_2"));
+        targetBGLabel = new QLabel(formLayoutWidget);
+        targetBGLabel->setObjectName(QString::fromUtf8("targetBGLabel"));
 
-        formLayout->setWidget(3, QFormLayout::LabelRole, carbRatioLabel_2);
+        formLayout->setWidget(4, QFormLayout::LabelRole, targetBGLabel);
 
-        carbRatioInput_2 = new QSpinBox(formLayoutWidget);
-        carbRatioInput_2->setObjectName(QString::fromUtf8("carbRatioInput_2"));
-        sizePolicy.setHeightForWidth(carbRatioInput_2->sizePolicy().hasHeightForWidth());
-        carbRatioInput_2->setSizePolicy(sizePolicy);
+        targetBGInput = new QSpinBox(formLayoutWidget);
+        targetBGInput->setObjectName(QString::fromUtf8("targetBGInput"));
+        sizePolicy.setHeightForWidth(targetBGInput->sizePolicy().hasHeightForWidth());
+        targetBGInput->setSizePolicy(sizePolicy);
 
-        formLayout->setWidget(3, QFormLayout::FieldRole, carbRatioInput_2);
+        formLayout->setWidget(4, QFormLayout::FieldRole, targetBGInput);
+
+        correctionFactorInput = new QSpinBox(formLayoutWidget);
+        correctionFactorInput->setObjectName(QString::fromUtf8("correctionFactorInput"));
+        sizePolicy.setHeightForWidth(correctionFactorInput->sizePolicy().hasHeightForWidth());
+        correctionFactorInput->setSizePolicy(sizePolicy);
+
+        formLayout->setWidget(2, QFormLayout::FieldRole, correctionFactorInput);
+
+        correctionFactorLabel = new QLabel(formLayoutWidget);
+        correctionFactorLabel->setObjectName(QString::fromUtf8("correctionFactorLabel"));
+
+        formLayout->setWidget(2, QFormLayout::LabelRole, correctionFactorLabel);
 
         confirmProfileButtonBox = new QDialogButtonBox(addProfilePage);
         confirmProfileButtonBox->setObjectName(QString::fromUtf8("confirmProfileButtonBox"));
-        confirmProfileButtonBox->setGeometry(QRect(410, 270, 171, 51));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(confirmProfileButtonBox->sizePolicy().hasHeightForWidth());
-        confirmProfileButtonBox->setSizePolicy(sizePolicy3);
+        confirmProfileButtonBox->setGeometry(QRect(430, 300, 171, 51));
+        sizePolicy2.setHeightForWidth(confirmProfileButtonBox->sizePolicy().hasHeightForWidth());
+        confirmProfileButtonBox->setSizePolicy(sizePolicy2);
         confirmProfileButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         optionsLabel_2 = new QLabel(addProfilePage);
         optionsLabel_2->setObjectName(QString::fromUtf8("optionsLabel_2"));
@@ -458,7 +579,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(5);
+        stackedWidget->setCurrentIndex(7);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -492,17 +613,26 @@ public:
         pushButton_16->setText(QCoreApplication::translate("MainWindow", "Pump Info", nullptr));
         backButton_2->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         backButton_3->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
-        pushButton_17->setText(QCoreApplication::translate("MainWindow", "Pump Settings", nullptr));
+        pumpSettingsButton->setText(QCoreApplication::translate("MainWindow", "Pump Settings", nullptr));
         addProfileButton->setText(QCoreApplication::translate("MainWindow", "Create Profile", nullptr));
-        pushButton_19->setText(QCoreApplication::translate("MainWindow", "Update Profile", nullptr));
-        pushButton_20->setText(QCoreApplication::translate("MainWindow", "Delete Profile", nullptr));
+        updateProfileButton->setText(QCoreApplication::translate("MainWindow", "Update Profile", nullptr));
+        deleteProfileButton->setText(QCoreApplication::translate("MainWindow", "Delete Profile", nullptr));
         viewProfilesButton->setText(QCoreApplication::translate("MainWindow", "View Profiles", nullptr));
         backButton_5->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        sppBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        updateProfileLabel_2->setText(QCoreApplication::translate("MainWindow", "Select Profile", nullptr));
+        uppBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        uppBasalLabel->setText(QCoreApplication::translate("MainWindow", "Basal", nullptr));
+        uppCorrectionFactorLabel->setText(QCoreApplication::translate("MainWindow", "Correction Factor", nullptr));
+        uppCarbRatioLabel->setText(QCoreApplication::translate("MainWindow", "Carb Ratio", nullptr));
+        uppTargetBGLabel->setText(QCoreApplication::translate("MainWindow", "Target BG", nullptr));
+        updateProfileLabel->setText(QCoreApplication::translate("MainWindow", "Update Profile", nullptr));
         backButton_4->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         nameLabel->setText(QCoreApplication::translate("MainWindow", "Name", nullptr));
         basalLabel->setText(QCoreApplication::translate("MainWindow", "Basal", nullptr));
         carbRatioLabel->setText(QCoreApplication::translate("MainWindow", "Carb Ratio", nullptr));
-        carbRatioLabel_2->setText(QCoreApplication::translate("MainWindow", "Target BG", nullptr));
+        targetBGLabel->setText(QCoreApplication::translate("MainWindow", "Target BG", nullptr));
+        correctionFactorLabel->setText(QCoreApplication::translate("MainWindow", "Correction Factor", nullptr));
         optionsLabel_2->setText(QCoreApplication::translate("MainWindow", "Create Profile", nullptr));
     } // retranslateUi
 

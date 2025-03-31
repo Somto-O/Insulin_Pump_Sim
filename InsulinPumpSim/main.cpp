@@ -14,22 +14,23 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    // load saved profiles
-    Profile::loadProfiles();
+    // Load saved profiles after the UI is ready
+    Profile::loadProfiles(&w);
 
-    User user;
+    // Create User object
+    User user(&w);
 
-    // when option button is pressed, it calls navigate profiles
-    user.navigateProfiles();
+    // The profiles will be managed through button clicks and navigation
+    // You don't need to call navigateProfiles here
 
-    vector<Profile*>& profiles = Profile::getProfiles();
+//    vector<Profile*>& profiles = Profile::getProfiles();
 
-    if (!profiles.empty()) {
-        Profile* profile = profiles[0];
-        cout << "Name: " << profile->getName() << endl;
-    } else {
-        cout << "No profiles found!" << endl;
-    }
+//    if (!profiles.empty()) {
+//        Profile* profile = profiles[0];
+//        cout << "Name: " << profile->getName() << endl;
+//    } else {
+//        cout << "No profiles found!" << endl;
+//    }
 
     return a.exec();
 }
