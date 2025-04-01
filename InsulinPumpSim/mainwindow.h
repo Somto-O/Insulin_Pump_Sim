@@ -28,13 +28,17 @@ public:
     Ui::MainWindow* getUI() const{return ui;}
 
     QString getSelectedProfileName() const;
-    void setSelectedProfileName( QString& profileName);
+    void setSelectedProfileName(const QString& profileName);
     QString onProfileSelected();
     void openUpdateProfilePage();
     void updateProfileList();
 
     void handleProfileUpdateState();
 
+    void moveToUpdatePage();
+    void moveToUpdatePage(const QString& profileName);
+
+    void populateProfileList();
     void on_spButtonBox_clicked(QAbstractButton *button);
 
 

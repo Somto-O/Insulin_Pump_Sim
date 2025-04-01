@@ -3,6 +3,8 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
+#include "QDebug"
+
 // constructor
 User::User(MainWindow* mw) :mainWindow(mw) {
     {
@@ -62,9 +64,31 @@ void User::handleViewProfile()
     Profile::viewProfile();
 }
 
+//void User::handleUpdateProfile() {
+//    Profile::displayProfiles(mainWindow);
+//    QListWidgetItem* selectedItem = mainWindow->getUI()->spDisplayBox->currentItem();
+//    if (!selectedItem) {
+//        QMessageBox::warning(mainWindow, "Selection Error", "No profile selected. Please select a profile first.");
+//        return;
+//    }
+
+//    QString selectedProfileName = selectedItem->text();
+//    qDebug() << "Selected Profile Name: " << selectedProfileName;
+
+//    mainWindow->moveToUpdatePage(selectedProfileName);  // Correctly move to update page
+//}
+
 void User::handleUpdateProfile() {
-    Profile::updateProfile(mainWindow);
+    QListWidgetItem* selectedItem = mainWindow->getUI()->spDisplayBox->currentItem();
+    if (!selectedItem) {
+        QMessageBox::warning(mainWindow, "Selection Error", "No profile selected.");
+        return;
+    }
+
+    // Store the selected profile name
+    mainWindow->setSelectedProfileName(selectedItem->text());
 }
+
 
 
 void User::handleDeleteProfile()

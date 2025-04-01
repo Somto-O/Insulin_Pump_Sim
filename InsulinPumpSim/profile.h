@@ -43,7 +43,8 @@ public:
 
     // functions
     static void createProfile(MainWindow* mw);
-    static void updateProfile(MainWindow* mw);
+    //static void updateProfile(MainWindow* mw);
+    static void updateProfile(MainWindow* mw, const QString& profileName);
     static void deleteProfile();
     static void viewProfile();
     static void displayProfiles(MainWindow* mw);

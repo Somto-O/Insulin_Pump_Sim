@@ -112,54 +112,104 @@ void Profile::createProfile(MainWindow* mw)
 
 //}
 
-void Profile::updateProfile(MainWindow* mw) {
-    // Get the selected item from the list
-    displayProfiles(mw);
-    QListWidgetItem* selectedItem = mw->getUI()->spDisplayBox->currentItem();
-    if (!selectedItem) {
-        QMessageBox::warning(mw, "Selection Error", "No profile selected. Please select a profile first.");
-        return;
-    }
+//void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
+//    // Find the existing profile
+//    Profile* selectedProfilePtr = nullptr;
+//    for (Profile* profile : profiles) {
+//        if (profile->getName() == profileName.toStdString()) {
+//            selectedProfilePtr = profile;
+//            break;
+//        }
+//    }
 
-    QString selectedProfileName = selectedItem->text();
+//    // If no profile was found, show an error
+//    if (!selectedProfilePtr) {
+//        QMessageBox::warning(mw, "Update Profile", "Profile not found.");
+//        return;
+//    }
 
-    // Find the corresponding profile object
-    Profile* selectedProfile = nullptr;
+//    // Get user-entered values from the UI
+//    float basalRate = mw->getUI()->basalInput->value();
+//    float carbRatio = mw->getUI()->carbRatioInput->value();
+//    float correctionFactor = mw->getUI()->correctionFactorInput->value();
+
+//    // Validate new values
+//    if (basalRate < 0 || carbRatio < 0 || correctionFactor < 0) {
+//        QMessageBox::warning(mw, "Error", "Invalid input. Please enter positive values.");
+//        return;
+//    }
+
+//    // Update the profile with new values
+//    selectedProfilePtr->setBasalRate(basalRate);
+//    selectedProfilePtr->setCarbRatio(carbRatio);
+//    selectedProfilePtr->setCorrectionFactor(correctionFactor);
+
+//    // Save the updated profile
+//    saveProfiles();
+
+//    // Inform the user that the profile has been updated successfully
+//    QMessageBox::information(mw, "Success", "Profile updated successfully!");
+//}
+
+void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
+    qDebug() << "DEBUG: Attempting to update profile: " << profileName;
+
+    // Find the profile in the list
+    Profile* selectedProfilePtr = nullptr;
     for (Profile* profile : profiles) {
-        if (profile->getName() == selectedProfileName.toStdString()) {
-            selectedProfile = profile;
+        if (profile->getName() == profileName.toStdString()) {
+            selectedProfilePtr = profile;
             break;
         }
     }
 
-    if (!selectedProfile) {
-        QMessageBox::warning(mw, "Error", "Selected profile not found.");
+    if (!selectedProfilePtr) {
+        QMessageBox::warning(mw, "Update Profile", "Profile not found.");
+        qDebug() << "ERROR: Profile not found!";
         return;
     }
 
-    // Get updated values from UI fields
-    float basalRate = mw->getUI()->basalInput->value();
-    float carbRatio = mw->getUI()->carbRatioInput->value();
-    float correctionFactor = mw->getUI()->correctionFactorInput->value();
+    // Retrieve user-entered values from the input fields
+    float basalRate = mw->getUI()->uppBasalInput->value();
+    float carbRatio = mw->getUI()->uppCarbRatioInput->value();
+    float correctionFactor = mw->getUI()->uppCorrectionFactorInput->value();
 
-    // Validate values
+    // Debug: Print user-entered values
+    qDebug() << "DEBUG: Retrieved values - Basal Rate: " << basalRate
+             << ", Carb Ratio: " << carbRatio
+             << ", Correction Factor: " << correctionFactor;
+
+    // Validate input
     if (basalRate < 0 || carbRatio < 0 || correctionFactor < 0) {
-        QMessageBox::warning(mw, "Error", "Invalid input. Please enter positive values.");
+        QMessageBox::warning(mw, "Error", "Invalid input. Enter positive values.");
         return;
     }
 
-    // Apply updates to the selected profile
-    selectedProfile->setBasalRate(basalRate);
-    selectedProfile->setCarbRatio(carbRatio);
-    selectedProfile->setCorrectionFactor(correctionFactor);
+    // Debug: Print current profile values before updating
+    qDebug() << "DEBUG: Current profile values - Basal Rate: "
+             << selectedProfilePtr->getBasalRate()
+             << ", Carb Ratio: " << selectedProfilePtr->getCarbRatio()
+             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
 
-    // Save updated profile
+    // Update profile attributes
+    selectedProfilePtr->setBasalRate(basalRate);
+    selectedProfilePtr->setCarbRatio(carbRatio);
+    selectedProfilePtr->setCorrectionFactor(correctionFactor);
+
+    // Debug: Print profile values after updating
+    qDebug() << "DEBUG: Updated profile values - Basal Rate: "
+             << selectedProfilePtr->getBasalRate()
+             << ", Carb Ratio: " << selectedProfilePtr->getCarbRatio()
+             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
+
+    // Save updated profile data
     saveProfiles();
 
-    // Inform the user
+    qDebug() << "DEBUG: Profile updated successfully!";
+
+    // Show confirmation message
     QMessageBox::information(mw, "Success", "Profile updated successfully!");
 }
-
 
 
 void Profile::deleteProfile() {
@@ -234,7 +284,10 @@ void Profile::saveProfiles()
              << profile->carbohydrateRatio << endl;
     }
 
+
     file.close();
+
+
 }
 
 
@@ -262,22 +315,33 @@ void Profile::loadProfiles(MainWindow* mw)
 }
 
 
+//void Profile::displayProfiles(MainWindow* mw) {
+//    QSet<QString> existingItems;
+
+//    // Store existing items to avoid duplicates
+//    for (int i = 0; i < mw->getUI()->spDisplayBox->count(); ++i) {
+//        existingItems.insert(mw->getUI()->spDisplayBox->item(i)->text());
+//    }
+
+//    // Add only new profiles (no clearing)
+//    for (Profile* profile : profiles) {
+//        QString profileName = QString::fromStdString(profile->getName());
+
+//        if (!existingItems.contains(profileName)) {
+//            QListWidgetItem* item = new QListWidgetItem(profileName);
+//            mw->getUI()->spDisplayBox->addItem(item);
+//        }
+//    }
+//}
+
+
+//Not being used
 void Profile::displayProfiles(MainWindow* mw) {
-    QSet<QString> existingItems;
+    mw->getUI()->spDisplayBox->clear();  // Clear previous items
 
-    // Store existing items to avoid duplicates
-    for (int i = 0; i < mw->getUI()->spDisplayBox->count(); ++i) {
-        existingItems.insert(mw->getUI()->spDisplayBox->item(i)->text());
-    }
-
-    // Add only new profiles (no clearing)
     for (Profile* profile : profiles) {
-        QString profileName = QString::fromStdString(profile->getName());
-
-        if (!existingItems.contains(profileName)) {
-            QListWidgetItem* item = new QListWidgetItem(profileName);
-            mw->getUI()->spDisplayBox->addItem(item);
-        }
+        QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(profile->getName()));
+        mw->getUI()->spDisplayBox->addItem(item);
     }
 }
 
