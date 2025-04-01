@@ -4,12 +4,12 @@
 class CGM
 {
 public:
-    CGM();  // Constructor to initialize the sensor
-    void monitorGlucose();  // Monitor glucose levels
-    void detectDisconnection();  // Detect if the CGM is disconnected
+    CGM();
+    float monitorGlucose();
+    bool detectDisconnection();
 
 private:
-    float sensorData;  // Simulated glucose level from the CGM sensor
+    float sensorData;
 };
 
 #endif // CGM_H

@@ -1,32 +1,29 @@
 #ifndef BOLUSCALCULATOR_H
 #define BOLUSCALCULATOR_H
 
-#include <iostream>
-
-
 #include "insulinpump.h"
-
-using namespace std;
+#include "cgm.h"
 
 class BolusCalculator
 {
 public:
-    // constructor
-    BolusCalculator();
+    BolusCalculator(CGM* cgm, InsulinPump* pump);
 
-    // setters
-    void setGlucose(float glucose) { glucoseLevel = glucose; }
-    void setCarb(float carbs) { carbohydrateIntake = carbs; }
-
-    // functions
-    void calculateBolus();
+    void calculateBolus(float carbIntake, float currentBG, float IOB);
     void confirmBolus();
 
 private:
-    float glucoseLevel;
-    float carbohydrateIntake;
-    float bolus;
-    InsulinPump insulinPump;
+    CGM* cgm;
+    InsulinPump* pump;
+
+    float insulinToCarbRatio;  // ICR
+    float correctionFactor;    // CF or ISF
+    float targetBG;
+
+    float totalBolusRequired;
+    float immediateBolus;
+    float extendedBolus;
+    float bolusRatePerHour;
 };
 
 #endif // BOLUSCALCULATOR_H

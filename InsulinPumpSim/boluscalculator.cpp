@@ -1,39 +1,57 @@
 #include "boluscalculator.h"
+#include <iostream>
 
-BolusCalculator::BolusCalculator():
-    glucoseLevel(0.0f),
-    carbohydrateIntake(0.0f),
-    bolus(0.0f)
+BolusCalculator::BolusCalculator(CGM* cgm, InsulinPump* pump)
+    : cgm(cgm), pump(pump), insulinToCarbRatio(1.0), correctionFactor(1.0), targetBG(5.0),
+      totalBolusRequired(0.0), immediateBolus(0.0), extendedBolus(0.0), bolusRatePerHour(0.0)
 {
-
 }
 
-// functions
-void BolusCalculator::calculateBolus()
+void BolusCalculator::calculateBolus(float carbIntake, float currentBG, float IOB)
 {
-    // Example bolus calculation (simplified):
-    // Let's assume 1 unit of insulin for every 10g of carbs
-    // and 1 unit of insulin to bring down 50 mg/dL of glucose above the target.
+    // Step 1: Calculate Food Bolus
+    float carbBolus = carbIntake / insulinToCarbRatio;
 
-    const float carbsPerUnit = 10.0; // 10 grams of carbs per unit of insulin
-    const float glucoseCorrectionFactor = 50.0; // 1 unit of insulin per 50 mg/dL over the target glucose
+    // Step 2: Calculate Correction Bolus
+    float correctionBolus = (currentBG - targetBG) / correctionFactor;
 
-    // Calculate the bolus for carbohydrate intake
-    float carbBolus = carbohydrateIntake / carbsPerUnit;
+    // Step 3: Total Bolus Before IOB Adjustment
+    float totalBolus = carbBolus + correctionBolus;
 
-    // Calculate the bolus for high glucose (assuming target glucose level is 100 mg/dL)
-    float targetGlucose = 100.0; // placeholder. this variable should be taken from user input.
-    float glucoseBolus = (glucoseLevel > targetGlucose) ? (glucoseLevel - targetGlucose) / glucoseCorrectionFactor : 0.0;
+    // Step 4: Adjust for Insulin On Board (IOB)
+    totalBolusRequired = totalBolus - IOB;
 
-    // Total bolus is the sum of both
-    bolus = carbBolus + glucoseBolus;
+    if (totalBolusRequired < 0) totalBolusRequired = 0; // Prevent negative values
 
-    std::cout << "Calculated bolus: " << bolus << " units" << std::endl;
+    // Step 5: Bolus Distribution
+    float immediateBolusFraction = 0.6;  // 60% immediate
+    float extendedBolusFraction = 0.4;   // 40% extended
+    int bolusDuration = 3; // 3 hours
+
+    immediateBolus = immediateBolusFraction * totalBolusRequired;
+    extendedBolus = extendedBolusFraction * totalBolusRequired;
+    bolusRatePerHour = extendedBolus / bolusDuration;
+
+    // Display the calculated values
+    std::cout << "Total Bolus Required: " << totalBolusRequired << " units" << std::endl;
+    std::cout << "Immediate Bolus: " << immediateBolus << " units" << std::endl;
+    std::cout << "Extended Bolus: " << extendedBolus << " units" << std::endl;
+    std::cout << "Bolus Rate Per Hour: " << bolusRatePerHour << " units/hour" << std::endl;
 }
 
 void BolusCalculator::confirmBolus()
 {
-    cout << "Bolus of " << bolus << " units confirmed for delivery." << endl;
+    std::cout << "Confirming Bolus Delivery..." << std::endl;
 
-    insulinPump.startDelivery();
+    // Start immediate delivery
+    pump->startDelivery();
+    std::cout << "Delivering Immediate Bolus: " << immediateBolus << " units" << std::endl;
+
+    // Simulate extended delivery over 3 hours
+    for (int hour = 1; hour <= 3; ++hour) {
+        std::cout << "Delivering Extended Bolus - Hour " << hour << ": " << bolusRatePerHour << " units" << std::endl;
+    }
+
+    // Stop delivery after completion
+    pump->stopDelivery();
 }
