@@ -327,10 +327,28 @@ void MainWindow::on_sppBackButton_clicked()
 
 
 /*unlock buttonns*/
+void MainWindow::on_unlock1_clicked()
+{
+    b1 = true;
+}
+
+void MainWindow::on_unlock2_clicked()
+{
+    if(b1 == true)
+        b2 = true;
+}
+
 void MainWindow::on_unlock3_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(1);
+//     if(n == 3)
+//     {
+//        ui->stackedWidget->setCurrentIndex(1);
+//     }
+
+    if(b1 == true && b2 == true)
+        ui->stackedWidget->setCurrentIndex(1);
 }
+
 
 
 

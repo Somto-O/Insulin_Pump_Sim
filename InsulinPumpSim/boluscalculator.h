@@ -1,6 +1,8 @@
 #ifndef BOLUSCALCULATOR_H
 #define BOLUSCALCULATOR_H
 
+#include <iostream>
+
 #include "insulinpump.h"
 #include "cgm.h"
 

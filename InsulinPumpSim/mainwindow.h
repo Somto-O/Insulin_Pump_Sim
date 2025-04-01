@@ -63,6 +63,8 @@ private slots:
 
     void on_backButton_3_clicked();
 
+    void on_unlock1_clicked();
+    void on_unlock2_clicked();
     void on_unlock3_clicked();
 
     void on_backButton_4_clicked();
@@ -85,6 +87,8 @@ private:
     Ui::MainWindow *ui;
     User* user;
     QString selectedProfileName;
+    bool b1 = false;
+    bool b2 = false;
 
     ProfileUpdateState updateState = WAITING_FOR_SELECTION; // Initial state
 };

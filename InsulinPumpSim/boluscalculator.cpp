@@ -1,5 +1,4 @@
 #include "boluscalculator.h"
-#include <iostream>
 
 BolusCalculator::BolusCalculator(CGM* cgm, InsulinPump* pump)
     : cgm(cgm), pump(pump), insulinToCarbRatio(1.0), correctionFactor(1.0), targetBG(5.0),
