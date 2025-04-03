@@ -83,6 +83,8 @@ private slots:
 
     void on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button);
 
+    void on_deleteProfileButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     User* user;

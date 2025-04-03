@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>ui-elements/icons8-settings-200.png</file>
+        <file>ui-elements/icons8-water-drop-100.png</file>
+    </qresource>
+</RCC>

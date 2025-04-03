@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -119,19 +119,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>310</y>
-        <width>111</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Insulin On Board</string>
-      </property>
-     </widget>
      <widget class="QGraphicsView" name="graphicsView_2">
       <property name="geometry">
        <rect>
@@ -146,13 +133,26 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>20</y>
-        <width>71</width>
-        <height>23</height>
+        <y>12</y>
+        <width>81</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="value">
        <number>24</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>300</y>
+        <width>181</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>INSULIN ON BOARD</string>
       </property>
      </widget>
     </widget>
@@ -182,13 +182,13 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>310</y>
-        <width>111</width>
-        <height>20</height>
+        <y>300</y>
+        <width>181</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Insulin On Board</string>
+       <string>INSULIN ON BOARD</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bolusButton">
@@ -209,6 +209,16 @@
       <property name="text">
        <string>Bolus</string>
       </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-water-drop-100.png</normaloff>:/icons/ui-elements/icons8-water-drop-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
      </widget>
      <widget class="QPushButton" name="options_Button">
       <property name="geometry">
@@ -227,6 +237,16 @@
       </property>
       <property name="text">
        <string>Options</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-settings-200.png</normaloff>:/icons/ui-elements/icons8-settings-200.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
       </property>
      </widget>
      <widget class="QWidget" name="verticalLayoutWidget">
@@ -285,13 +305,13 @@
      </widget>
     </widget>
     <widget class="QWidget" name="optionsPage">
-     <widget class="QLabel" name="optionsLabel">
+     <widget class="QLabel" name="h1">
       <property name="geometry">
        <rect>
-        <x>370</x>
+        <x>350</x>
         <y>20</y>
-        <width>62</width>
-        <height>17</height>
+        <width>131</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
@@ -300,12 +320,15 @@
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
+      </property>
      </widget>
      <widget class="QWidget" name="verticalLayoutWidget_3">
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>60</y>
+        <y>90</y>
         <width>691</width>
         <height>321</height>
        </rect>
@@ -566,9 +589,9 @@
       <property name="geometry">
        <rect>
         <x>810</x>
-        <y>20</y>
-        <width>121</width>
-        <height>31</height>
+        <y>10</y>
+        <width>141</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -596,6 +619,57 @@
        <string>Back</string>
       </property>
      </widget>
+     <widget class="QListWidget" name="spDisplayBox_2">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>130</y>
+        <width>511</width>
+        <height>211</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QDialogButtonBox" name="spButtonBox_2">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>350</y>
+        <width>211</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+      <property name="centerButtons">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="h1_3">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>30</y>
+        <width>391</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select Profile to View</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="selectProfilePage">
      <widget class="QPushButton" name="sppBackButton">
@@ -611,20 +685,23 @@
        <string>Back</string>
       </property>
      </widget>
-     <widget class="QLabel" name="updateProfileLabel_2">
+     <widget class="QLabel" name="h1_2">
       <property name="geometry">
        <rect>
-        <x>450</x>
-        <y>100</y>
-        <width>131</width>
-        <height>20</height>
+        <x>330</x>
+        <y>50</y>
+        <width>371</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="text">
-       <string>Select Profile</string>
+       <string>Select Profile to Update</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
       </property>
      </widget>
      <widget class="QListWidget" name="spDisplayBox">
@@ -640,14 +717,23 @@
      <widget class="QDialogButtonBox" name="spButtonBox">
       <property name="geometry">
        <rect>
-        <x>440</x>
+        <x>390</x>
         <y>350</y>
-        <width>166</width>
-        <height>25</height>
+        <width>211</width>
+        <height>51</height>
        </rect>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
       <property name="standardButtons">
        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+      <property name="centerButtons">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -668,10 +754,10 @@
      <widget class="QDialogButtonBox" name="uppConfirmProfileButtonBox">
       <property name="geometry">
        <rect>
-        <x>430</x>
+        <x>400</x>
         <y>270</y>
-        <width>171</width>
-        <height>51</height>
+        <width>201</width>
+        <height>71</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -682,6 +768,9 @@
       </property>
       <property name="standardButtons">
        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+      <property name="centerButtons">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QWidget" name="formLayoutWidget_3">
@@ -745,13 +834,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="uppTargetBGLabel">
-         <property name="text">
-          <string>Target BG</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="1">
         <widget class="QSpinBox" name="uppTargetBGInput">
          <property name="sizePolicy">
@@ -762,15 +844,22 @@
          </property>
         </widget>
        </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="uppTargetBGLabel">
+         <property name="text">
+          <string>Target BG</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QLabel" name="updateProfileLabel">
       <property name="geometry">
        <rect>
-        <x>450</x>
-        <y>100</y>
-        <width>131</width>
-        <height>20</height>
+        <x>400</x>
+        <y>80</y>
+        <width>221</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
@@ -778,6 +867,9 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
       </property>
      </widget>
     </widget>
@@ -801,7 +893,7 @@
         <x>150</x>
         <y>140</y>
         <width>721</width>
-        <height>155</height>
+        <height>161</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
@@ -914,11 +1006,17 @@
      <widget class="QLabel" name="optionsLabel_2">
       <property name="geometry">
        <rect>
-        <x>450</x>
-        <y>100</y>
-        <width>131</width>
-        <height>20</height>
+        <x>390</x>
+        <y>80</y>
+        <width>211</width>
+        <height>51</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="text">
        <string>Create Profile</string>
@@ -926,11 +1024,83 @@
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="batteryDeadPage"/>
+    <widget class="QWidget" name="deleteProfilePage">
+     <widget class="QLabel" name="h1_4">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>60</y>
+        <width>371</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select Profile to Delete</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="sppBackButton_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>30</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="spDisplayBox_3">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>140</y>
+        <width>511</width>
+        <height>211</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QDialogButtonBox" name="spButtonBox_3">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>360</y>
+        <width>211</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+      <property name="centerButtons">
+       <bool>true</bool>
+      </property>
      </widget>
     </widget>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -5,12 +5,30 @@
 #include <iostream>
 
 #include <QApplication>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
+#include <QDir>
 
 using namespace std;
+
+void loadStyleSheet(QApplication &app){
+    QFile file("styles.qss");
+    if (file.open(QFile::ReadOnly)){
+        QString styleSheet = QTextStream(&file).readAll();
+        app.setStyleSheet(styleSheet);
+        qDebug() << "Stylesheet loaded!";
+        file.close();
+    } else {
+        qDebug() << "Could not open styles.qss at:" << QDir::currentPath();
+    }
+}
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QApplication::setStyle("Fusion");
+    loadStyleSheet(a);
     MainWindow w;
     w.show();
 
@@ -20,17 +38,6 @@ int main(int argc, char *argv[])
     // Create User object
     User user(&w);
 
-    // The profiles will be managed through button clicks and navigation
-    // You don't need to call navigateProfiles here
-
-//    vector<Profile*>& profiles = Profile::getProfiles();
-
-//    if (!profiles.empty()) {
-//        Profile* profile = profiles[0];
-//        cout << "Name: " << profile->getName() << endl;
-//    } else {
-//        cout << "No profiles found!" << endl;
-//    }
 
     return a.exec();
 }

@@ -432,7 +432,10 @@ void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) 
 }
 
 
-
+void MainWindow::on_deleteProfileButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(10);
+}
 
 
 
