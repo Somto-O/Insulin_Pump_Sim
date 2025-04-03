@@ -9,8 +9,6 @@ using namespace std;
 // Constructor
 SystemAlerts::SystemAlerts() {}
 
-//LEAVING THIS AS IT IS, NEED MORE INFO ON THE FUNCTIONS
-
 // Function to trigger an alert
 void SystemAlerts::triggerAlert(const string& alertMessage) {
     // Show an alert message to the user
@@ -21,17 +19,20 @@ void SystemAlerts::triggerAlert(const string& alertMessage) {
 }
 
 // Function to log alerts
-void SystemAlerts::logAlert(const string& alertMessage) {
-    // Open a log file in append mode
-    ofstream logFile("alerts.log", ios::app);
+void SystemAlerts::logAlert(const string& alertMessage)
+{
+    ofstream file("alerts.txt"); // Open file without append mode (overwrites existing content)
 
-    if (logFile.is_open()) {
-        logFile << "Alert: " << alertMessage << endl;
-        logFile.close();
-    } else {
-        cerr << "Error: Could not open alert log file!" << endl;
+    if (!file) {
+        QMessageBox::warning(nullptr, "Error", "Could not open alert log file.");
+        return;
     }
+
+    file << "Alert: " << alertMessage << endl;
+
+    file.close();
 }
+
 
 // Function to escalate an alert
 void SystemAlerts::escalateAlert(const string& alertMessage) {

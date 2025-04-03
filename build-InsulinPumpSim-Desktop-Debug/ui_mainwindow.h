@@ -419,17 +419,17 @@ public:
         backButton_5->setGeometry(QRect(30, 20, 81, 31));
         spDisplayBox_2 = new QListWidget(viewProfilePage);
         spDisplayBox_2->setObjectName(QString::fromUtf8("spDisplayBox_2"));
-        spDisplayBox_2->setGeometry(QRect(240, 130, 511, 211));
+        spDisplayBox_2->setGeometry(QRect(260, 130, 511, 211));
         spButtonBox_2 = new QDialogButtonBox(viewProfilePage);
         spButtonBox_2->setObjectName(QString::fromUtf8("spButtonBox_2"));
-        spButtonBox_2->setGeometry(QRect(360, 350, 211, 51));
+        spButtonBox_2->setGeometry(QRect(410, 350, 211, 51));
         spButtonBox_2->setLayoutDirection(Qt::LeftToRight);
         spButtonBox_2->setOrientation(Qt::Horizontal);
         spButtonBox_2->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         spButtonBox_2->setCenterButtons(true);
         h1_3 = new QLabel(viewProfilePage);
         h1_3->setObjectName(QString::fromUtf8("h1_3"));
-        h1_3->setGeometry(QRect(280, 30, 391, 91));
+        h1_3->setGeometry(QRect(320, 40, 391, 91));
         h1_3->setAlignment(Qt::AlignCenter);
         stackedWidget->addWidget(viewProfilePage);
         selectProfilePage = new QWidget();
@@ -439,14 +439,14 @@ public:
         sppBackButton->setGeometry(QRect(30, 20, 81, 31));
         h1_2 = new QLabel(selectProfilePage);
         h1_2->setObjectName(QString::fromUtf8("h1_2"));
-        h1_2->setGeometry(QRect(330, 50, 371, 81));
+        h1_2->setGeometry(QRect(330, 40, 371, 81));
         h1_2->setAlignment(Qt::AlignCenter);
         spDisplayBox = new QListWidget(selectProfilePage);
         spDisplayBox->setObjectName(QString::fromUtf8("spDisplayBox"));
-        spDisplayBox->setGeometry(QRect(270, 130, 511, 211));
+        spDisplayBox->setGeometry(QRect(260, 130, 511, 211));
         spButtonBox = new QDialogButtonBox(selectProfilePage);
         spButtonBox->setObjectName(QString::fromUtf8("spButtonBox"));
-        spButtonBox->setGeometry(QRect(390, 350, 211, 51));
+        spButtonBox->setGeometry(QRect(410, 350, 211, 51));
         spButtonBox->setLayoutDirection(Qt::LeftToRight);
         spButtonBox->setOrientation(Qt::Horizontal);
         spButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
@@ -643,7 +643,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(9);
+        stackedWidget->setCurrentIndex(5);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

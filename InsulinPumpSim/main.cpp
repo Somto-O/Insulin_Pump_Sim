@@ -17,7 +17,7 @@ void loadStyleSheet(QApplication &app){
     if (file.open(QFile::ReadOnly)){
         QString styleSheet = QTextStream(&file).readAll();
         app.setStyleSheet(styleSheet);
-        qDebug() << "Stylesheet loaded!";
+        //qDebug() << "Stylesheet loaded!";
         file.close();
     } else {
         qDebug() << "Could not open styles.qss at:" << QDir::currentPath();

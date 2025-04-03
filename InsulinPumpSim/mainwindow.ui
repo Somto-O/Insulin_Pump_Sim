@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -622,7 +622,7 @@
      <widget class="QListWidget" name="spDisplayBox_2">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>260</x>
         <y>130</y>
         <width>511</width>
         <height>211</height>
@@ -632,7 +632,7 @@
      <widget class="QDialogButtonBox" name="spButtonBox_2">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>410</x>
         <y>350</y>
         <width>211</width>
         <height>51</height>
@@ -654,8 +654,8 @@
      <widget class="QLabel" name="h1_3">
       <property name="geometry">
        <rect>
-        <x>280</x>
-        <y>30</y>
+        <x>320</x>
+        <y>40</y>
         <width>391</width>
         <height>91</height>
        </rect>
@@ -689,7 +689,7 @@
       <property name="geometry">
        <rect>
         <x>330</x>
-        <y>50</y>
+        <y>40</y>
         <width>371</width>
         <height>81</height>
        </rect>
@@ -707,7 +707,7 @@
      <widget class="QListWidget" name="spDisplayBox">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>260</x>
         <y>130</y>
         <width>511</width>
         <height>211</height>
@@ -717,7 +717,7 @@
      <widget class="QDialogButtonBox" name="spButtonBox">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>410</x>
         <y>350</y>
         <width>211</width>
         <height>51</height>

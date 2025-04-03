@@ -79,9 +79,6 @@ void MainWindow::updateBatteryDisplay(float newLevel) {
                                    "}"
                                   );
     }
-
-    qDebug() << "Battery Level Updated to:" << newLevel; // Debugging
-   // ui->stackedWidget->setCurrentIndex(9);
 }
 
 void MainWindow::updateBatteryDisplay2(float newLevel) {
@@ -129,11 +126,11 @@ void MainWindow::updateBatteryDisplay2(float newLevel) {
                                    );
     }
 
-    qDebug() << "Battery2 Level Updated to:" << newLevel; // Debugging
+
 }
 
 void MainWindow::changePageToBatteryLow() {
-    ui->stackedWidget->setCurrentIndex(9);  // Switch to battery low warning page
+    ui->stackedWidget->setCurrentIndex(9);
 }
 
 
@@ -321,8 +318,6 @@ void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
     if (ui->spButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         QListWidgetItem* selectedItem = ui->spDisplayBox->currentItem();
 
-
-
         QString selectedProfileName = selectedItem->text();
         qDebug() << "DEBUG: Selected Profile Name: " << selectedProfileName;  // Debug output
 
@@ -367,9 +362,9 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
     ui->stackedWidget->setCurrentIndex(7);
 
     // Debug: Check pre-filled values
-    qDebug() << "DEBUG: Pre-filled UI with Basal Rate: " << selectedProfilePtr->getBasalRate()
-             << ", Carb Ratio: " << selectedProfilePtr->getCarbRatio()
-             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
+//    qDebug() << "DEBUG: Pre-filled UI with Basal Rate: " << selectedProfilePtr->getBasalRate()
+//             << ", Carb Ratio: " << selectedProfilePtr->getCarbRatio()
+//             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
 }
 
 

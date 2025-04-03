@@ -90,6 +90,8 @@ private slots:
 
     void changePageToBatteryLow();
 
+    void moveToViewPage(const QString& profileName);
+
 
 
 private:
