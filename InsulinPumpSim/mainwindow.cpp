@@ -2,12 +2,15 @@
 #include "ui_mainwindow.h"
 #include "profile.h"
 #include "user.h"
+#include "insulinpump.h"
+
 
 #include "QDebug"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , insulinPump(new InsulinPump())
 {
     ui->setupUi(this);
 
@@ -18,6 +21,11 @@ MainWindow::MainWindow(QWidget *parent)
     // Connect selection change signal to slot
     connect(ui->spDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::onProfileSelected);
     connect(ui->spButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_spButtonBox_clicked);
+    connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
+    connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
+
+    // Connect battery depletion signal to screen change function
+    connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::changePageToBatteryLow);
 
 }
 
@@ -26,6 +34,108 @@ MainWindow::~MainWindow()
 
     delete ui;
 }
+
+void MainWindow::updateBatteryDisplay(float newLevel) {
+    ui->battery->setValue(static_cast<int>(newLevel)); // Update QProgressBar
+
+    // Change the color of the chunk (the actual filled part of the progress bar)
+    if (newLevel > 50) {
+        ui->battery->setStyleSheet("QProgressBar {"
+                                   "border: 2px solid grey;"
+                                   "border-radius: 5px;"
+                                   "background: lightgray;"
+                                   "text-align: center;"
+                                   "color: white;"
+                                   "}"
+                                   "QProgressBar::chunk {"
+                                   "background: green;"
+                                   "border-radius: 5px;"
+                                   "}"
+                                  );
+    } else if (newLevel > 20) {
+        ui->battery->setStyleSheet("QProgressBar {"
+                                   "border: 2px solid grey;"
+                                   "border-radius: 5px;"
+                                   "background: lightgray;"
+                                   "text-align: center;"
+                                   "color: white;"
+                                   "}"
+                                   "QProgressBar::chunk {"
+                                   "background: orange;"
+                                   "border-radius: 5px;"
+                                   "}"
+                                  );
+    } else {
+        ui->battery->setStyleSheet("QProgressBar {"
+                                   "border: 2px solid grey;"
+                                   "border-radius: 5px;"
+                                   "background: lightgray;"
+                                   "text-align: center;"
+                                   "color: white;"
+                                   "}"
+                                   "QProgressBar::chunk {"
+                                   "background: red;"
+                                   "border-radius: 5px;"
+                                   "}"
+                                  );
+    }
+
+    qDebug() << "Battery Level Updated to:" << newLevel; // Debugging
+   // ui->stackedWidget->setCurrentIndex(9);
+}
+
+void MainWindow::updateBatteryDisplay2(float newLevel) {
+    ui->battery_2->setValue(static_cast<int>(newLevel)); // Update second QProgressBar
+
+    // Change the color of the chunk (the actual filled part of the progress bar)
+    if (newLevel > 50) {
+        ui->battery_2->setStyleSheet("QProgressBar {"
+                                    "border: 2px solid grey;"
+                                    "border-radius: 5px;"
+                                    "background: 2px lightgray;"
+                                    "text-align: center;"
+                                    "color: white;"
+                                    "}"
+                                    "QProgressBar::chunk {"
+                                    "background: green;"
+                                    "border-radius: 5px;"
+                                    "}"
+                                   );
+    } else if (newLevel > 20) {
+        ui->battery_2->setStyleSheet("QProgressBar {"
+                                    "border: 2px solid grey;"
+                                    "border-radius: 5px;"
+                                    "background: lightgray;"
+                                    "text-align: center;"
+                                    "color: white;"
+                                    "}"
+                                    "QProgressBar::chunk {"
+                                    "background: orange;"
+                                    "border-radius: 5px;"
+                                    "}"
+                                   );
+    } else {
+        ui->battery_2->setStyleSheet("QProgressBar {"
+                                    "border: 2px solid grey;"
+                                    "border-radius: 5px;"
+                                    "background: lightgray;"
+                                    "text-align: center;"
+                                    "color: white;"
+                                    "}"
+                                    "QProgressBar::chunk {"
+                                    "background: red;"
+                                    "border-radius: 5px;"
+                                    "}"
+                                   );
+    }
+
+    qDebug() << "Battery2 Level Updated to:" << newLevel; // Debugging
+}
+
+void MainWindow::changePageToBatteryLow() {
+    ui->stackedWidget->setCurrentIndex(9);  // Switch to battery low warning page
+}
+
 
 
 QString MainWindow::onProfileSelected() {
@@ -44,13 +154,6 @@ void MainWindow::openUpdateProfilePage() {
     ui->stackedWidget->setCurrentIndex(7);
 }
 
-
-// Function to update the display of profiles
-
-//void MainWindow::updateProfileList() {
-
-//    Profile::displayProfiles(this);  // 'this' refers to the MainWindow object
-//}
 
 void MainWindow::populateProfileList() {
     ui->spDisplayBox->clear();  // Clear the list before populating
@@ -122,6 +225,15 @@ void MainWindow::on_confirmProfileButtonBox_clicked(QAbstractButton *button)
 
         // Inform the user that the profile is saved
         QMessageBox::information(this, "Success", "Profile created and saved successfully!");
+        ui->stackedWidget->setCurrentIndex(4);
+        // Clear the input fields after profile is created
+            ui->nameInput->clear();
+            ui->basalInput->clear();
+            ui->carbRatioInput->clear();
+            ui->correctionFactorInput->clear();
+            ui->targetBGInput->clear();
+
+
     }
     else if (ui->confirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::RejectRole) {
         // Handle the "Cancel" button click
@@ -140,148 +252,6 @@ void MainWindow::on_updateProfileButton_clicked(){
     ui->stackedWidget->setCurrentIndex(6);
 }
 
-
-//void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
-//    // Check if the clicked button is the "OK" or "Accept" button
-//    if (ui->spButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
-//        // Get the selected item from the list
-//        QListWidgetItem* selectedItem = ui->spDisplayBox->currentItem();
-//        if (!selectedItem) {
-//            QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
-//            return;
-//        }
-
-//        QString selectedProfileName = selectedItem->text();
-
-//        // Find the corresponding profile object
-//        Profile* selectedProfile = nullptr;
-//        for (Profile* profile : Profile::getProfiles()) {
-//            if (profile->getName() == selectedProfileName.toStdString()) {
-//                selectedProfile = profile;
-//                break;
-//            }
-//        }
-
-//        if (!selectedProfile) {
-//            QMessageBox::warning(this, "Error", "Selected profile not found.");
-//            return;
-//        }
-
-//        // Pre-fill update fields with selected profile details
-//        ui->nameInput->setText(QString::fromStdString(selectedProfile->getName()));
-//        ui->basalInput->setValue(selectedProfile->getBasalRate());
-//        ui->carbRatioInput->setValue(selectedProfile->getCarbRatio());
-//        ui->correctionFactorInput->setValue(selectedProfile->getCorrectionFactor());
-
-//        // Switch to the Update Profile page
-//        ui->stackedWidget->setCurrentIndex(7);
-//    }
-//}
-
-//void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
-//    if (ui->spButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
-//        QListWidgetItem* selectedItem = ui->spDisplayBox->currentItem();
-//        if (!selectedItem) {
-//            QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
-//            return;
-//        }
-
-//        QString selectedProfileName = selectedItem->text();
-//        moveToUpdatePage(selectedProfileName);
-//    }
-//}
-
-
-
-//void MainWindow::moveToUpdatePage(const QString& profileName) {
-//    if (profileName.isEmpty()) {
-//        QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
-//        return;
-//    }
-
-//    // Store the selected profile name for later use
-//    selectedProfileName = profileName;
-
-//    // Switch to the Update Profile page
-//    ui->stackedWidget->setCurrentIndex(7);
-//}
-
-
-
-
-
-
-
-//void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button)
-//{
-//    if(ui->uppConfirmProfileButtonBox->buttonRole(button) ==  QDialogButtonBox::AcceptRole){
-//        Profile::updateProfile(this);
-//    }
-//    else if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::RejectRole) {
-//        // Handle the "Cancel" button click
-//        QMessageBox::information(this, "Cancelled", "Profile update was cancelled.");
-//}
-//}
-
-//void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) {
-//    if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
-//        if (selectedProfileName.isEmpty()) {
-//            QMessageBox::warning(this, "Error", "No profile selected.");
-//            return;
-//        }
-
-//        // Find the profile using stored profile name
-//        Profile* selectedProfile = nullptr;
-//        for (Profile* profile : Profile::getProfiles()) {
-//            if (QString::fromStdString(profile->getName()) == selectedProfileName) {
-//                selectedProfile = profile;
-//                break;
-//            }
-//        }
-
-//        if (!selectedProfile) {
-//            QMessageBox::warning(this, "Error", "Profile not found.");
-//            return;
-//        }
-
-//        // Get user-entered values
-//        float basalRate = ui->basalInput->value();
-//        float carbRatio = ui->carbRatioInput->value();
-//        float correctionFactor = ui->correctionFactorInput->value();
-
-//        // Validate values
-//        if (basalRate <= 0 || carbRatio <= 0 || correctionFactor <= 0) {
-//            QMessageBox::warning(this, "Error", "Invalid input. Please enter positive values.");
-//            return;
-//        }
-
-//        // Update the existing profile
-//        selectedProfile->setBasalRate(basalRate);
-//        selectedProfile->setCarbRatio(carbRatio);
-//        selectedProfile->setCorrectionFactor(correctionFactor);
-
-//        // Save changes
-//        Profile::saveProfiles();
-
-//        // Show success message
-//        QMessageBox::information(this, "Success", "Profile updated successfully!");
-
-//        // Refresh profile list after update
-//        Profile::displayProfiles(this);
-//    }
-//}
-
-//void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) {
-//    if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
-//        if (selectedProfileName.isEmpty()) {
-//            QMessageBox::warning(this, "Error", "No profile selected.");
-//            return;
-//        }
-
-//        // Update the profile with the stored name
-//        Profile::updateProfile(this, selectedProfileName);
-//    }
-//}
 
 
 
@@ -340,18 +310,9 @@ void MainWindow::on_unlock2_clicked()
 
 void MainWindow::on_unlock3_clicked()
 {
-//     if(n == 3)
-//     {
-//        ui->stackedWidget->setCurrentIndex(1);
-//     }
-
     if(b1 == true && b2 == true)
         ui->stackedWidget->setCurrentIndex(1);
 }
-
-
-
-
 
 
 
@@ -360,10 +321,7 @@ void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
     if (ui->spButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         QListWidgetItem* selectedItem = ui->spDisplayBox->currentItem();
 
-        if (!selectedItem) {
-            QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
-            return;
-        }
+
 
         QString selectedProfileName = selectedItem->text();
         qDebug() << "DEBUG: Selected Profile Name: " << selectedProfileName;  // Debug output
@@ -372,16 +330,21 @@ void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
 
         qDebug() << "DEBUG: Stored Profile Name: " << getSelectedProfileName();  // Debug output
 
+//        if (!selectedItem) {
+//            QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
+//            return;
+//        }
+
         moveToUpdatePage(selectedProfileName);  // Move to update page
     }
 }
 
 
 void MainWindow::moveToUpdatePage(const QString& profileName) {
-    if (profileName.isEmpty()) {
-        QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
-        return;
-    }
+//    if (profileName.isEmpty()) {
+//        QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
+//        return;
+//    }
 
     // Store the selected profile name for later use
     selectedProfileName = profileName;
@@ -400,11 +363,6 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
         return;
     }
 
-    // Pre-fill the UI fields with the current profile values
-//    ui->basalInput->setValue(selectedProfilePtr->getBasalRate());
-//    ui->carbRatioInput->setValue(selectedProfilePtr->getCarbRatio());
-//    ui->correctionFactorInput->setValue(selectedProfilePtr->getCorrectionFactor());
-
     // Switch to the Update Profile page
     ui->stackedWidget->setCurrentIndex(7);
 
@@ -420,14 +378,15 @@ void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) 
     if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         qDebug() << "DEBUG: Updating profile for " << selectedProfileName;
 
-        if (selectedProfileName.isEmpty()) {
-            QMessageBox::warning(this, "Error", "No profile selected.");
-            qDebug() << "ERROR: No profile selected!";
-            return;
-        }
 
         // Call updateProfile function with the selected profile
         Profile::updateProfile(this, selectedProfileName);
+
+//        if (selectedProfileName.isEmpty()) {
+//            QMessageBox::warning(this, "Error", "No profile selected.");
+//            qDebug() << "ERROR: No profile selected!";
+//            return;
+//        }
     }
 }
 

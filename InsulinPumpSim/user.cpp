@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
+#include "QDialogButtonBox"
 #include "QDebug"
 
 // constructor
@@ -42,10 +43,9 @@ void User::navigateProfiles()
     {
         handleViewProfile();
     }
-    else if (senderButton == mainWindow->getUI()->updateProfileButton)
+    else if (senderButton == mainWindow->getUI()->uppConfirmProfileButtonBox->button(QDialogButtonBox::Ok))
     {
         handleUpdateProfile();
-
     }
     else if (senderButton == mainWindow->getUI()->deleteProfileButton)
     {
@@ -64,29 +64,19 @@ void User::handleViewProfile()
     Profile::viewProfile();
 }
 
-//void User::handleUpdateProfile() {
-//    Profile::displayProfiles(mainWindow);
-//    QListWidgetItem* selectedItem = mainWindow->getUI()->spDisplayBox->currentItem();
-//    if (!selectedItem) {
-//        QMessageBox::warning(mainWindow, "Selection Error", "No profile selected. Please select a profile first.");
-//        return;
-//    }
 
-//    QString selectedProfileName = selectedItem->text();
-//    qDebug() << "Selected Profile Name: " << selectedProfileName;
-
-//    mainWindow->moveToUpdatePage(selectedProfileName);  // Correctly move to update page
-//}
 
 void User::handleUpdateProfile() {
     QListWidgetItem* selectedItem = mainWindow->getUI()->spDisplayBox->currentItem();
     if (!selectedItem) {
-        QMessageBox::warning(mainWindow, "Selection Error", "No profile selected.");
+      //  QMessageBox::warning(mainWindow, "Selection Error", "No profile selected.");
         return;
     }
 
     // Store the selected profile name
     mainWindow->setSelectedProfileName(selectedItem->text());
+    //Profile::updateProfile(mainWindow,mainWindow->onProfileSelected());
+
 }
 
 

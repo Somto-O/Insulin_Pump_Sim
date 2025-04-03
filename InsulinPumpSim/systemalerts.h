@@ -9,9 +9,9 @@ class SystemAlerts
 
 public:
     SystemAlerts();
-    void triggerAlert(const string& alertMessage);
-    void logAlert(const string& alertMessage);
-    void escalateAlert(const string& alertMessage);
+    static void triggerAlert(const string& alertMessage);
+    static void logAlert(const string& alertMessage);
+    static void escalateAlert(const string& alertMessage);
 
 
 };

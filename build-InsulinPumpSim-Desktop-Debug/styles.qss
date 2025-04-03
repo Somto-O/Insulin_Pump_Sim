@@ -98,20 +98,20 @@ QLabel#alert {
 }
 
 QProgressBar {
-    border: 1px solid #333333;
+    border: 2px solid grey;
     border-radius: 5px;
-    background-color: #1E1E1E;
+    background-color: grey;
     text-align: center;
     color: #E0E0E0;
      font-size: 15px;
 }
 
 QProgressBar::chunk {
-    background-color: #007BFF;
-    width: 10px;
-    margin: 2 px;
-    border-radius: 4px;
+    background-color: green;
+    border-radius: 5px;
+
 }
+
 
 /*headings*/
 QLabel[heading="h1"]{

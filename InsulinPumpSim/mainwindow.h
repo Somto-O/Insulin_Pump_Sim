@@ -5,16 +5,16 @@
 #include <QAbstractButton>
 #include <QPushButton>
 
+
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class User;
+class InsulinPump;
 
-enum ProfileUpdateState {
-    WAITING_FOR_SELECTION,
-    PROFILE_SELECTED
-};
 
 class MainWindow : public QMainWindow
 {
@@ -83,16 +83,23 @@ private slots:
 
     void on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button);
 
+    void updateBatteryDisplay(float newLevel);
+    void updateBatteryDisplay2(float newLevel);
+    
     void on_deleteProfileButton_clicked();
+
+    void changePageToBatteryLow();
+
+
 
 private:
     Ui::MainWindow *ui;
     User* user;
+    InsulinPump* insulinPump;
     QString selectedProfileName;
     bool b1 = false;
     bool b2 = false;
 
-    ProfileUpdateState updateState = WAITING_FOR_SELECTION; // Initial state
 };
 
 #endif // MAINWINDOW_H

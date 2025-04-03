@@ -17,7 +17,7 @@ class Profile {
 
 public:
     // constructor
-    Profile(MainWindow* mw, string n, float bRate, float carbRatio,float cFactor);
+    Profile(MainWindow* mw, string n, float bRate, float carbRatio,float cFactor, float targetbg);
 
     // destructor
     ~Profile();
@@ -35,7 +35,7 @@ public:
     void setBasalRate(float newBasalRate) { basalRate = newBasalRate; }
     void setCarbRatio(float newCarbRatio) { carbohydrateRatio = newCarbRatio; }
     void setCorrectionFactor(float newCorrectionFactor) { correctionFactor = newCorrectionFactor;}
-    float setTargetBG(){return targetBG;}
+    void setTargetBG(float newTargetBG){targetBG = newTargetBG;}
 
     static vector<Profile*>& getProfiles();
 

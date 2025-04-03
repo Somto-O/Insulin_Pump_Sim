@@ -3,23 +3,40 @@
 
 #include <iostream>
 #include <string>
+#include <QObject>
+#include <QTimer>
+#include "mainwindow.h"
 
 using namespace std;
 
-class InsulinPump
+class InsulinPump : public QObject
 {
+    Q_OBJECT
+
 public:
     // constructor
     InsulinPump();
+    virtual ~InsulinPump(){}
 
     // functions
     void startDelivery();
     void stopDelivery();
     void viewStatus();
 
+
+signals:
+    void batteryLevelChanged(float newLevel);  // Signal to update UI
+    void batteryDepleted(); // Signal for battery = 0
+
+private slots:
+    void drainBattery();  // Function to decrease battery over time
+
+
 private:
-    string status;
+    MainWindow* mainWindow;
+    QString status;
     float batteryLevel;
+    QTimer *batteryTimer;  // Timer for automatic battery drain
 };
 
 #endif // INSULINPUMP_H
