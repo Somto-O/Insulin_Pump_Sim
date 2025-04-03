@@ -30,16 +30,19 @@ public:
     QString getSelectedProfileName() const;
     void setSelectedProfileName(const QString& profileName);
     QString onProfileSelected();
+    QString on_dppProfileSelected();
     void openUpdateProfilePage();
     void updateProfileList();
 
     void handleProfileUpdateState();
 
-    void moveToUpdatePage();
     void moveToUpdatePage(const QString& profileName);
+    void moveToViewPage(const QString& profileName);
 
     void populateProfileList();
+    void populateDeleteList();
     void on_spButtonBox_clicked(QAbstractButton *button);
+    void on_dppButtonBox_clicked(QAbstractButton *button);
 
 
     // Declare buttons
@@ -73,13 +76,15 @@ private slots:
     void on_updateProfileButton_clicked();
     void on_viewProfilesButton_clicked();
 
-    void on_backButton_5_clicked();
+    void on_vppBackButton_clicked();
 
     void on_confirmProfileButtonBox_clicked(QAbstractButton *button);
 
     void on_uppBackButton_clicked();
 
     void on_sppBackButton_clicked();
+
+    void on_dppBackButton_clicked();
 
     void on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button);
 
@@ -89,9 +94,6 @@ private slots:
     void on_deleteProfileButton_clicked();
 
     void changePageToBatteryLow();
-
-    void moveToViewPage(const QString& profileName);
-
 
 
 private:

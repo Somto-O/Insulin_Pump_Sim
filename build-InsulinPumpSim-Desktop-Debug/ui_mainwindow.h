@@ -88,9 +88,9 @@ public:
     QPushButton *deleteProfileButton;
     QPushButton *viewProfilesButton;
     QWidget *viewProfilePage;
-    QPushButton *backButton_5;
-    QListWidget *spDisplayBox_2;
-    QDialogButtonBox *spButtonBox_2;
+    QPushButton *vppBackButton;
+    QListWidget *vppDisplayBox;
+    QDialogButtonBox *vppButtonBox;
     QLabel *h1_3;
     QWidget *selectProfilePage;
     QPushButton *sppBackButton;
@@ -130,9 +130,9 @@ public:
     QWidget *batteryDeadPage;
     QWidget *deleteProfilePage;
     QLabel *h1_4;
-    QPushButton *sppBackButton_2;
-    QListWidget *spDisplayBox_3;
-    QDialogButtonBox *spButtonBox_3;
+    QPushButton *dppBackButton;
+    QListWidget *dppDisplayBox;
+    QDialogButtonBox *dppButtonBox;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -414,19 +414,19 @@ public:
         stackedWidget->addWidget(personalProfiles);
         viewProfilePage = new QWidget();
         viewProfilePage->setObjectName(QString::fromUtf8("viewProfilePage"));
-        backButton_5 = new QPushButton(viewProfilePage);
-        backButton_5->setObjectName(QString::fromUtf8("backButton_5"));
-        backButton_5->setGeometry(QRect(30, 20, 81, 31));
-        spDisplayBox_2 = new QListWidget(viewProfilePage);
-        spDisplayBox_2->setObjectName(QString::fromUtf8("spDisplayBox_2"));
-        spDisplayBox_2->setGeometry(QRect(260, 130, 511, 211));
-        spButtonBox_2 = new QDialogButtonBox(viewProfilePage);
-        spButtonBox_2->setObjectName(QString::fromUtf8("spButtonBox_2"));
-        spButtonBox_2->setGeometry(QRect(410, 350, 211, 51));
-        spButtonBox_2->setLayoutDirection(Qt::LeftToRight);
-        spButtonBox_2->setOrientation(Qt::Horizontal);
-        spButtonBox_2->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        spButtonBox_2->setCenterButtons(true);
+        vppBackButton = new QPushButton(viewProfilePage);
+        vppBackButton->setObjectName(QString::fromUtf8("vppBackButton"));
+        vppBackButton->setGeometry(QRect(30, 20, 81, 31));
+        vppDisplayBox = new QListWidget(viewProfilePage);
+        vppDisplayBox->setObjectName(QString::fromUtf8("vppDisplayBox"));
+        vppDisplayBox->setGeometry(QRect(260, 130, 511, 211));
+        vppButtonBox = new QDialogButtonBox(viewProfilePage);
+        vppButtonBox->setObjectName(QString::fromUtf8("vppButtonBox"));
+        vppButtonBox->setGeometry(QRect(410, 350, 211, 51));
+        vppButtonBox->setLayoutDirection(Qt::LeftToRight);
+        vppButtonBox->setOrientation(Qt::Horizontal);
+        vppButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        vppButtonBox->setCenterButtons(true);
         h1_3 = new QLabel(viewProfilePage);
         h1_3->setObjectName(QString::fromUtf8("h1_3"));
         h1_3->setGeometry(QRect(320, 40, 391, 91));
@@ -533,7 +533,7 @@ public:
         backButton_4->setGeometry(QRect(30, 20, 81, 31));
         formLayoutWidget = new QWidget(addProfilePage);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(150, 140, 721, 161));
+        formLayoutWidget->setGeometry(QRect(110, 140, 721, 161));
         formLayout = new QFormLayout(formLayoutWidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setContentsMargins(0, 0, 0, 0);
@@ -608,7 +608,7 @@ public:
         confirmProfileButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         optionsLabel_2 = new QLabel(addProfilePage);
         optionsLabel_2->setObjectName(QString::fromUtf8("optionsLabel_2"));
-        optionsLabel_2->setGeometry(QRect(390, 80, 211, 51));
+        optionsLabel_2->setGeometry(QRect(410, 80, 211, 51));
         QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
@@ -623,27 +623,27 @@ public:
         deleteProfilePage->setObjectName(QString::fromUtf8("deleteProfilePage"));
         h1_4 = new QLabel(deleteProfilePage);
         h1_4->setObjectName(QString::fromUtf8("h1_4"));
-        h1_4->setGeometry(QRect(350, 60, 371, 81));
+        h1_4->setGeometry(QRect(330, 40, 371, 81));
         h1_4->setAlignment(Qt::AlignCenter);
-        sppBackButton_2 = new QPushButton(deleteProfilePage);
-        sppBackButton_2->setObjectName(QString::fromUtf8("sppBackButton_2"));
-        sppBackButton_2->setGeometry(QRect(50, 30, 81, 31));
-        spDisplayBox_3 = new QListWidget(deleteProfilePage);
-        spDisplayBox_3->setObjectName(QString::fromUtf8("spDisplayBox_3"));
-        spDisplayBox_3->setGeometry(QRect(290, 140, 511, 211));
-        spButtonBox_3 = new QDialogButtonBox(deleteProfilePage);
-        spButtonBox_3->setObjectName(QString::fromUtf8("spButtonBox_3"));
-        spButtonBox_3->setGeometry(QRect(410, 360, 211, 51));
-        spButtonBox_3->setLayoutDirection(Qt::LeftToRight);
-        spButtonBox_3->setOrientation(Qt::Horizontal);
-        spButtonBox_3->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        spButtonBox_3->setCenterButtons(true);
+        dppBackButton = new QPushButton(deleteProfilePage);
+        dppBackButton->setObjectName(QString::fromUtf8("dppBackButton"));
+        dppBackButton->setGeometry(QRect(30, 20, 81, 31));
+        dppDisplayBox = new QListWidget(deleteProfilePage);
+        dppDisplayBox->setObjectName(QString::fromUtf8("dppDisplayBox"));
+        dppDisplayBox->setGeometry(QRect(260, 130, 511, 211));
+        dppButtonBox = new QDialogButtonBox(deleteProfilePage);
+        dppButtonBox->setObjectName(QString::fromUtf8("dppButtonBox"));
+        dppButtonBox->setGeometry(QRect(410, 350, 211, 51));
+        dppButtonBox->setLayoutDirection(Qt::LeftToRight);
+        dppButtonBox->setOrientation(Qt::Horizontal);
+        dppButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        dppButtonBox->setCenterButtons(true);
         stackedWidget->addWidget(deleteProfilePage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(5);
+        stackedWidget->setCurrentIndex(8);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -683,7 +683,7 @@ public:
         updateProfileButton->setText(QCoreApplication::translate("MainWindow", "Update Profile", nullptr));
         deleteProfileButton->setText(QCoreApplication::translate("MainWindow", "Delete Profile", nullptr));
         viewProfilesButton->setText(QCoreApplication::translate("MainWindow", "View Profiles", nullptr));
-        backButton_5->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        vppBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         h1_3->setText(QCoreApplication::translate("MainWindow", "Select Profile to View", nullptr));
         h1_3->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         sppBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
@@ -706,7 +706,7 @@ public:
         optionsLabel_2->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         h1_4->setText(QCoreApplication::translate("MainWindow", "Select Profile to Delete", nullptr));
         h1_4->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
-        sppBackButton_2->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        dppBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
     } // retranslateUi
 
 };

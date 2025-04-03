@@ -1,0 +1,1 @@
+Alert: ESCALATED: Battery critically low! Charge immediately.

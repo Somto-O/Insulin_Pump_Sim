@@ -69,13 +69,12 @@ void User::handleViewProfile()
 void User::handleUpdateProfile() {
     QListWidgetItem* selectedItem = mainWindow->getUI()->spDisplayBox->currentItem();
     if (!selectedItem) {
-      //  QMessageBox::warning(mainWindow, "Selection Error", "No profile selected.");
-        return;
+      return;
     }
 
     // Store the selected profile name
     mainWindow->setSelectedProfileName(selectedItem->text());
-    //Profile::updateProfile(mainWindow,mainWindow->onProfileSelected());
+
 
 }
 
@@ -83,5 +82,10 @@ void User::handleUpdateProfile() {
 
 void User::handleDeleteProfile()
 {
-    Profile::deleteProfile();
+    QListWidgetItem* selectedItem = mainWindow->getUI()->dppDisplayBox->currentItem();
+    if (!selectedItem) {
+       return;
+    }
+     // Store the selected profile name
+     mainWindow->setSelectedProfileName(selectedItem->text());
 }

@@ -57,8 +57,6 @@ void Profile::createProfile(MainWindow* mw)
                      << ", Correction Factor:" << p->getCorrectionFactor()
                      << ", Target BG: " << p->getTargetBG();
 }
-
-
 }
 
 
@@ -127,31 +125,32 @@ void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
 }
 
 
-void Profile::deleteProfile() {
+void Profile::deleteProfile(MainWindow* mw, const QString& profileName) {
+    qDebug() << "DEBUG: Attempting to delete profile: " << profileName;
+
     if (profiles.empty()) {
-        QMessageBox::warning(nullptr, "Delete Profile", "No profiles available to delete.");
+        QMessageBox::warning(mw, "Delete Profile", "No profiles available to delete.");
         return;
     }
 
-    QStringList profileNames;
-    for (Profile* profile : profiles) {
-        profileNames.append(QString::fromStdString(profile->getName()));
-    }
-
-    bool ok;
-    QString selectedProfile = QInputDialog::getItem(nullptr, "Delete Profile", "Select a profile to delete:", profileNames, 0, false, &ok);
-    if (!ok || selectedProfile.isEmpty()) return;
-
+    // Find the profile in the list
     for (auto it = profiles.begin(); it != profiles.end(); ++it) {
-        if ((*it)->getName() == selectedProfile.toStdString()) {
-            delete *it; // Free memory
+        if ((*it)->getName() == profileName.toStdString()) {
+            delete *it;  // Free memory
             profiles.erase(it);
-            saveProfiles(); // update profiles after deletion
-            QMessageBox::information(nullptr, "Success", "Profile deleted successfully!");
+            saveProfiles();  // Save updated profiles after deletion
+
+            qDebug() << "DEBUG: Profile deleted successfully!";
+            QMessageBox::information(mw, "Success", "Profile deleted successfully!");
             return;
         }
     }
+
+    // If profile not found
+    QMessageBox::warning(mw, "Delete Profile", "Profile not found.");
+    qDebug() << "ERROR: Profile not found!";
 }
+
 
 void Profile::viewProfile() {
     if (profiles.empty()) {

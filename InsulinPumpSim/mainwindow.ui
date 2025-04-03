@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>8</number>
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -606,7 +606,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="viewProfilePage">
-     <widget class="QPushButton" name="backButton_5">
+     <widget class="QPushButton" name="vppBackButton">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -619,7 +619,7 @@
        <string>Back</string>
       </property>
      </widget>
-     <widget class="QListWidget" name="spDisplayBox_2">
+     <widget class="QListWidget" name="vppDisplayBox">
       <property name="geometry">
        <rect>
         <x>260</x>
@@ -629,7 +629,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QDialogButtonBox" name="spButtonBox_2">
+     <widget class="QDialogButtonBox" name="vppButtonBox">
       <property name="geometry">
        <rect>
         <x>410</x>
@@ -890,7 +890,7 @@
      <widget class="QWidget" name="formLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>150</x>
+        <x>110</x>
         <y>140</y>
         <width>721</width>
         <height>161</height>
@@ -1006,7 +1006,7 @@
      <widget class="QLabel" name="optionsLabel_2">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>410</x>
         <y>80</y>
         <width>211</width>
         <height>51</height>
@@ -1034,8 +1034,8 @@
      <widget class="QLabel" name="h1_4">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>60</y>
+        <x>330</x>
+        <y>40</y>
         <width>371</width>
         <height>81</height>
        </rect>
@@ -1050,11 +1050,11 @@
        <string>h1</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="sppBackButton_2">
+     <widget class="QPushButton" name="dppBackButton">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>30</y>
+        <x>30</x>
+        <y>20</y>
         <width>81</width>
         <height>31</height>
        </rect>
@@ -1063,21 +1063,21 @@
        <string>Back</string>
       </property>
      </widget>
-     <widget class="QListWidget" name="spDisplayBox_3">
+     <widget class="QListWidget" name="dppDisplayBox">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>140</y>
+        <x>260</x>
+        <y>130</y>
         <width>511</width>
         <height>211</height>
        </rect>
       </property>
      </widget>
-     <widget class="QDialogButtonBox" name="spButtonBox_3">
+     <widget class="QDialogButtonBox" name="dppButtonBox">
       <property name="geometry">
        <rect>
         <x>410</x>
-        <y>360</y>
+        <y>350</y>
         <width>211</width>
         <height>51</height>
        </rect>

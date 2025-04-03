@@ -18,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // In MainWindow constructor, connect the signal
     connect(ui->spDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::onProfileSelected);
-    // Connect selection change signal to slot
-    connect(ui->spDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::onProfileSelected);
     connect(ui->spButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_spButtonBox_clicked);
+    connect(ui->dppDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::on_dppProfileSelected);
+    connect(ui->dppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_dppButtonBox_clicked);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
 
@@ -125,8 +125,6 @@ void MainWindow::updateBatteryDisplay2(float newLevel) {
                                     "}"
                                    );
     }
-
-
 }
 
 void MainWindow::changePageToBatteryLow() {
@@ -139,6 +137,14 @@ QString MainWindow::onProfileSelected() {
     //updateProfileList();
 
     QString selectedItem = ui->spDisplayBox->currentItem()->text();  // Get the selected item
+    return selectedItem;
+
+}
+
+QString MainWindow::on_dppProfileSelected() {
+    //updateProfileList();
+
+    QString selectedItem = ui->dppDisplayBox->currentItem()->text();  // Get the selected item
     return selectedItem;
 
 }
@@ -161,6 +167,19 @@ void MainWindow::populateProfileList() {
     }
 
     if (ui->spDisplayBox->count() == 0) {
+        QMessageBox::information(this, "No Profiles", "No profiles available.");
+    }
+}
+
+void MainWindow::populateDeleteList() {
+    ui->dppDisplayBox->clear();// Clear the list before populating
+
+    for (Profile* profile : Profile::getProfiles()) {
+        QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(profile->getName()));
+        ui->dppDisplayBox->addItem(item);
+    }
+
+    if (ui->dppDisplayBox->count() == 0) {
         QMessageBox::information(this, "No Profiles", "No profiles available.");
     }
 }
@@ -250,6 +269,13 @@ void MainWindow::on_updateProfileButton_clicked(){
 }
 
 
+void MainWindow::on_deleteProfileButton_clicked()
+{   populateDeleteList();
+    ui->stackedWidget->setCurrentIndex(10);
+}
+
+
+
 
 
 /*back buttons*/
@@ -274,7 +300,7 @@ void MainWindow::on_backButton_4_clicked()
       ui->stackedWidget->setCurrentIndex(4);
 }
 
-void MainWindow::on_backButton_5_clicked()
+void MainWindow::on_vppBackButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(4);
 }
@@ -284,11 +310,13 @@ void MainWindow::on_uppBackButton_clicked()
     ui->stackedWidget->setCurrentIndex(4);
 }
 
-
 void MainWindow::on_sppBackButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(4);
+}
 
+void MainWindow::on_dppBackButton_clicked(){
+    ui->stackedWidget->setCurrentIndex(4);
 }
 
 
@@ -325,21 +353,42 @@ void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
 
         qDebug() << "DEBUG: Stored Profile Name: " << getSelectedProfileName();  // Debug output
 
-//        if (!selectedItem) {
-//            QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
-//            return;
-//        }
 
         moveToUpdatePage(selectedProfileName);  // Move to update page
     }
 }
 
+void MainWindow::on_dppButtonBox_clicked(QAbstractButton *button){
+    if (ui->dppButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
+        QListWidgetItem* selectedItem = ui->dppDisplayBox->currentItem();
+
+        QString selectedProfileName = selectedItem->text();
+        qDebug() << "DEBUG: Selected Profile Name: " << selectedProfileName;  // Debug output
+
+        setSelectedProfileName(selectedProfileName);  // Store the selected profile name
+
+        qDebug() << "DEBUG: Selected Profile Name: " << selectedProfileName;  // Debug output
+        Profile::deleteProfile(this,selectedProfileName);
+        ui->stackedWidget->setCurrentIndex(4);
+    }
+}
+
+
+void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) {
+    if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
+        qDebug() << "DEBUG: Updating profile for " << selectedProfileName;
+
+
+        // Call updateProfile function with the selected profile
+        Profile::updateProfile(this, selectedProfileName);
+
+
+    }
+}
+
+
 
 void MainWindow::moveToUpdatePage(const QString& profileName) {
-//    if (profileName.isEmpty()) {
-//        QMessageBox::warning(this, "Selection Error", "No profile selected. Please select a profile first.");
-//        return;
-//    }
 
     // Store the selected profile name for later use
     selectedProfileName = profileName;
@@ -367,29 +416,14 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
 //             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
 }
 
+//void MainWindow::moveToViewPage(const QString& profileName){
+
+//}
 
 
-void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) {
-    if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
-        qDebug() << "DEBUG: Updating profile for " << selectedProfileName;
 
 
-        // Call updateProfile function with the selected profile
-        Profile::updateProfile(this, selectedProfileName);
 
-//        if (selectedProfileName.isEmpty()) {
-//            QMessageBox::warning(this, "Error", "No profile selected.");
-//            qDebug() << "ERROR: No profile selected!";
-//            return;
-//        }
-    }
-}
-
-
-void MainWindow::on_deleteProfileButton_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(10);
-}
 
 
 

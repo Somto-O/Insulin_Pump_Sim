@@ -21,7 +21,7 @@ void SystemAlerts::triggerAlert(const string& alertMessage) {
 // Function to log alerts
 void SystemAlerts::logAlert(const string& alertMessage)
 {
-    ofstream file("alerts.txt"); // Open file without append mode (overwrites existing content)
+    ofstream file("alerts.txt");
 
     if (!file) {
         QMessageBox::warning(nullptr, "Error", "Could not open alert log file.");
