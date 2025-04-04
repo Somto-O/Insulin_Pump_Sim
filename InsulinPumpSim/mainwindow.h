@@ -45,6 +45,8 @@ public:
     void on_spButtonBox_clicked(QAbstractButton *button);
     void on_dppButtonBox_clicked(QAbstractButton *button);
 
+    void setLockScreenState(bool locked);
+
 
     void updateClock();
 
@@ -76,6 +78,10 @@ private slots:
     void on_unlock3_clicked();
 
     void on_backButton_4_clicked();
+
+
+    void on_hpBackButton_clicked();
+    void on_dlBackButton_clicked();
 
     void on_addProfileButton_clicked();
     void on_updateProfileButton_clicked();
@@ -111,8 +117,9 @@ private slots:
     void on_alertLogButton_clicked();
 
 
-    void on_hpBackButton_clicked();
-    void on_dlBackButton_clicked();
+    void returnToLockPage();
+
+    bool eventFilter(QObject *obj, QEvent *event);
 
 private:
     Ui::MainWindow *ui;
@@ -122,6 +129,7 @@ private:
     bool b1 = false;
     bool b2 = false;
     QTimer* clockTimer;  // Timer to update the clock
+    QTimer* inactivityTimer;
     QLabel* clockLabel;  // QLabel to display the time
 
 

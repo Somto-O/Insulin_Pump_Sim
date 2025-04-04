@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->stackedWidget->setCurrentIndex(0);
+    setLockScreenState(true);  // Lock everything except 1,2,3 buttons
 
     // In MainWindow constructor, connect the signal
     connect(ui->spDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::onProfileSelected);
@@ -31,10 +32,18 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up the timer to update every second
     clockTimer = new QTimer(this);
     connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateClock);
-    clockTimer->start(1000);  // Update every 1000ms (1 second)
+    clockTimer->start(1000);  // Update every (1 second)
 
     // Initial clock update
     updateClock();
+
+    // Add this in MainWindow constructor
+    inactivityTimer = new QTimer(this);
+    connect(inactivityTimer, &QTimer::timeout, this, &MainWindow::returnToLockPage);
+
+    qApp->installEventFilter(this);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -42,6 +51,15 @@ MainWindow::~MainWindow()
 
     delete ui;
 }
+
+void MainWindow::returnToLockPage() {
+    ui->stackedWidget->setCurrentIndex(0);
+    b1 = false;
+    b2 = false;
+
+}
+
+
 
 void MainWindow::updateClock() {
     QString currentTime = QDateTime::currentDateTime().toString("d MMMM yyyy hh:mm AP");
@@ -367,6 +385,7 @@ void MainWindow::on_unlock3_clicked()
 {
     if(b1 == true && b2 == true)
         ui->stackedWidget->setCurrentIndex(1);
+    setLockScreenState(true);  // Re-enable all buttons
 }
 
 
@@ -454,6 +473,25 @@ void MainWindow::on_alertLogButton_clicked()
     ui->dlDisplayBox->clear();
     ui->dlDisplayBox->addItems(logData);
     ui->stackedWidget->setCurrentIndex(12);
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::KeyPress) {
+        inactivityTimer->start(15000); // Reset the timer
+    }
+    return QMainWindow::eventFilter(obj, event);
+}
+
+void MainWindow::setLockScreenState(bool locked) {
+    // Disable everything except the unlock buttons when lockeds
+    ui->graphicsView_2->setEnabled(!locked);
+    ui->graphViewsButton_2->setEnabled(!locked);
+
+
+    // Ensure only unlock buttons are enabled when locked
+    ui->unlock1->setEnabled(locked);
+    ui->unlock2->setEnabled(locked);
+    ui->unlock3->setEnabled(locked);
 }
 
 
