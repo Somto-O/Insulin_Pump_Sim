@@ -8,8 +8,9 @@ class History
 {
 public:
     History();
-    static void logEvent(const QString& event);  // Log event with message
-    QString viewData();                   // Return the contents of the log file
+    static void logEvent(const QString& eventType, const QString& userName, const QString& details);  // Log event with message
+    static QString viewData(const QString& logType);
+    static QString mergeAndSortLogs();
     void generateGraph();
 };
 

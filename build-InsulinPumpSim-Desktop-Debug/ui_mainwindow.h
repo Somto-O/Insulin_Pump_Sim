@@ -65,12 +65,12 @@ public:
     QLabel *h1;
     QWidget *verticalLayoutWidget_3;
     QVBoxLayout *verticalLayout_3;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
+    QPushButton *loadButton;
+    QPushButton *activityButton;
     QPushButton *pushButton;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton_5;
-    QPushButton *pushButton_6;
+    QPushButton *myCGMButton;
+    QPushButton *device_settingsButton;
+    QPushButton *historyButton;
     QPushButton *backButton;
     QWidget *myPumpPage;
     QWidget *verticalLayoutWidget_4;
@@ -135,6 +135,20 @@ public:
     QPushButton *dppBackButton;
     QListWidget *dppDisplayBox;
     QDialogButtonBox *dppButtonBox;
+    QWidget *historyPage;
+    QWidget *verticalLayoutWidget_6;
+    QVBoxLayout *verticalLayout_9;
+    QPushButton *allHistoryButton;
+    QPushButton *alertLogButton;
+    QPushButton *profilesCreatedLogButton;
+    QPushButton *profilesDeletedLogButton;
+    QPushButton *profilesUpdatedLogButton;
+    QPushButton *hpBackButton;
+    QLabel *h1_5;
+    QWidget *displayLogsPage;
+    QListWidget *dlDisplayBox;
+    QPushButton *dlBackButton;
+    QLabel *h1_6;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -214,7 +228,7 @@ public:
         label_2->setGeometry(QRect(70, 300, 181, 21));
         clockLabel = new QLabel(lockScreen);
         clockLabel->setObjectName(QString::fromUtf8("clockLabel"));
-        clockLabel->setGeometry(QRect(480, 10, 171, 31));
+        clockLabel->setGeometry(QRect(460, 10, 191, 31));
         clockLabel->setTextFormat(Qt::MarkdownText);
         stackedWidget->addWidget(lockScreen);
         homePage = new QWidget();
@@ -276,7 +290,7 @@ public:
         battery->setValue(100);
         clockLabel2 = new QLabel(homePage);
         clockLabel2->setObjectName(QString::fromUtf8("clockLabel2"));
-        clockLabel2->setGeometry(QRect(480, 10, 171, 31));
+        clockLabel2->setGeometry(QRect(460, 10, 191, 31));
         clockLabel2->setTextFormat(Qt::MarkdownText);
         stackedWidget->addWidget(homePage);
         optionsPage = new QWidget();
@@ -291,19 +305,19 @@ public:
         verticalLayout_3 = new QVBoxLayout(verticalLayoutWidget_3);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        pushButton_2 = new QPushButton(verticalLayoutWidget_3);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        sizePolicy.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
-        pushButton_2->setSizePolicy(sizePolicy);
+        loadButton = new QPushButton(verticalLayoutWidget_3);
+        loadButton->setObjectName(QString::fromUtf8("loadButton"));
+        sizePolicy.setHeightForWidth(loadButton->sizePolicy().hasHeightForWidth());
+        loadButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_3->addWidget(pushButton_2);
+        verticalLayout_3->addWidget(loadButton);
 
-        pushButton_3 = new QPushButton(verticalLayoutWidget_3);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        sizePolicy.setHeightForWidth(pushButton_3->sizePolicy().hasHeightForWidth());
-        pushButton_3->setSizePolicy(sizePolicy);
+        activityButton = new QPushButton(verticalLayoutWidget_3);
+        activityButton->setObjectName(QString::fromUtf8("activityButton"));
+        sizePolicy.setHeightForWidth(activityButton->sizePolicy().hasHeightForWidth());
+        activityButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_3->addWidget(pushButton_3);
+        verticalLayout_3->addWidget(activityButton);
 
         pushButton = new QPushButton(verticalLayoutWidget_3);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
@@ -312,26 +326,26 @@ public:
 
         verticalLayout_3->addWidget(pushButton);
 
-        pushButton_4 = new QPushButton(verticalLayoutWidget_3);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-        sizePolicy.setHeightForWidth(pushButton_4->sizePolicy().hasHeightForWidth());
-        pushButton_4->setSizePolicy(sizePolicy);
+        myCGMButton = new QPushButton(verticalLayoutWidget_3);
+        myCGMButton->setObjectName(QString::fromUtf8("myCGMButton"));
+        sizePolicy.setHeightForWidth(myCGMButton->sizePolicy().hasHeightForWidth());
+        myCGMButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_3->addWidget(pushButton_4);
+        verticalLayout_3->addWidget(myCGMButton);
 
-        pushButton_5 = new QPushButton(verticalLayoutWidget_3);
-        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
-        sizePolicy.setHeightForWidth(pushButton_5->sizePolicy().hasHeightForWidth());
-        pushButton_5->setSizePolicy(sizePolicy);
+        device_settingsButton = new QPushButton(verticalLayoutWidget_3);
+        device_settingsButton->setObjectName(QString::fromUtf8("device_settingsButton"));
+        sizePolicy.setHeightForWidth(device_settingsButton->sizePolicy().hasHeightForWidth());
+        device_settingsButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_3->addWidget(pushButton_5);
+        verticalLayout_3->addWidget(device_settingsButton);
 
-        pushButton_6 = new QPushButton(verticalLayoutWidget_3);
-        pushButton_6->setObjectName(QString::fromUtf8("pushButton_6"));
-        sizePolicy.setHeightForWidth(pushButton_6->sizePolicy().hasHeightForWidth());
-        pushButton_6->setSizePolicy(sizePolicy);
+        historyButton = new QPushButton(verticalLayoutWidget_3);
+        historyButton->setObjectName(QString::fromUtf8("historyButton"));
+        sizePolicy.setHeightForWidth(historyButton->sizePolicy().hasHeightForWidth());
+        historyButton->setSizePolicy(sizePolicy);
 
-        verticalLayout_3->addWidget(pushButton_6);
+        verticalLayout_3->addWidget(historyButton);
 
         backButton = new QPushButton(optionsPage);
         backButton->setObjectName(QString::fromUtf8("backButton"));
@@ -649,11 +663,75 @@ public:
         dppButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         dppButtonBox->setCenterButtons(true);
         stackedWidget->addWidget(deleteProfilePage);
+        historyPage = new QWidget();
+        historyPage->setObjectName(QString::fromUtf8("historyPage"));
+        verticalLayoutWidget_6 = new QWidget(historyPage);
+        verticalLayoutWidget_6->setObjectName(QString::fromUtf8("verticalLayoutWidget_6"));
+        verticalLayoutWidget_6->setGeometry(QRect(70, 90, 691, 321));
+        verticalLayout_9 = new QVBoxLayout(verticalLayoutWidget_6);
+        verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
+        verticalLayout_9->setContentsMargins(0, 0, 0, 0);
+        allHistoryButton = new QPushButton(verticalLayoutWidget_6);
+        allHistoryButton->setObjectName(QString::fromUtf8("allHistoryButton"));
+        sizePolicy.setHeightForWidth(allHistoryButton->sizePolicy().hasHeightForWidth());
+        allHistoryButton->setSizePolicy(sizePolicy);
+
+        verticalLayout_9->addWidget(allHistoryButton);
+
+        alertLogButton = new QPushButton(verticalLayoutWidget_6);
+        alertLogButton->setObjectName(QString::fromUtf8("alertLogButton"));
+        sizePolicy.setHeightForWidth(alertLogButton->sizePolicy().hasHeightForWidth());
+        alertLogButton->setSizePolicy(sizePolicy);
+
+        verticalLayout_9->addWidget(alertLogButton);
+
+        profilesCreatedLogButton = new QPushButton(verticalLayoutWidget_6);
+        profilesCreatedLogButton->setObjectName(QString::fromUtf8("profilesCreatedLogButton"));
+        sizePolicy.setHeightForWidth(profilesCreatedLogButton->sizePolicy().hasHeightForWidth());
+        profilesCreatedLogButton->setSizePolicy(sizePolicy);
+
+        verticalLayout_9->addWidget(profilesCreatedLogButton);
+
+        profilesDeletedLogButton = new QPushButton(verticalLayoutWidget_6);
+        profilesDeletedLogButton->setObjectName(QString::fromUtf8("profilesDeletedLogButton"));
+        sizePolicy.setHeightForWidth(profilesDeletedLogButton->sizePolicy().hasHeightForWidth());
+        profilesDeletedLogButton->setSizePolicy(sizePolicy);
+
+        verticalLayout_9->addWidget(profilesDeletedLogButton);
+
+        profilesUpdatedLogButton = new QPushButton(verticalLayoutWidget_6);
+        profilesUpdatedLogButton->setObjectName(QString::fromUtf8("profilesUpdatedLogButton"));
+        sizePolicy.setHeightForWidth(profilesUpdatedLogButton->sizePolicy().hasHeightForWidth());
+        profilesUpdatedLogButton->setSizePolicy(sizePolicy);
+
+        verticalLayout_9->addWidget(profilesUpdatedLogButton);
+
+        hpBackButton = new QPushButton(historyPage);
+        hpBackButton->setObjectName(QString::fromUtf8("hpBackButton"));
+        hpBackButton->setGeometry(QRect(30, 10, 81, 31));
+        h1_5 = new QLabel(historyPage);
+        h1_5->setObjectName(QString::fromUtf8("h1_5"));
+        h1_5->setGeometry(QRect(350, 20, 131, 41));
+        h1_5->setAlignment(Qt::AlignCenter);
+        stackedWidget->addWidget(historyPage);
+        displayLogsPage = new QWidget();
+        displayLogsPage->setObjectName(QString::fromUtf8("displayLogsPage"));
+        dlDisplayBox = new QListWidget(displayLogsPage);
+        dlDisplayBox->setObjectName(QString::fromUtf8("dlDisplayBox"));
+        dlDisplayBox->setGeometry(QRect(180, 100, 611, 281));
+        dlBackButton = new QPushButton(displayLogsPage);
+        dlBackButton->setObjectName(QString::fromUtf8("dlBackButton"));
+        dlBackButton->setGeometry(QRect(30, 10, 81, 31));
+        h1_6 = new QLabel(displayLogsPage);
+        h1_6->setObjectName(QString::fromUtf8("h1_6"));
+        h1_6->setGeometry(QRect(280, 10, 371, 81));
+        h1_6->setAlignment(Qt::AlignCenter);
+        stackedWidget->addWidget(displayLogsPage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(12);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -677,12 +755,12 @@ public:
         clockLabel2->setText(QCoreApplication::translate("MainWindow", "Clock", nullptr));
         h1->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
         h1->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Activity", nullptr));
+        loadButton->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
+        activityButton->setText(QCoreApplication::translate("MainWindow", "Activity", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "My Pump", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "My CGM", nullptr));
-        pushButton_5->setText(QCoreApplication::translate("MainWindow", "Device Settings", nullptr));
-        pushButton_6->setText(QCoreApplication::translate("MainWindow", "History", nullptr));
+        myCGMButton->setText(QCoreApplication::translate("MainWindow", "My CGM", nullptr));
+        device_settingsButton->setText(QCoreApplication::translate("MainWindow", "Device Settings", nullptr));
+        historyButton->setText(QCoreApplication::translate("MainWindow", "History", nullptr));
         backButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         personalProfile_button->setText(QCoreApplication::translate("MainWindow", "Personal Profiles", nullptr));
         pushButton_14->setText(QCoreApplication::translate("MainWindow", "Control-IQ", nullptr));
@@ -719,6 +797,17 @@ public:
         h1_4->setText(QCoreApplication::translate("MainWindow", "Select Profile to Delete", nullptr));
         h1_4->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         dppBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        allHistoryButton->setText(QCoreApplication::translate("MainWindow", "All History", nullptr));
+        alertLogButton->setText(QCoreApplication::translate("MainWindow", "Alert Log", nullptr));
+        profilesCreatedLogButton->setText(QCoreApplication::translate("MainWindow", "Profiles Created Log", nullptr));
+        profilesDeletedLogButton->setText(QCoreApplication::translate("MainWindow", "Profiles Deleted Log", nullptr));
+        profilesUpdatedLogButton->setText(QCoreApplication::translate("MainWindow", "Profiles Updated Log", nullptr));
+        hpBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        h1_5->setText(QCoreApplication::translate("MainWindow", "History", nullptr));
+        h1_5->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
+        dlBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        h1_6->setText(QCoreApplication::translate("MainWindow", "Logs", nullptr));
+        h1_6->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
     } // retranslateUi
 
 };

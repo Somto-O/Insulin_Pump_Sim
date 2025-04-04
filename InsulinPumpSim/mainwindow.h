@@ -45,6 +45,7 @@ public:
     void on_spButtonBox_clicked(QAbstractButton *button);
     void on_dppButtonBox_clicked(QAbstractButton *button);
 
+
     void updateClock();
 
 
@@ -62,6 +63,7 @@ private slots:
     void on_pushButton_clicked();
 
     void on_personalProfile_button_clicked();
+    void on_historyButton_clicked();
 
     void on_backButton_clicked();
 
@@ -98,6 +100,19 @@ private slots:
 
     void changePageToBatteryLow();
 
+    void on_profilesCreatedLogButton_clicked();
+
+    void on_profilesUpdatedLogButton_clicked();
+
+    void on_profilesDeletedLogButton_clicked();
+
+    void on_allHistoryButton_clicked();
+
+    void on_alertLogButton_clicked();
+
+
+    void on_hpBackButton_clicked();
+    void on_dlBackButton_clicked();
 
 private:
     Ui::MainWindow *ui;

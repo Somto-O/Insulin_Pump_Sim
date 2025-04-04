@@ -44,7 +44,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::updateClock() {
-    QString currentTime = QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss");
+    QString currentTime = QDateTime::currentDateTime().toString("d MMMM yyyy hh:mm AP");
     ui->clockLabel->setText(currentTime);  // Update the text of the QLabel
     ui->clockLabel2->setText(currentTime);
 }
@@ -219,6 +219,10 @@ void MainWindow::on_options_Button_clicked()
 
 }
 
+void MainWindow::on_historyButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(11);
+}
 void MainWindow::on_pushButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(3);
@@ -254,7 +258,7 @@ void MainWindow::on_confirmProfileButtonBox_clicked(QAbstractButton *button)
         // Save profiles after creation
         Profile::saveProfiles();
 
-        History::logEvent("Profile was created!");
+        History::logEvent("ProfileCreated", name, "");
 
         // Inform the user that the profile is saved
         QMessageBox::information(this, "Success", "Profile created and saved successfully!");
@@ -336,6 +340,15 @@ void MainWindow::on_dppBackButton_clicked(){
     ui->stackedWidget->setCurrentIndex(4);
 }
 
+void MainWindow::on_hpBackButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_dlBackButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(11);
+}
 
 
 /*unlock buttonns*/
@@ -380,7 +393,7 @@ void MainWindow::on_dppButtonBox_clicked(QAbstractButton *button){
         setSelectedProfileName(selectedProfileName);  // Store the selected profile name
 
         Profile::deleteProfile(this,selectedProfileName);
-        History::logEvent("Profile was deleted!");
+        History::logEvent("ProfileDeleted", selectedProfileName, "was deleted!");
         ui->stackedWidget->setCurrentIndex(4);
     }
 }
@@ -391,11 +404,58 @@ void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) 
 
         // Call updateProfile function with the selected profile
         Profile::updateProfile(this, selectedProfileName);
-        History::logEvent("Profile was updated!");
+        History::logEvent("ProfileUpdated", selectedProfileName, "");
 
 
     }
 }
+
+void MainWindow::on_profilesCreatedLogButton_clicked()
+{
+    QStringList logData = History::viewData("ProfileCreated").split("\n", Qt::SkipEmptyParts);
+
+
+    ui->dlDisplayBox->clear(); // Clear existing items
+    ui->dlDisplayBox->addItems(logData); // Add log lines as items to the QListWidget
+    ui->stackedWidget->setCurrentIndex(12);
+}
+
+void MainWindow::on_profilesUpdatedLogButton_clicked()
+{
+    QStringList logData = History::viewData("ProfileUpdated").split("\n", Qt::SkipEmptyParts);
+
+    ui->dlDisplayBox->clear();
+    ui->dlDisplayBox->addItems(logData);
+    ui->stackedWidget->setCurrentIndex(12);
+}
+
+void MainWindow::on_profilesDeletedLogButton_clicked()
+{
+    QStringList logData = History::viewData("ProfileDeleted").split("\n", Qt::SkipEmptyParts);
+
+    ui->dlDisplayBox->clear();
+    ui->dlDisplayBox->addItems(logData);
+    ui->stackedWidget->setCurrentIndex(12);
+}
+
+void MainWindow::on_allHistoryButton_clicked()
+{
+    QStringList logData = History::viewData("AllHistory").split("\n", Qt::SkipEmptyParts);
+
+    ui->dlDisplayBox->clear();
+    ui->dlDisplayBox->addItems(logData);
+    ui->stackedWidget->setCurrentIndex(12);
+}
+
+void MainWindow::on_alertLogButton_clicked()
+{
+    QStringList logData = History::viewData("Alerts").split("\n", Qt::SkipEmptyParts);
+
+    ui->dlDisplayBox->clear();
+    ui->dlDisplayBox->addItems(logData);
+    ui->stackedWidget->setCurrentIndex(12);
+}
+
 
 
 
@@ -425,6 +485,9 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
 //void MainWindow::moveToViewPage(const QString& profileName){
 
 //}
+
+
+
 
 
 

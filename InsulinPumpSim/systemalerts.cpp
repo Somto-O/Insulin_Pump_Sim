@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <QMessageBox>
+#include <QDateTime>
 
 using namespace std;
 
@@ -21,14 +22,19 @@ void SystemAlerts::triggerAlert(const string& alertMessage) {
 // Function to log alerts
 void SystemAlerts::logAlert(const string& alertMessage)
 {
-    ofstream file("alerts.txt");
+    ofstream file("alerts.log");
 
     if (!file) {
         QMessageBox::warning(nullptr, "Error", "Could not open alert log file.");
         return;
     }
 
-    file << "Alert: " << alertMessage << endl;
+    // Get current date and time in "d MMMM yyyy hh:mm:ss" format (e.g., "4 April 2025 14:30:15")
+        QString currentTime = QDateTime::currentDateTime().toString("d MMMM yyyy hh:mm:ss AP");
+
+        // Write the timestamp and alert message
+        file << "[" << currentTime.toStdString() << "] Alert " << alertMessage << std::endl;
+
 
     file.close();
 }
