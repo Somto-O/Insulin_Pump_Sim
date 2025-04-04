@@ -1,6 +1,7 @@
 #include "profile.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "history.h"
 #include <QDebug>
 
 // static variables
@@ -47,23 +48,12 @@ void Profile::createProfile(MainWindow* mw)
     profiles.push_back(profile);
     }
 
-
-    // Optionally, you can print the entire profiles vector
-        qDebug() << "Profiles in Vector:";
-        for (Profile* p : profiles) {
-            qDebug() << "Name:" << QString::fromStdString(p->getName())
-                     << ", Basal Rate:" << p->getBasalRate()
-                     << ", Carb Ratio:" << p->getCarbRatio()
-                     << ", Correction Factor:" << p->getCorrectionFactor()
-                     << ", Target BG: " << p->getTargetBG();
-}
 }
 
 
 
 
 void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
-    qDebug() << "DEBUG: Attempting to update profile: " << profileName;
 
     // Find the profile in the list
     Profile* selectedProfilePtr = nullptr;
@@ -76,7 +66,6 @@ void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
 
     if (!selectedProfilePtr) {
         QMessageBox::warning(mw, "Update Profile", "Profile not found.");
-        qDebug() << "ERROR: Profile not found!";
         return;
     }
 
@@ -86,22 +75,12 @@ void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
     float correctionFactor = mw->getUI()->uppCorrectionFactorInput->value();
     float targetbg = mw->getUI()->uppTargetBGInput->value();
 
-    // Debug: Print user-entered values
-//    qDebug() << "DEBUG: Retrieved values - Basal Rate: " << basalRate
-//             << ", Carb Ratio: " << carbRatio
-//             << ", Correction Factor: " << correctionFactor;
-
     // Validate input
     if (basalRate < 0 || carbRatio < 0 || correctionFactor < 0 || targetbg < 0) {
         QMessageBox::warning(mw, "Error", "Invalid input. Enter positive values.");
         return;
     }
 
-    // Debug: Print current profile values before updating
-//    qDebug() << "DEBUG: Current profile values - Basal Rate: "
-//             << selectedProfilePtr->getBasalRate()
-//             << ", Carb Ratio: " << selectedProfilePtr->getCarbRatio()
-//             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
 
     // Update profile attributes
     selectedProfilePtr->setBasalRate(basalRate);
@@ -109,16 +88,8 @@ void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
     selectedProfilePtr->setCorrectionFactor(correctionFactor);
     selectedProfilePtr->setTargetBG(targetbg);
 
-    // Debug: Print profile values after updating
-//    qDebug() << "DEBUG: Updated profile values - Basal Rate: "
-//             << selectedProfilePtr->getBasalRate()
-//             << ", Carb Ratio: " << selectedProfilePtr->getCarbRatio()
-//             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
-
     // Save updated profile data
     saveProfiles();
-
-    qDebug() << "DEBUG: Profile updated successfully!";
 
     // Show confirmation message
     QMessageBox::information(mw, "Success", "Profile updated successfully!");
@@ -126,7 +97,6 @@ void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
 
 
 void Profile::deleteProfile(MainWindow* mw, const QString& profileName) {
-    qDebug() << "DEBUG: Attempting to delete profile: " << profileName;
 
     if (profiles.empty()) {
         QMessageBox::warning(mw, "Delete Profile", "No profiles available to delete.");
@@ -140,7 +110,6 @@ void Profile::deleteProfile(MainWindow* mw, const QString& profileName) {
             profiles.erase(it);
             saveProfiles();  // Save updated profiles after deletion
 
-            qDebug() << "DEBUG: Profile deleted successfully!";
             QMessageBox::information(mw, "Success", "Profile deleted successfully!");
             return;
         }
@@ -148,7 +117,6 @@ void Profile::deleteProfile(MainWindow* mw, const QString& profileName) {
 
     // If profile not found
     QMessageBox::warning(mw, "Delete Profile", "Profile not found.");
-    qDebug() << "ERROR: Profile not found!";
 }
 
 

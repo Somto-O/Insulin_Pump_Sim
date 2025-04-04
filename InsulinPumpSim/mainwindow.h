@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QAbstractButton>
 #include <QPushButton>
+#include <QLabel>
 
 
 
@@ -43,6 +44,8 @@ public:
     void populateDeleteList();
     void on_spButtonBox_clicked(QAbstractButton *button);
     void on_dppButtonBox_clicked(QAbstractButton *button);
+
+    void updateClock();
 
 
     // Declare buttons
@@ -103,6 +106,9 @@ private:
     QString selectedProfileName;
     bool b1 = false;
     bool b2 = false;
+    QTimer* clockTimer;  // Timer to update the clock
+    QLabel* clockLabel;  // QLabel to display the time
+
 
 };
 

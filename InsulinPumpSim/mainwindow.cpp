@@ -3,6 +3,7 @@
 #include "profile.h"
 #include "user.h"
 #include "insulinpump.h"
+#include "QDateTime"
 
 
 #include "QDebug"
@@ -27,6 +28,13 @@ MainWindow::MainWindow(QWidget *parent)
     // Connect battery depletion signal to screen change function
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::changePageToBatteryLow);
 
+    // Set up the timer to update every second
+    clockTimer = new QTimer(this);
+    connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateClock);
+    clockTimer->start(1000);  // Update every 1000ms (1 second)
+
+    // Initial clock update
+    updateClock();
 }
 
 MainWindow::~MainWindow()
@@ -34,6 +42,13 @@ MainWindow::~MainWindow()
 
     delete ui;
 }
+
+void MainWindow::updateClock() {
+    QString currentTime = QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss");
+    ui->clockLabel->setText(currentTime);  // Update the text of the QLabel
+    ui->clockLabel2->setText(currentTime);
+}
+
 
 void MainWindow::updateBatteryDisplay(float newLevel) {
     ui->battery->setValue(static_cast<int>(newLevel)); // Update QProgressBar
@@ -239,6 +254,8 @@ void MainWindow::on_confirmProfileButtonBox_clicked(QAbstractButton *button)
         // Save profiles after creation
         Profile::saveProfiles();
 
+        History::logEvent("Profile was created!");
+
         // Inform the user that the profile is saved
         QMessageBox::information(this, "Success", "Profile created and saved successfully!");
         ui->stackedWidget->setCurrentIndex(4);
@@ -346,13 +363,9 @@ void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
     if (ui->spButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         QListWidgetItem* selectedItem = ui->spDisplayBox->currentItem();
 
-        QString selectedProfileName = selectedItem->text();
-        qDebug() << "DEBUG: Selected Profile Name: " << selectedProfileName;  // Debug output
+        QString selectedProfileName = selectedItem->text();   
 
         setSelectedProfileName(selectedProfileName);  // Store the selected profile name
-
-        qDebug() << "DEBUG: Stored Profile Name: " << getSelectedProfileName();  // Debug output
-
 
         moveToUpdatePage(selectedProfileName);  // Move to update page
     }
@@ -363,12 +376,11 @@ void MainWindow::on_dppButtonBox_clicked(QAbstractButton *button){
         QListWidgetItem* selectedItem = ui->dppDisplayBox->currentItem();
 
         QString selectedProfileName = selectedItem->text();
-        qDebug() << "DEBUG: Selected Profile Name: " << selectedProfileName;  // Debug output
 
         setSelectedProfileName(selectedProfileName);  // Store the selected profile name
 
-        qDebug() << "DEBUG: Selected Profile Name: " << selectedProfileName;  // Debug output
         Profile::deleteProfile(this,selectedProfileName);
+        History::logEvent("Profile was deleted!");
         ui->stackedWidget->setCurrentIndex(4);
     }
 }
@@ -376,11 +388,10 @@ void MainWindow::on_dppButtonBox_clicked(QAbstractButton *button){
 
 void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) {
     if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
-        qDebug() << "DEBUG: Updating profile for " << selectedProfileName;
-
 
         // Call updateProfile function with the selected profile
         Profile::updateProfile(this, selectedProfileName);
+        History::logEvent("Profile was updated!");
 
 
     }
@@ -409,11 +420,6 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
 
     // Switch to the Update Profile page
     ui->stackedWidget->setCurrentIndex(7);
-
-    // Debug: Check pre-filled values
-//    qDebug() << "DEBUG: Pre-filled UI with Basal Rate: " << selectedProfilePtr->getBasalRate()
-//             << ", Carb Ratio: " << selectedProfilePtr->getCarbRatio()
-//             << ", Correction Factor: " << selectedProfilePtr->getCorrectionFactor();
 }
 
 //void MainWindow::moveToViewPage(const QString& profileName){

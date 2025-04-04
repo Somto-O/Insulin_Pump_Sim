@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTimer>
 #include "mainwindow.h"
+#include "history.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ private slots:
 
 
 private:
+    History history;
     MainWindow* mainWindow;
     QString status;
     float batteryLevel;

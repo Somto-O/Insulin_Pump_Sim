@@ -47,6 +47,7 @@ public:
     QGraphicsView *graphicsView_2;
     QProgressBar *battery_2;
     QLabel *label_2;
+    QLabel *clockLabel;
     QWidget *homePage;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout_3;
@@ -59,6 +60,7 @@ public:
     QLabel *sensorValue;
     QPushButton *graphViewsButton;
     QProgressBar *battery;
+    QLabel *clockLabel2;
     QWidget *optionsPage;
     QLabel *h1;
     QWidget *verticalLayoutWidget_3;
@@ -210,6 +212,10 @@ public:
         label_2 = new QLabel(lockScreen);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(70, 300, 181, 21));
+        clockLabel = new QLabel(lockScreen);
+        clockLabel->setObjectName(QString::fromUtf8("clockLabel"));
+        clockLabel->setGeometry(QRect(480, 10, 171, 31));
+        clockLabel->setTextFormat(Qt::MarkdownText);
         stackedWidget->addWidget(lockScreen);
         homePage = new QWidget();
         homePage->setObjectName(QString::fromUtf8("homePage"));
@@ -268,6 +274,10 @@ public:
         battery->setObjectName(QString::fromUtf8("battery"));
         battery->setGeometry(QRect(70, 10, 81, 31));
         battery->setValue(100);
+        clockLabel2 = new QLabel(homePage);
+        clockLabel2->setObjectName(QString::fromUtf8("clockLabel2"));
+        clockLabel2->setGeometry(QRect(480, 10, 171, 31));
+        clockLabel2->setTextFormat(Qt::MarkdownText);
         stackedWidget->addWidget(homePage);
         optionsPage = new QWidget();
         optionsPage->setObjectName(QString::fromUtf8("optionsPage"));
@@ -643,7 +653,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(8);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -658,11 +668,13 @@ public:
         sensorValue_2->setText(QCoreApplication::translate("MainWindow", "7.9 mmol/l", nullptr));
         graphViewsButton_2->setText(QCoreApplication::translate("MainWindow", "3 Hrs", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "INSULIN ON BOARD", nullptr));
+        clockLabel->setText(QCoreApplication::translate("MainWindow", "Clock", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "INSULIN ON BOARD", nullptr));
         bolusButton->setText(QCoreApplication::translate("MainWindow", "Bolus", nullptr));
         options_Button->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
         sensorValue->setText(QCoreApplication::translate("MainWindow", "7.9 mmol/l", nullptr));
         graphViewsButton->setText(QCoreApplication::translate("MainWindow", "3 Hrs", nullptr));
+        clockLabel2->setText(QCoreApplication::translate("MainWindow", "Clock", nullptr));
         h1->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
         h1->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
