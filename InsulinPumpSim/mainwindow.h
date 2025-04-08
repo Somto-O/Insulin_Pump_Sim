@@ -121,6 +121,7 @@ private slots:
 
     bool eventFilter(QObject *obj, QEvent *event);
 
+
 private:
     Ui::MainWindow *ui;
     User* user;

@@ -13,3 +13,4 @@ Uriel 31 53 12 53
 Abram 23 1 42 1
 Leah 0 0 0 0
 Ruth 0 0 0 0
+Naa 2 2 1 1

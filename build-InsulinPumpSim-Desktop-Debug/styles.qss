@@ -149,4 +149,8 @@ QListWidget::item:hover {
     background-color: #2A2A2A;
 }
 
+QFrame[type="device"]{
+    border: 3px solid #FFFFFF;
+    background-color: blue;
 
+}

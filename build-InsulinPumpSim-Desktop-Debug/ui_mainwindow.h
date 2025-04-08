@@ -37,17 +37,17 @@ public:
     QWidget *lockScreen;
     QWidget *horizontalLayoutWidget_2;
     QHBoxLayout *horizontalLayout_4;
-    QPushButton *unlock1;
-    QPushButton *unlock2;
-    QPushButton *unlock3;
     QWidget *verticalLayoutWidget_2;
     QVBoxLayout *verticalLayout_2;
-    QLabel *sensorValue_2;
-    QPushButton *graphViewsButton_2;
     QGraphicsView *graphicsView_2;
     QProgressBar *battery_2;
     QLabel *label_2;
     QLabel *clockLabel;
+    QPushButton *unlock1;
+    QPushButton *unlock3;
+    QPushButton *unlock2;
+    QPushButton *graphViewsButton_2;
+    QLabel *sensorValue_2;
     QWidget *homePage;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout_3;
@@ -149,17 +149,32 @@ public:
     QListWidget *dlDisplayBox;
     QPushButton *dlBackButton;
     QLabel *h1_6;
+    QWidget *specificProfilePage;
+    QWidget *formLayoutWidget_2;
+    QFormLayout *formLayout_2;
+    QLabel *nameLabel_2;
+    QLabel *basalLabel_2;
+    QLabel *carbRatioLabel_2;
+    QLabel *targetBGLabel_2;
+    QLabel *correctionFactorLabel_2;
+    QLabel *label_3;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLabel *label_6;
+    QLabel *label_7;
+    QPushButton *backButton_5;
+    QLabel *optionsLabel_3;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1029, 464);
+        MainWindow->resize(1029, 553);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        stackedWidget->setGeometry(QRect(0, 0, 1031, 461));
+        stackedWidget->setGeometry(QRect(0, 0, 1051, 561));
         lockScreen = new QWidget();
         lockScreen->setObjectName(QString::fromUtf8("lockScreen"));
         horizontalLayoutWidget_2 = new QWidget(lockScreen);
@@ -168,54 +183,12 @@ public:
         horizontalLayout_4 = new QHBoxLayout(horizontalLayoutWidget_2);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
-        unlock1 = new QPushButton(horizontalLayoutWidget_2);
-        unlock1->setObjectName(QString::fromUtf8("unlock1"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(unlock1->sizePolicy().hasHeightForWidth());
-        unlock1->setSizePolicy(sizePolicy);
-
-        horizontalLayout_4->addWidget(unlock1);
-
-        unlock2 = new QPushButton(horizontalLayoutWidget_2);
-        unlock2->setObjectName(QString::fromUtf8("unlock2"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(unlock2->sizePolicy().hasHeightForWidth());
-        unlock2->setSizePolicy(sizePolicy1);
-
-        horizontalLayout_4->addWidget(unlock2);
-
-        unlock3 = new QPushButton(horizontalLayoutWidget_2);
-        unlock3->setObjectName(QString::fromUtf8("unlock3"));
-        sizePolicy.setHeightForWidth(unlock3->sizePolicy().hasHeightForWidth());
-        unlock3->setSizePolicy(sizePolicy);
-
-        horizontalLayout_4->addWidget(unlock3);
-
         verticalLayoutWidget_2 = new QWidget(lockScreen);
         verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
         verticalLayoutWidget_2->setGeometry(QRect(660, 60, 121, 231));
         verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget_2);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        sensorValue_2 = new QLabel(verticalLayoutWidget_2);
-        sensorValue_2->setObjectName(QString::fromUtf8("sensorValue_2"));
-        sizePolicy1.setHeightForWidth(sensorValue_2->sizePolicy().hasHeightForWidth());
-        sensorValue_2->setSizePolicy(sizePolicy1);
-        sensorValue_2->setAlignment(Qt::AlignCenter);
-
-        verticalLayout_2->addWidget(sensorValue_2);
-
-        graphViewsButton_2 = new QPushButton(verticalLayoutWidget_2);
-        graphViewsButton_2->setObjectName(QString::fromUtf8("graphViewsButton_2"));
-        sizePolicy.setHeightForWidth(graphViewsButton_2->sizePolicy().hasHeightForWidth());
-        graphViewsButton_2->setSizePolicy(sizePolicy);
-
-        verticalLayout_2->addWidget(graphViewsButton_2);
-
         graphicsView_2 = new QGraphicsView(lockScreen);
         graphicsView_2->setObjectName(QString::fromUtf8("graphicsView_2"));
         graphicsView_2->setGeometry(QRect(70, 60, 581, 231));
@@ -230,7 +203,50 @@ public:
         clockLabel->setObjectName(QString::fromUtf8("clockLabel"));
         clockLabel->setGeometry(QRect(460, 10, 191, 31));
         clockLabel->setTextFormat(Qt::MarkdownText);
+        unlock1 = new QPushButton(lockScreen);
+        unlock1->setObjectName(QString::fromUtf8("unlock1"));
+        unlock1->setGeometry(QRect(71, 331, 232, 79));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(unlock1->sizePolicy().hasHeightForWidth());
+        unlock1->setSizePolicy(sizePolicy);
+        unlock3 = new QPushButton(lockScreen);
+        unlock3->setObjectName(QString::fromUtf8("unlock3"));
+        unlock3->setGeometry(QRect(548, 331, 232, 79));
+        sizePolicy.setHeightForWidth(unlock3->sizePolicy().hasHeightForWidth());
+        unlock3->setSizePolicy(sizePolicy);
+        unlock2 = new QPushButton(lockScreen);
+        unlock2->setObjectName(QString::fromUtf8("unlock2"));
+        unlock2->setGeometry(QRect(309, 331, 233, 79));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(unlock2->sizePolicy().hasHeightForWidth());
+        unlock2->setSizePolicy(sizePolicy1);
+        graphViewsButton_2 = new QPushButton(lockScreen);
+        graphViewsButton_2->setObjectName(QString::fromUtf8("graphViewsButton_2"));
+        graphViewsButton_2->setGeometry(QRect(662, 180, 119, 111));
+        sizePolicy.setHeightForWidth(graphViewsButton_2->sizePolicy().hasHeightForWidth());
+        graphViewsButton_2->setSizePolicy(sizePolicy);
+        sensorValue_2 = new QLabel(lockScreen);
+        sensorValue_2->setObjectName(QString::fromUtf8("sensorValue_2"));
+        sensorValue_2->setGeometry(QRect(662, 62, 119, 112));
+        sizePolicy1.setHeightForWidth(sensorValue_2->sizePolicy().hasHeightForWidth());
+        sensorValue_2->setSizePolicy(sizePolicy1);
+        sensorValue_2->setAlignment(Qt::AlignCenter);
         stackedWidget->addWidget(lockScreen);
+        horizontalLayoutWidget_2->raise();
+        verticalLayoutWidget_2->raise();
+        graphicsView_2->raise();
+        label_2->raise();
+        clockLabel->raise();
+        battery_2->raise();
+        unlock3->raise();
+        unlock2->raise();
+        unlock1->raise();
+        graphViewsButton_2->raise();
+        sensorValue_2->raise();
         homePage = new QWidget();
         homePage->setObjectName(QString::fromUtf8("homePage"));
         horizontalLayoutWidget = new QWidget(homePage);
@@ -727,6 +743,76 @@ public:
         h1_6->setGeometry(QRect(280, 10, 371, 81));
         h1_6->setAlignment(Qt::AlignCenter);
         stackedWidget->addWidget(displayLogsPage);
+        specificProfilePage = new QWidget();
+        specificProfilePage->setObjectName(QString::fromUtf8("specificProfilePage"));
+        formLayoutWidget_2 = new QWidget(specificProfilePage);
+        formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
+        formLayoutWidget_2->setGeometry(QRect(380, 150, 301, 187));
+        formLayout_2 = new QFormLayout(formLayoutWidget_2);
+        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
+        formLayout_2->setHorizontalSpacing(50);
+        formLayout_2->setVerticalSpacing(15);
+        formLayout_2->setContentsMargins(0, 0, 0, 0);
+        nameLabel_2 = new QLabel(formLayoutWidget_2);
+        nameLabel_2->setObjectName(QString::fromUtf8("nameLabel_2"));
+
+        formLayout_2->setWidget(0, QFormLayout::LabelRole, nameLabel_2);
+
+        basalLabel_2 = new QLabel(formLayoutWidget_2);
+        basalLabel_2->setObjectName(QString::fromUtf8("basalLabel_2"));
+
+        formLayout_2->setWidget(1, QFormLayout::LabelRole, basalLabel_2);
+
+        carbRatioLabel_2 = new QLabel(formLayoutWidget_2);
+        carbRatioLabel_2->setObjectName(QString::fromUtf8("carbRatioLabel_2"));
+
+        formLayout_2->setWidget(3, QFormLayout::LabelRole, carbRatioLabel_2);
+
+        targetBGLabel_2 = new QLabel(formLayoutWidget_2);
+        targetBGLabel_2->setObjectName(QString::fromUtf8("targetBGLabel_2"));
+
+        formLayout_2->setWidget(4, QFormLayout::LabelRole, targetBGLabel_2);
+
+        correctionFactorLabel_2 = new QLabel(formLayoutWidget_2);
+        correctionFactorLabel_2->setObjectName(QString::fromUtf8("correctionFactorLabel_2"));
+
+        formLayout_2->setWidget(2, QFormLayout::LabelRole, correctionFactorLabel_2);
+
+        label_3 = new QLabel(formLayoutWidget_2);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, label_3);
+
+        label_4 = new QLabel(formLayoutWidget_2);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        formLayout_2->setWidget(1, QFormLayout::FieldRole, label_4);
+
+        label_5 = new QLabel(formLayoutWidget_2);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, label_5);
+
+        label_6 = new QLabel(formLayoutWidget_2);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, label_6);
+
+        label_7 = new QLabel(formLayoutWidget_2);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+
+        formLayout_2->setWidget(4, QFormLayout::FieldRole, label_7);
+
+        backButton_5 = new QPushButton(specificProfilePage);
+        backButton_5->setObjectName(QString::fromUtf8("backButton_5"));
+        backButton_5->setGeometry(QRect(30, 20, 81, 31));
+        optionsLabel_3 = new QLabel(specificProfilePage);
+        optionsLabel_3->setObjectName(QString::fromUtf8("optionsLabel_3"));
+        optionsLabel_3->setGeometry(QRect(410, 80, 211, 51));
+        sizePolicy4.setHeightForWidth(optionsLabel_3->sizePolicy().hasHeightForWidth());
+        optionsLabel_3->setSizePolicy(sizePolicy4);
+        optionsLabel_3->setAlignment(Qt::AlignCenter);
+        stackedWidget->addWidget(specificProfilePage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
@@ -740,13 +826,13 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        unlock1->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
-        unlock2->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
-        unlock3->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
-        sensorValue_2->setText(QCoreApplication::translate("MainWindow", "7.9 mmol/l", nullptr));
-        graphViewsButton_2->setText(QCoreApplication::translate("MainWindow", "3 Hrs", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "INSULIN ON BOARD", nullptr));
         clockLabel->setText(QCoreApplication::translate("MainWindow", "Clock", nullptr));
+        unlock1->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
+        unlock3->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
+        unlock2->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
+        graphViewsButton_2->setText(QCoreApplication::translate("MainWindow", "3 Hrs", nullptr));
+        sensorValue_2->setText(QCoreApplication::translate("MainWindow", "7.9 mmol/l", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "INSULIN ON BOARD", nullptr));
         bolusButton->setText(QCoreApplication::translate("MainWindow", "Bolus", nullptr));
         options_Button->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
@@ -808,6 +894,19 @@ public:
         dlBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         h1_6->setText(QCoreApplication::translate("MainWindow", "Logs", nullptr));
         h1_6->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
+        nameLabel_2->setText(QCoreApplication::translate("MainWindow", "Name", nullptr));
+        basalLabel_2->setText(QCoreApplication::translate("MainWindow", "Basal", nullptr));
+        carbRatioLabel_2->setText(QCoreApplication::translate("MainWindow", "Carb Ratio", nullptr));
+        targetBGLabel_2->setText(QCoreApplication::translate("MainWindow", "Target BG", nullptr));
+        correctionFactorLabel_2->setText(QCoreApplication::translate("MainWindow", "Correction Factor", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        backButton_5->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        optionsLabel_3->setText(QCoreApplication::translate("MainWindow", "Profile Name", nullptr));
+        optionsLabel_3->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
     } // retranslateUi
 
 };

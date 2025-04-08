@@ -531,10 +531,3 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
 
 
 
-
-
-
-
-
-
-
