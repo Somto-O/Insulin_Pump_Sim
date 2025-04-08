@@ -8,8 +8,10 @@
 #include <QString>
 #include <QInputDialog>
 #include <QMessageBox>
-
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "history.h"
+
 
 using namespace std;
 
@@ -45,7 +47,7 @@ public:
     static void createProfile(MainWindow* mw);
     static void updateProfile(MainWindow* mw, const QString& profileName);
     static void deleteProfile(MainWindow* mw, const QString& profileName);
-    static void viewProfile();
+    static void viewProfile(MainWindow* mw, const QString& profileName);
     static void displayProfiles(MainWindow* mw);
 
     static void saveProfiles();

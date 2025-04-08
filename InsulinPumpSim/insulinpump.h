@@ -23,6 +23,7 @@ public:
     void startDelivery();
     void stopDelivery();
     void viewStatus();
+    void deliverExtendedBolus(float unitsPerHour, int durationHours);
 
 
 signals:
@@ -31,6 +32,7 @@ signals:
 
 private slots:
     void drainBattery();  // Function to decrease battery over time
+    void deliverHourlyBolus(); // Handles hourly extended delivery
 
 
 private:
@@ -39,6 +41,10 @@ private:
     QString status;
     float batteryLevel;
     QTimer *batteryTimer;  // Timer for automatic battery drain
+    
+    QTimer* extendedBolusTimer;   // Timer for hourly bolus delivery
+    float hourlyBolusAmount;
+    int remainingHours;
 };
 
 #endif // INSULINPUMP_H

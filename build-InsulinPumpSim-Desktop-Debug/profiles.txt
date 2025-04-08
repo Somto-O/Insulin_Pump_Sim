@@ -1,5 +1,5 @@
 Elijah 21 22 23 24
-Nun 32 43 0 0
+Nun 0 21 0 0
 Sarah 2 4 6 2
 Peter 0 0 0 0
 Lebabeus 0 0 0 0

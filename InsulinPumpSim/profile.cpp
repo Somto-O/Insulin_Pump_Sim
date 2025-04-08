@@ -1,7 +1,5 @@
 #include "profile.h"
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "history.h"
+
 #include <QDebug>
 
 // static variables
@@ -120,35 +118,40 @@ void Profile::deleteProfile(MainWindow* mw, const QString& profileName) {
 }
 
 
-void Profile::viewProfile() {
-    if (profiles.empty()) {
-        QMessageBox::warning(nullptr, "View Profile", "No profiles available to view.");
+void Profile::viewProfile(MainWindow* mw, const QString& profileName) {
+
+    // Find the profile in the list
+    Profile* selectedProfilePtr = nullptr;
+    for (Profile* profile : profiles) {
+        if (profile->getName() == profileName.toStdString()) {
+            selectedProfilePtr = profile;
+            break;
+        }
+    }
+
+    if (!selectedProfilePtr) {
+        QMessageBox::warning(mw, "View Profile", "Profile not found.");
         return;
     }
 
-    QStringList profileNames;
-    for (Profile* profile : profiles) {
-        profileNames.append(QString::fromStdString(profile->getName()));
-    }
+    // Retrieve data using getters
+    QString name = QString::fromStdString(selectedProfilePtr->getName());
+    float basalRate = selectedProfilePtr->getBasalRate();
+    float carbRatio = selectedProfilePtr->getCarbRatio();
+    float correctionFactor = selectedProfilePtr->getCorrectionFactor();
+    float targetBG = selectedProfilePtr->getTargetBG();
 
-    bool ok;
-    QString selectedProfile = QInputDialog::getItem(nullptr, "View Profile", "Select a profile to view:", profileNames, 0, false, &ok);
-    if (!ok || selectedProfile.isEmpty()) return;
+    // Update the fields on the MainWindow
+    mw->getUI()->LABEL->setText(name);  // Assuming vppNameInput is a QLabel or QLineEdit
+    mw->getUI()->spBasal->setText(QString::number(basalRate));
+    mw->getUI()->spCarbRatio->setText(QString::number(carbRatio));
+    mw->getUI()->spCFactor->setText(QString::number(correctionFactor));
+    mw->getUI()->spTargetBG->setText(QString::number(targetBG));
 
-    for (Profile* profile : profiles) {
-        if (profile->getName() == selectedProfile.toStdString()) {
-            QString profileInfo = QString("Name: %1\nBasal Rate: %2\nCarb Ratio: %3\nCorrection Factor: %4\nTarget BG: %5")
-                                      .arg(QString::fromStdString(profile->getName()))
-                                      .arg(profile->basalRate)
-                                      .arg(profile->carbohydrateRatio)
-                                      .arg(profile->correctionFactor)
-                                      .arg(profile->targetBG);
-
-            QMessageBox::information(nullptr, "Profile Details", profileInfo);
-            return;
-        }
-    }
+    // Optionally switch to the view page if needed
+    mw->getUI()->stackedWidget->setCurrentIndex(13);  // Change 13 to the index of your view page
 }
+
 
 void Profile::saveProfiles()
 {

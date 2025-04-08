@@ -61,6 +61,8 @@ SOURCES       = ../InsulinPumpSim/boluscalculator.cpp \
 		../InsulinPumpSim/profile.cpp \
 		../InsulinPumpSim/systemalerts.cpp \
 		../InsulinPumpSim/user.cpp qrc_resource.cpp \
+		moc_boluscalculator.cpp \
+		moc_cgm.cpp \
 		moc_insulinpump.cpp \
 		moc_mainwindow.cpp \
 		moc_user.cpp
@@ -74,6 +76,8 @@ OBJECTS       = boluscalculator.o \
 		systemalerts.o \
 		user.o \
 		qrc_resource.o \
+		moc_boluscalculator.o \
+		moc_cgm.o \
 		moc_insulinpump.o \
 		moc_mainwindow.o \
 		moc_user.o
@@ -88,6 +92,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_charts.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_core.pri \
@@ -193,6 +198,7 @@ Makefile: ../InsulinPumpSim/InsulinPumpSim.pro /usr/lib/x86_64-linux-gnu/qt5/mks
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_charts.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_core.pri \
@@ -274,6 +280,7 @@ Makefile: ../InsulinPumpSim/InsulinPumpSim.pro /usr/lib/x86_64-linux-gnu/qt5/mks
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_charts.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_core.pri:
@@ -400,24 +407,43 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_insulinpump.cpp moc_mainwindow.cpp moc_user.cpp
+compiler_moc_header_make_all: moc_boluscalculator.cpp moc_cgm.cpp moc_insulinpump.cpp moc_mainwindow.cpp moc_user.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_insulinpump.cpp moc_mainwindow.cpp moc_user.cpp
+	-$(DEL_FILE) moc_boluscalculator.cpp moc_cgm.cpp moc_insulinpump.cpp moc_mainwindow.cpp moc_user.cpp
+moc_boluscalculator.cpp: ../InsulinPumpSim/boluscalculator.h \
+		../InsulinPumpSim/insulinpump.h \
+		../InsulinPumpSim/mainwindow.h \
+		ui_mainwindow.h \
+		../InsulinPumpSim/history.h \
+		../InsulinPumpSim/cgm.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/COMP3004/Insulin_Pump_Sim/build-InsulinPumpSim-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/COMP3004/Insulin_Pump_Sim/InsulinPumpSim -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../InsulinPumpSim/boluscalculator.h -o moc_boluscalculator.cpp
+
+moc_cgm.cpp: ../InsulinPumpSim/cgm.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/COMP3004/Insulin_Pump_Sim/build-InsulinPumpSim-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/COMP3004/Insulin_Pump_Sim/InsulinPumpSim -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../InsulinPumpSim/cgm.h -o moc_cgm.cpp
+
 moc_insulinpump.cpp: ../InsulinPumpSim/insulinpump.h \
+		../InsulinPumpSim/mainwindow.h \
+		ui_mainwindow.h \
+		../InsulinPumpSim/history.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/COMP3004/Insulin_Pump_Sim/build-InsulinPumpSim-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/COMP3004/Insulin_Pump_Sim/InsulinPumpSim -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../InsulinPumpSim/insulinpump.h -o moc_insulinpump.cpp
 
 moc_mainwindow.cpp: ../InsulinPumpSim/mainwindow.h \
-		../InsulinPumpSim/insulinpump.h \
+		ui_mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/COMP3004/Insulin_Pump_Sim/build-InsulinPumpSim-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/COMP3004/Insulin_Pump_Sim/InsulinPumpSim -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../InsulinPumpSim/mainwindow.h -o moc_mainwindow.cpp
 
 moc_user.cpp: ../InsulinPumpSim/user.h \
 		../InsulinPumpSim/mainwindow.h \
-		../InsulinPumpSim/insulinpump.h \
+		ui_mainwindow.h \
 		../InsulinPumpSim/profile.h \
+		../InsulinPumpSim/history.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/COMP3004/Insulin_Pump_Sim/build-InsulinPumpSim-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/COMP3004/Insulin_Pump_Sim/InsulinPumpSim -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../InsulinPumpSim/user.h -o moc_user.cpp
@@ -445,6 +471,9 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 boluscalculator.o: ../InsulinPumpSim/boluscalculator.cpp ../InsulinPumpSim/boluscalculator.h \
 		../InsulinPumpSim/insulinpump.h \
+		../InsulinPumpSim/mainwindow.h \
+		ui_mainwindow.h \
+		../InsulinPumpSim/history.h \
 		../InsulinPumpSim/cgm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o boluscalculator.o ../InsulinPumpSim/boluscalculator.cpp
 
@@ -455,26 +484,31 @@ history.o: ../InsulinPumpSim/history.cpp ../InsulinPumpSim/history.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o history.o ../InsulinPumpSim/history.cpp
 
 insulinpump.o: ../InsulinPumpSim/insulinpump.cpp ../InsulinPumpSim/insulinpump.h \
+		../InsulinPumpSim/mainwindow.h \
+		ui_mainwindow.h \
+		../InsulinPumpSim/history.h \
 		../InsulinPumpSim/systemalerts.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o insulinpump.o ../InsulinPumpSim/insulinpump.cpp
 
 main.o: ../InsulinPumpSim/main.cpp ../InsulinPumpSim/mainwindow.h \
-		../InsulinPumpSim/insulinpump.h \
+		ui_mainwindow.h \
 		../InsulinPumpSim/user.h \
-		../InsulinPumpSim/profile.h
+		../InsulinPumpSim/profile.h \
+		../InsulinPumpSim/history.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../InsulinPumpSim/main.cpp
 
 mainwindow.o: ../InsulinPumpSim/mainwindow.cpp ../InsulinPumpSim/mainwindow.h \
-		../InsulinPumpSim/insulinpump.h \
 		ui_mainwindow.h \
 		../InsulinPumpSim/profile.h \
-		../InsulinPumpSim/user.h
+		../InsulinPumpSim/history.h \
+		../InsulinPumpSim/user.h \
+		../InsulinPumpSim/insulinpump.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../InsulinPumpSim/mainwindow.cpp
 
 profile.o: ../InsulinPumpSim/profile.cpp ../InsulinPumpSim/profile.h \
 		../InsulinPumpSim/mainwindow.h \
-		../InsulinPumpSim/insulinpump.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../InsulinPumpSim/history.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o profile.o ../InsulinPumpSim/profile.cpp
 
 systemalerts.o: ../InsulinPumpSim/systemalerts.cpp ../InsulinPumpSim/systemalerts.h
@@ -482,13 +516,19 @@ systemalerts.o: ../InsulinPumpSim/systemalerts.cpp ../InsulinPumpSim/systemalert
 
 user.o: ../InsulinPumpSim/user.cpp ../InsulinPumpSim/user.h \
 		../InsulinPumpSim/mainwindow.h \
-		../InsulinPumpSim/insulinpump.h \
+		ui_mainwindow.h \
 		../InsulinPumpSim/profile.h \
-		ui_mainwindow.h
+		../InsulinPumpSim/history.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o user.o ../InsulinPumpSim/user.cpp
 
 qrc_resource.o: qrc_resource.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource.o qrc_resource.cpp
+
+moc_boluscalculator.o: moc_boluscalculator.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_boluscalculator.o moc_boluscalculator.cpp
+
+moc_cgm.o: moc_cgm.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cgm.o moc_cgm.cpp
 
 moc_insulinpump.o: moc_insulinpump.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_insulinpump.o moc_insulinpump.cpp

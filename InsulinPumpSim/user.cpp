@@ -1,10 +1,5 @@
 #include "user.h"
-#include "profile.h"
-#include "ui_mainwindow.h"
-#include "mainwindow.h"
 
-#include "QDialogButtonBox"
-#include "QDebug"
 
 // constructor
 User::User(MainWindow* mw) :mainWindow(mw) {
@@ -61,7 +56,13 @@ void User::handleCreateProfile()
 
 void User::handleViewProfile()
 {
-    Profile::viewProfile();
+    QListWidgetItem* selectedItem = mainWindow->getUI()->vppDisplayBox->currentItem();
+    if (!selectedItem) {
+      return;
+    }
+
+    // Store the selected profile name
+    mainWindow->setSelectedProfileName(selectedItem->text());
 }
 
 

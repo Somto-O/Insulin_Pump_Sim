@@ -1,15 +1,29 @@
 #ifndef CGM_H
 #define CGM_H
 
-class CGM
+#include <QObject>
+#include <QTimer>
+
+class CGM : public QObject
 {
+    Q_OBJECT
+
 public:
-    CGM();
-    float monitorGlucose();
-    bool detectDisconnection();
+    explicit CGM(QObject* parent = nullptr);
+    void startMonitoring();
+    float getGlucoseLevel() const;
+
+signals:
+    void glucoseLevelUpdated(float level);
+    void sensorDisconnected();
+
+private slots:
+    void monitorGlucose();
 
 private:
     float sensorData;
+    QTimer monitorTimer;
+    int disconnectCounter; // simulate disconnection
 };
 
 #endif // CGM_H

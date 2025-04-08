@@ -152,18 +152,16 @@ public:
     QWidget *specificProfilePage;
     QWidget *formLayoutWidget_2;
     QFormLayout *formLayout_2;
-    QLabel *nameLabel_2;
     QLabel *basalLabel_2;
-    QLabel *carbRatioLabel_2;
-    QLabel *targetBGLabel_2;
+    QLabel *spBasal;
     QLabel *correctionFactorLabel_2;
-    QLabel *label_3;
-    QLabel *label_4;
-    QLabel *label_5;
-    QLabel *label_6;
-    QLabel *label_7;
-    QPushButton *backButton_5;
-    QLabel *optionsLabel_3;
+    QLabel *spCFactor;
+    QLabel *carbRatioLabel_2;
+    QLabel *spCarbRatio;
+    QLabel *targetBGLabel_2;
+    QLabel *spTargetBG;
+    QPushButton *spBackButton;
+    QLabel *LABEL;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -753,71 +751,61 @@ public:
         formLayout_2->setHorizontalSpacing(50);
         formLayout_2->setVerticalSpacing(15);
         formLayout_2->setContentsMargins(0, 0, 0, 0);
-        nameLabel_2 = new QLabel(formLayoutWidget_2);
-        nameLabel_2->setObjectName(QString::fromUtf8("nameLabel_2"));
-
-        formLayout_2->setWidget(0, QFormLayout::LabelRole, nameLabel_2);
-
         basalLabel_2 = new QLabel(formLayoutWidget_2);
         basalLabel_2->setObjectName(QString::fromUtf8("basalLabel_2"));
 
-        formLayout_2->setWidget(1, QFormLayout::LabelRole, basalLabel_2);
+        formLayout_2->setWidget(0, QFormLayout::LabelRole, basalLabel_2);
 
-        carbRatioLabel_2 = new QLabel(formLayoutWidget_2);
-        carbRatioLabel_2->setObjectName(QString::fromUtf8("carbRatioLabel_2"));
+        spBasal = new QLabel(formLayoutWidget_2);
+        spBasal->setObjectName(QString::fromUtf8("spBasal"));
 
-        formLayout_2->setWidget(3, QFormLayout::LabelRole, carbRatioLabel_2);
-
-        targetBGLabel_2 = new QLabel(formLayoutWidget_2);
-        targetBGLabel_2->setObjectName(QString::fromUtf8("targetBGLabel_2"));
-
-        formLayout_2->setWidget(4, QFormLayout::LabelRole, targetBGLabel_2);
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, spBasal);
 
         correctionFactorLabel_2 = new QLabel(formLayoutWidget_2);
         correctionFactorLabel_2->setObjectName(QString::fromUtf8("correctionFactorLabel_2"));
 
-        formLayout_2->setWidget(2, QFormLayout::LabelRole, correctionFactorLabel_2);
+        formLayout_2->setWidget(1, QFormLayout::LabelRole, correctionFactorLabel_2);
 
-        label_3 = new QLabel(formLayoutWidget_2);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        spCFactor = new QLabel(formLayoutWidget_2);
+        spCFactor->setObjectName(QString::fromUtf8("spCFactor"));
 
-        formLayout_2->setWidget(0, QFormLayout::FieldRole, label_3);
+        formLayout_2->setWidget(1, QFormLayout::FieldRole, spCFactor);
 
-        label_4 = new QLabel(formLayoutWidget_2);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        carbRatioLabel_2 = new QLabel(formLayoutWidget_2);
+        carbRatioLabel_2->setObjectName(QString::fromUtf8("carbRatioLabel_2"));
 
-        formLayout_2->setWidget(1, QFormLayout::FieldRole, label_4);
+        formLayout_2->setWidget(2, QFormLayout::LabelRole, carbRatioLabel_2);
 
-        label_5 = new QLabel(formLayoutWidget_2);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
+        spCarbRatio = new QLabel(formLayoutWidget_2);
+        spCarbRatio->setObjectName(QString::fromUtf8("spCarbRatio"));
 
-        formLayout_2->setWidget(2, QFormLayout::FieldRole, label_5);
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, spCarbRatio);
 
-        label_6 = new QLabel(formLayoutWidget_2);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
+        targetBGLabel_2 = new QLabel(formLayoutWidget_2);
+        targetBGLabel_2->setObjectName(QString::fromUtf8("targetBGLabel_2"));
 
-        formLayout_2->setWidget(3, QFormLayout::FieldRole, label_6);
+        formLayout_2->setWidget(3, QFormLayout::LabelRole, targetBGLabel_2);
 
-        label_7 = new QLabel(formLayoutWidget_2);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
+        spTargetBG = new QLabel(formLayoutWidget_2);
+        spTargetBG->setObjectName(QString::fromUtf8("spTargetBG"));
 
-        formLayout_2->setWidget(4, QFormLayout::FieldRole, label_7);
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, spTargetBG);
 
-        backButton_5 = new QPushButton(specificProfilePage);
-        backButton_5->setObjectName(QString::fromUtf8("backButton_5"));
-        backButton_5->setGeometry(QRect(30, 20, 81, 31));
-        optionsLabel_3 = new QLabel(specificProfilePage);
-        optionsLabel_3->setObjectName(QString::fromUtf8("optionsLabel_3"));
-        optionsLabel_3->setGeometry(QRect(410, 80, 211, 51));
-        sizePolicy4.setHeightForWidth(optionsLabel_3->sizePolicy().hasHeightForWidth());
-        optionsLabel_3->setSizePolicy(sizePolicy4);
-        optionsLabel_3->setAlignment(Qt::AlignCenter);
+        spBackButton = new QPushButton(specificProfilePage);
+        spBackButton->setObjectName(QString::fromUtf8("spBackButton"));
+        spBackButton->setGeometry(QRect(30, 20, 81, 31));
+        LABEL = new QLabel(specificProfilePage);
+        LABEL->setObjectName(QString::fromUtf8("LABEL"));
+        LABEL->setGeometry(QRect(410, 80, 211, 51));
+        sizePolicy4.setHeightForWidth(LABEL->sizePolicy().hasHeightForWidth());
+        LABEL->setSizePolicy(sizePolicy4);
+        LABEL->setAlignment(Qt::AlignCenter);
         stackedWidget->addWidget(specificProfilePage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(13);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -894,19 +882,17 @@ public:
         dlBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         h1_6->setText(QCoreApplication::translate("MainWindow", "Logs", nullptr));
         h1_6->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
-        nameLabel_2->setText(QCoreApplication::translate("MainWindow", "Name", nullptr));
         basalLabel_2->setText(QCoreApplication::translate("MainWindow", "Basal", nullptr));
-        carbRatioLabel_2->setText(QCoreApplication::translate("MainWindow", "Carb Ratio", nullptr));
-        targetBGLabel_2->setText(QCoreApplication::translate("MainWindow", "Target BG", nullptr));
+        spBasal->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         correctionFactorLabel_2->setText(QCoreApplication::translate("MainWindow", "Correction Factor", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_5->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_6->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_7->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        backButton_5->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
-        optionsLabel_3->setText(QCoreApplication::translate("MainWindow", "Profile Name", nullptr));
-        optionsLabel_3->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
+        spCFactor->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        carbRatioLabel_2->setText(QCoreApplication::translate("MainWindow", "Carb Ratio", nullptr));
+        spCarbRatio->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        targetBGLabel_2->setText(QCoreApplication::translate("MainWindow", "Target BG", nullptr));
+        spTargetBG->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        spBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        LABEL->setText(QCoreApplication::translate("MainWindow", "Profile Name", nullptr));
+        LABEL->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
     } // retranslateUi
 
 };

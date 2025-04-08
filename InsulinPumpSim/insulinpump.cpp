@@ -2,21 +2,22 @@
 #include "systemalerts.h"
 #include "mainwindow.h"
 
-
-#include <QTimer>
-
-
-InsulinPump::InsulinPump() : status("Idle"), batteryLevel(100.0f){
-
+InsulinPump::InsulinPump() : status("Idle"), batteryLevel(100.0f),
+    hourlyBolusAmount(0.0f), remainingHours(0)
+{
+    // Battery timer
     batteryTimer = new QTimer(this);
     connect(batteryTimer, &QTimer::timeout, this, &InsulinPump::drainBattery);
-    batteryTimer->start(2000);  // Reduce battery every 2 seconds
+    batteryTimer->start(2000); // Drain every 2 seconds
 
-
+    // Extended bolus timer
+    extendedBolusTimer = new QTimer(this);
+    connect(extendedBolusTimer, &QTimer::timeout, this, &InsulinPump::deliverHourlyBolus);
 }
 
-// functions
-void InsulinPump::startDelivery() {
+// Immediate delivery
+void InsulinPump::startDelivery()
+{
     if (batteryLevel > 10) {
         status = "Delivering insulin";
         std::cout << "Insulin pump is " << status.toStdString() << "..." << std::endl;
@@ -36,32 +37,60 @@ void InsulinPump::viewStatus()
 {
     std::cout << "Pump Status: " << status.toStdString() << std::endl;
     std::cout << "Battery Level: " << batteryLevel << "%" << std::endl;
-   }
+}
 
-
-void InsulinPump::drainBattery() {
+// Battery drain logic
+void InsulinPump::drainBattery()
+{
     if (batteryLevel > 0) {
-        batteryLevel -= 1; // Reduce battery gradually
-
-        // Emit signal to update GUI
+        batteryLevel -= 1;
         emit batteryLevelChanged(batteryLevel);
 
-        // Notify at critical battery levels
         if (batteryLevel == 20) {
-            QString alert = "Battery low! Please charge soon.";
-            SystemAlerts::triggerAlert(alert.toStdString());
-
+            SystemAlerts::triggerAlert("Battery low! Please charge soon.");
         } else if (batteryLevel == 5) {
-            QString alert = "Battery critically low! Charge immediately.";
-            SystemAlerts::escalateAlert(alert.toStdString());
-
-        } else if(batteryLevel == 0){
+            SystemAlerts::escalateAlert("Battery critically low! Charge immediately.");
+        } else if (batteryLevel == 0) {
             emit batteryDepleted();
             batteryTimer->stop();
-
-            QString alert = "Battery depleted. System shutting down.";
-            SystemAlerts::escalateAlert(alert.toStdString());
+            extendedBolusTimer->stop();
+            SystemAlerts::escalateAlert("Battery depleted. System shutting down.");
         }
     }
 }
 
+// Extended bolus delivery
+void InsulinPump::deliverExtendedBolus(float unitsPerHour, int durationHours)
+{
+    if (batteryLevel <= 10) {
+        SystemAlerts::escalateAlert("Battery too low for extended delivery!");
+        return;
+    }
+
+    hourlyBolusAmount = unitsPerHour;
+    remainingHours = durationHours;
+
+    std::cout << "Starting extended bolus: " << unitsPerHour
+              << " units/hour for " << durationHours << " hours." << std::endl;
+
+    // Simulate hourly delivery with compressed time for testing (5 seconds = 1 hour)
+    extendedBolusTimer->start(5000);
+}
+
+void InsulinPump::deliverHourlyBolus()
+{
+    if (remainingHours <= 0 || batteryLevel <= 10) {
+        extendedBolusTimer->stop();
+        stopDelivery();
+        return;
+    }
+
+    std::cout << "Delivering " << hourlyBolusAmount << " units (extended bolus)." << std::endl;
+    remainingHours--;
+
+    if (remainingHours == 0) {
+        std::cout << "Extended bolus completed." << std::endl;
+        stopDelivery();
+        extendedBolusTimer->stop();
+    }
+}

@@ -1,12 +1,11 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "profile.h"
 #include "user.h"
 #include "insulinpump.h"
 #include "QDateTime"
 
 
-#include "QDebug"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,8 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->spButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_spButtonBox_clicked);
     connect(ui->dppDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::on_dppProfileSelected);
     connect(ui->dppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_dppButtonBox_clicked);
+    connect(ui->vppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_vppButtonBox_clicked);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
+   // connect(ui->bolusButton, &QPushButton::clicked, this, &MainWindow::on_bolusButton_clicked);
 
     // Connect battery depletion signal to screen change function
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::changePageToBatteryLow);
@@ -217,6 +218,19 @@ void MainWindow::populateDeleteList() {
     }
 }
 
+void MainWindow::populateViewList() {
+    ui->vppDisplayBox->clear();// Clear the list before populating
+
+    for (Profile* profile : Profile::getProfiles()) {
+        QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(profile->getName()));
+        ui->vppDisplayBox->addItem(item);
+    }
+
+    if (ui->vppDisplayBox->count() == 0) {
+        QMessageBox::information(this, "No Profiles", "No profiles available.");
+    }
+}
+
 
 
 
@@ -251,11 +265,7 @@ void MainWindow::on_personalProfile_button_clicked()
     ui->stackedWidget->setCurrentIndex(4);
 }
 
-void MainWindow::on_viewProfilesButton_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(5);
 
-}
 
 void MainWindow::on_confirmProfileButtonBox_clicked(QAbstractButton *button)
 {
@@ -313,7 +323,12 @@ void MainWindow::on_deleteProfileButton_clicked()
     ui->stackedWidget->setCurrentIndex(10);
 }
 
+void MainWindow::on_viewProfilesButton_clicked()
+{
+    populateViewList();
+    ui->stackedWidget->setCurrentIndex(5);
 
+}
 
 
 
@@ -368,6 +383,11 @@ void MainWindow::on_dlBackButton_clicked()
     ui->stackedWidget->setCurrentIndex(11);
 }
 
+void MainWindow::on_spBackButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
 
 /*unlock buttonns*/
 void MainWindow::on_unlock1_clicked()
@@ -395,7 +415,7 @@ void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
     if (ui->spButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         QListWidgetItem* selectedItem = ui->spDisplayBox->currentItem();
 
-        QString selectedProfileName = selectedItem->text();   
+        QString selectedProfileName = selectedItem->text();
 
         setSelectedProfileName(selectedProfileName);  // Store the selected profile name
 
@@ -416,6 +436,22 @@ void MainWindow::on_dppButtonBox_clicked(QAbstractButton *button){
         ui->stackedWidget->setCurrentIndex(4);
     }
 }
+
+void MainWindow::on_vppButtonBox_clicked(QAbstractButton *button){
+    if (ui->vppButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
+        QListWidgetItem* selectedItem = ui->vppDisplayBox->currentItem();
+
+        QString selectedProfileName = selectedItem->text();
+
+        setSelectedProfileName(selectedProfileName);  // Store the selected profile name
+
+        //Profile::viewProfile(this,selectedProfileName);
+        Profile::viewProfile(this,selectedProfileName);
+
+        ui->stackedWidget->setCurrentIndex(13);
+    }
+}
+
 
 
 void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) {
@@ -520,14 +556,12 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
     ui->stackedWidget->setCurrentIndex(7);
 }
 
-//void MainWindow::moveToViewPage(const QString& profileName){
-
+//void MainWindow::on_bolusButton_clicked()
+//{
+//    generateGraph();  // Call the graph generation function when the bolusButton is clicked
 //}
 
 
+//void MainWindow::moveToViewPage(const QString& profileName){
 
-
-
-
-
-
+//}
