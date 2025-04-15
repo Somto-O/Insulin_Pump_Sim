@@ -4,12 +4,12 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QRegularExpression>
+#include <QCoreApplication>
 
 History::History() {}
 
 void History::logEvent(const QString& eventType, const QString& userName, const QString& details)
 {
-    // Map event types to corresponding log files
     QString fileName;
     QString logMessage;
 
@@ -17,15 +17,13 @@ void History::logEvent(const QString& eventType, const QString& userName, const 
         fileName = "profile_created.log";
         logMessage = QString("[%1] A new profile '%2' was created!")
                          .arg(QDateTime::currentDateTime().toString("d MMMM yyyy h:mm:ss AP"))
-                         .arg(userName)
-                         .arg(details);
+                         .arg(userName);
     }
     else if (eventType == "ProfileUpdated") {
         fileName = "profile_updated.log";
         logMessage = QString("[%1] '%2' was updated!")
                          .arg(QDateTime::currentDateTime().toString("d MMMM yyyy h:mm:ss AP"))
                          .arg(userName);
-                       //  .arg(details);
     }
     else if (eventType == "ProfileDeleted") {
         fileName = "profile_deleted.log";
@@ -34,7 +32,7 @@ void History::logEvent(const QString& eventType, const QString& userName, const 
                          .arg(userName);
     }
     else {
-        fileName = "general_history.log";  // Default log file for unspecified events
+        fileName = "general_history.log";
         logMessage = QString("[%1] Event Type: %2 | User: %3 | Details: %4")
                          .arg(QDateTime::currentDateTime().toString("d MMMM yyyy h:mm:ss AP"))
                          .arg(eventType)
@@ -42,16 +40,16 @@ void History::logEvent(const QString& eventType, const QString& userName, const 
                          .arg(details);
     }
 
-    QFile file(fileName);
+    QString filePath = QCoreApplication::applicationDirPath() + "/../InsulinPumpSim/data/" + fileName;
+    QFile file(filePath);
 
-    // Open file in append mode
     if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
         out << logMessage << "\n";
         file.close();
-        qDebug() << "Event logged in" << fileName << ":" << logMessage;
+        qDebug() << "Event logged in" << filePath << ":" << logMessage;
     } else {
-        qDebug() << "ERROR: Could not open" << fileName << "to log event!";
+        qDebug() << "ERROR: Could not open" << filePath << "to log event!";
     }
 }
 
@@ -59,7 +57,6 @@ QString History::viewData(const QString& logType)
 {
     QString fileName;
 
-    // Select the correct file based on log type
     if (logType == "ProfileCreated") {
         fileName = "profile_created.log";
     }
@@ -69,20 +66,21 @@ QString History::viewData(const QString& logType)
     else if (logType == "ProfileDeleted") {
         fileName = "profile_deleted.log";
     }
-    else if (logType == "Alerts"){
+    else if (logType == "Alerts") {
         fileName = "alerts.log";
     }
     else if (logType == "AllHistory") {
-        return mergeAndSortLogs();  // Call helper function to merge and sort all logs
+        return mergeAndSortLogs();  // mergeAndSortLogs will be updated next
     }
     else {
         return "Invalid log type.";
     }
 
-    // Open the selected log file
-    QFile file(fileName);
+    QString filePath = QCoreApplication::applicationDirPath() + "/../InsulinPumpSim/data/" + fileName;
+    QFile file(filePath);
+
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return "Unable to read " + fileName;
+        return "Unable to read " + filePath;
     }
 
     QTextStream in(&file);
@@ -98,7 +96,8 @@ QString History::mergeAndSortLogs()
     QVector<QPair<QDateTime, QString>> logEntries;
 
     for (const QString& fileName : logFiles) {
-        QFile file(fileName);
+        QString filePath = QCoreApplication::applicationDirPath() + "/../InsulinPumpSim/data/" + fileName;
+        QFile file(filePath);
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream in(&file);
 
@@ -121,13 +120,11 @@ QString History::mergeAndSortLogs()
         }
     }
 
-    // Sort logs by date (earliest first)
     std::sort(logEntries.begin(), logEntries.end(),
               [](const QPair<QDateTime, QString>& a, const QPair<QDateTime, QString>& b) {
                   return a.first < b.first;
               });
 
-    // Combine sorted entries
     QString sortedLog;
     for (const auto& entry : logEntries) {
         sortedLog += entry.second + "\n";

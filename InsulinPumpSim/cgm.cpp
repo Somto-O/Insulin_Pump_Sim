@@ -1,26 +1,37 @@
 #include "cgm.h"
-#include <iostream>
-#include <cstdlib>
+#include <QDebug>
+#include <QRandomGenerator>
 
-CGM::CGM()
-    : sensorData(100.0) // Initialize with default glucose level
+CGM::CGM(QObject* parent)
+    : QObject(parent), sensorData(0.0f), disconnectCounter(0)
 {
+    connect(&monitorTimer, &QTimer::timeout, this, &CGM::monitorGlucose);
 }
 
-float CGM::monitorGlucose()
+void CGM::startMonitoring()
 {
-    // Simulate glucose reading between 80 and 180 mg/dL
-    sensorData = 80.0 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (180.0 - 80.0)));
-    std::cout << "Current glucose level: " << sensorData << " mg/dL" << std::endl;
+    monitorTimer.start(3000); // simulate glucose readings every 3 seconds
+    qDebug() << "CGM monitoring started.";
+}
+
+float CGM::getGlucoseLevel() const
+{
     return sensorData;
 }
 
-bool CGM::detectDisconnection()
+
+void CGM::monitorGlucose()
 {
-    if (sensorData == -1) {
-        std::cout << "CGM Disconnection detected!" << std::endl;
-        return true;
+    // Generate a glucose level between 4.0 and 10.0 mmol/L
+    sensorData = 4.0 + QRandomGenerator::global()->generateDouble() * (10.0 - 4.0);
+    qDebug() << "New glucose level:" << sensorData << "mmol/L";
+    emit glucoseLevelUpdated(sensorData);
+
+    // Simulate a possible disconnection every 5 readings
+    disconnectCounter++;
+    if (disconnectCounter >= 5) {
+        qDebug() << "Sensor disconnected!";
+        emit sensorDisconnected();
+        disconnectCounter = 0;
     }
-    std::cout << "CGM is connected and working correctly." << std::endl;
-    return false;
 }

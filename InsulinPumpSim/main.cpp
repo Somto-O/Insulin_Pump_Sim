@@ -13,9 +13,14 @@
 using namespace std;
 
 void loadStyleSheet(QApplication &app){
-    QFile file("styles.qss");
+   // QFile file("styles.qss");
+    QFile file(":/styles/styles/styles.qss");
+
+
     if (file.open(QFile::ReadOnly)){
         QString styleSheet = QTextStream(&file).readAll();
+        qDebug() << "Current style sheet length:" << styleSheet.length();
+
         app.setStyleSheet(styleSheet);
         //qDebug() << "Stylesheet loaded!";
         file.close();

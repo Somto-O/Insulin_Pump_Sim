@@ -1,18 +1,23 @@
 #ifndef BOLUSCALCULATOR_H
 #define BOLUSCALCULATOR_H
 
-#include <iostream>
-
+#include <QObject>
 #include "insulinpump.h"
 #include "cgm.h"
 
-class BolusCalculator
+class BolusCalculator : public QObject
 {
+    Q_OBJECT
+
 public:
-    BolusCalculator(CGM* cgm, InsulinPump* pump);
+    explicit BolusCalculator(CGM* cgm, InsulinPump* pump, QObject* parent = nullptr);
 
     void calculateBolus(float carbIntake, float currentBG, float IOB);
     void confirmBolus();
+
+signals:
+    void bolusCalculated(float totalBolus, float immediate, float extended, float ratePerHour);
+    void bolusDelivered();
 
 private:
     CGM* cgm;

@@ -5,6 +5,9 @@
 #include <QAbstractButton>
 #include <QPushButton>
 #include <QLabel>
+#include "ui_mainwindow.h"
+
+#include "QDebug"
 
 
 
@@ -42,10 +45,12 @@ public:
 
     void populateProfileList();
     void populateDeleteList();
+    void populateViewList();
     void on_spButtonBox_clicked(QAbstractButton *button);
     void on_dppButtonBox_clicked(QAbstractButton *button);
 
     void setLockScreenState(bool locked);
+
 
 
     void updateClock();
@@ -59,7 +64,7 @@ public:
 
 private slots:
 
-
+   // void on_bolusButton_clicked();
     void on_options_Button_clicked();
 
     void on_pushButton_clicked();
@@ -88,6 +93,7 @@ private slots:
     void on_viewProfilesButton_clicked();
 
     void on_vppBackButton_clicked();
+    void on_vppButtonBox_clicked(QAbstractButton *button);
 
     void on_confirmProfileButtonBox_clicked(QAbstractButton *button);
 
@@ -97,11 +103,13 @@ private slots:
 
     void on_dppBackButton_clicked();
 
+    void on_spBackButton_clicked();
+
     void on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button);
 
     void updateBatteryDisplay(float newLevel);
     void updateBatteryDisplay2(float newLevel);
-    
+
     void on_deleteProfileButton_clicked();
 
     void changePageToBatteryLow();
@@ -121,8 +129,8 @@ private slots:
 
     bool eventFilter(QObject *obj, QEvent *event);
 
-
 private:
+
     Ui::MainWindow *ui;
     User* user;
     InsulinPump* insulinPump;
