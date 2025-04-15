@@ -7,12 +7,16 @@
 
 
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , insulinPump(new InsulinPump())
 {
     ui->setupUi(this);
+
+    // Disable scroll bars for graphicsView_2
+    ui->graphicsView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     ui->stackedWidget->setCurrentIndex(0);
     setLockScreenState(true);  // Lock everything except 1,2,3 buttons
@@ -25,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->vppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_vppButtonBox_clicked);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
-   // connect(ui->bolusButton, &QPushButton::clicked, this, &MainWindow::on_bolusButton_clicked);
+    // connect(ui->bolusButton, &QPushButton::clicked, this, &MainWindow::on_bolusButton_clicked);
 
-    // Connect battery depletion signal to screen change function
+     // Connect battery depletion signal to screen change function
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::changePageToBatteryLow);
 
     // Set up the timer to update every second
@@ -44,7 +48,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     qApp->installEventFilter(this);
 
-
+    // graph
+    displayXYPoints();
 }
 
 MainWindow::~MainWindow()
@@ -75,43 +80,45 @@ void MainWindow::updateBatteryDisplay(float newLevel) {
     // Change the color of the chunk (the actual filled part of the progress bar)
     if (newLevel > 50) {
         ui->battery->setStyleSheet("QProgressBar {"
-                                   "border: 2px solid grey;"
-                                   "border-radius: 5px;"
-                                   "background: lightgray;"
-                                   "text-align: center;"
-                                   "color: white;"
-                                   "}"
-                                   "QProgressBar::chunk {"
-                                   "background: green;"
-                                   "border-radius: 5px;"
-                                   "}"
-                                  );
-    } else if (newLevel > 20) {
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: green;"
+            "border-radius: 5px;"
+            "}"
+        );
+    }
+    else if (newLevel > 20) {
         ui->battery->setStyleSheet("QProgressBar {"
-                                   "border: 2px solid grey;"
-                                   "border-radius: 5px;"
-                                   "background: lightgray;"
-                                   "text-align: center;"
-                                   "color: white;"
-                                   "}"
-                                   "QProgressBar::chunk {"
-                                   "background: orange;"
-                                   "border-radius: 5px;"
-                                   "}"
-                                  );
-    } else {
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: orange;"
+            "border-radius: 5px;"
+            "}"
+        );
+    }
+    else {
         ui->battery->setStyleSheet("QProgressBar {"
-                                   "border: 2px solid grey;"
-                                   "border-radius: 5px;"
-                                   "background: lightgray;"
-                                   "text-align: center;"
-                                   "color: white;"
-                                   "}"
-                                   "QProgressBar::chunk {"
-                                   "background: red;"
-                                   "border-radius: 5px;"
-                                   "}"
-                                  );
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: red;"
+            "border-radius: 5px;"
+            "}"
+        );
     }
 }
 
@@ -121,43 +128,45 @@ void MainWindow::updateBatteryDisplay2(float newLevel) {
     // Change the color of the chunk (the actual filled part of the progress bar)
     if (newLevel > 50) {
         ui->battery_2->setStyleSheet("QProgressBar {"
-                                    "border: 2px solid grey;"
-                                    "border-radius: 5px;"
-                                    "background: 2px lightgray;"
-                                    "text-align: center;"
-                                    "color: white;"
-                                    "}"
-                                    "QProgressBar::chunk {"
-                                    "background: green;"
-                                    "border-radius: 5px;"
-                                    "}"
-                                   );
-    } else if (newLevel > 20) {
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: 2px lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: green;"
+            "border-radius: 5px;"
+            "}"
+        );
+    }
+    else if (newLevel > 20) {
         ui->battery_2->setStyleSheet("QProgressBar {"
-                                    "border: 2px solid grey;"
-                                    "border-radius: 5px;"
-                                    "background: lightgray;"
-                                    "text-align: center;"
-                                    "color: white;"
-                                    "}"
-                                    "QProgressBar::chunk {"
-                                    "background: orange;"
-                                    "border-radius: 5px;"
-                                    "}"
-                                   );
-    } else {
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: orange;"
+            "border-radius: 5px;"
+            "}"
+        );
+    }
+    else {
         ui->battery_2->setStyleSheet("QProgressBar {"
-                                    "border: 2px solid grey;"
-                                    "border-radius: 5px;"
-                                    "background: lightgray;"
-                                    "text-align: center;"
-                                    "color: white;"
-                                    "}"
-                                    "QProgressBar::chunk {"
-                                    "background: red;"
-                                    "border-radius: 5px;"
-                                    "}"
-                                   );
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: red;"
+            "border-radius: 5px;"
+            "}"
+        );
     }
 }
 
@@ -184,7 +193,7 @@ QString MainWindow::on_dppProfileSelected() {
 }
 
 
- // Switch to the Update Profile pages
+// Switch to the Update Profile pages
 void MainWindow::openUpdateProfilePage() {
 
 
@@ -253,7 +262,7 @@ void MainWindow::on_options_Button_clicked()
 
 void MainWindow::on_historyButton_clicked()
 {
-   ui->stackedWidget->setCurrentIndex(11);
+    ui->stackedWidget->setCurrentIndex(11);
 }
 void MainWindow::on_pushButton_clicked()
 {
@@ -267,7 +276,7 @@ void MainWindow::on_personalProfile_button_clicked()
 
 
 
-void MainWindow::on_confirmProfileButtonBox_clicked(QAbstractButton *button)
+void MainWindow::on_confirmProfileButtonBox_clicked(QAbstractButton* button)
 {
     // Check which button was clicked
     if (ui->confirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
@@ -292,11 +301,11 @@ void MainWindow::on_confirmProfileButtonBox_clicked(QAbstractButton *button)
         QMessageBox::information(this, "Success", "Profile created and saved successfully!");
         ui->stackedWidget->setCurrentIndex(4);
         // Clear the input fields after profile is created
-            ui->nameInput->clear();
-            ui->basalInput->clear();
-            ui->carbRatioInput->clear();
-            ui->correctionFactorInput->clear();
-            ui->targetBGInput->clear();
+        ui->nameInput->clear();
+        ui->basalInput->clear();
+        ui->carbRatioInput->clear();
+        ui->correctionFactorInput->clear();
+        ui->targetBGInput->clear();
 
 
     }
@@ -312,14 +321,15 @@ void MainWindow::on_addProfileButton_clicked()
 
 }
 
-void MainWindow::on_updateProfileButton_clicked(){
+void MainWindow::on_updateProfileButton_clicked() {
     populateProfileList();
     ui->stackedWidget->setCurrentIndex(6);
 }
 
 
 void MainWindow::on_deleteProfileButton_clicked()
-{   populateDeleteList();
+{
+    populateDeleteList();
     ui->stackedWidget->setCurrentIndex(10);
 }
 
@@ -340,7 +350,7 @@ void MainWindow::on_backButton_clicked()
 
 void MainWindow::on_backButton_2_clicked()
 {
-      ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::on_backButton_3_clicked()
@@ -351,7 +361,7 @@ void MainWindow::on_backButton_3_clicked()
 
 void MainWindow::on_backButton_4_clicked()
 {
-      ui->stackedWidget->setCurrentIndex(4);
+    ui->stackedWidget->setCurrentIndex(4);
 }
 
 void MainWindow::on_vppBackButton_clicked()
@@ -369,7 +379,7 @@ void MainWindow::on_sppBackButton_clicked()
     ui->stackedWidget->setCurrentIndex(4);
 }
 
-void MainWindow::on_dppBackButton_clicked(){
+void MainWindow::on_dppBackButton_clicked() {
     ui->stackedWidget->setCurrentIndex(4);
 }
 
@@ -397,21 +407,22 @@ void MainWindow::on_unlock1_clicked()
 
 void MainWindow::on_unlock2_clicked()
 {
-    if(b1 == true)
+    if (b1 == true)
         b2 = true;
 }
 
 void MainWindow::on_unlock3_clicked()
 {
-    if(b1 == true && b2 == true)
+    if (b1 == true && b2 == true) {
         ui->stackedWidget->setCurrentIndex(1);
+    }
     setLockScreenState(true);  // Re-enable all buttons
 }
 
 
 
 
-void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
+void MainWindow::on_spButtonBox_clicked(QAbstractButton* button) {
     if (ui->spButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         QListWidgetItem* selectedItem = ui->spDisplayBox->currentItem();
 
@@ -423,7 +434,7 @@ void MainWindow::on_spButtonBox_clicked(QAbstractButton *button) {
     }
 }
 
-void MainWindow::on_dppButtonBox_clicked(QAbstractButton *button){
+void MainWindow::on_dppButtonBox_clicked(QAbstractButton* button) {
     if (ui->dppButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         QListWidgetItem* selectedItem = ui->dppDisplayBox->currentItem();
 
@@ -431,13 +442,13 @@ void MainWindow::on_dppButtonBox_clicked(QAbstractButton *button){
 
         setSelectedProfileName(selectedProfileName);  // Store the selected profile name
 
-        Profile::deleteProfile(this,selectedProfileName);
+        Profile::deleteProfile(this, selectedProfileName);
         History::logEvent("ProfileDeleted", selectedProfileName, "was deleted!");
         ui->stackedWidget->setCurrentIndex(4);
     }
 }
 
-void MainWindow::on_vppButtonBox_clicked(QAbstractButton *button){
+void MainWindow::on_vppButtonBox_clicked(QAbstractButton* button) {
     if (ui->vppButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         QListWidgetItem* selectedItem = ui->vppDisplayBox->currentItem();
 
@@ -446,7 +457,7 @@ void MainWindow::on_vppButtonBox_clicked(QAbstractButton *button){
         setSelectedProfileName(selectedProfileName);  // Store the selected profile name
 
         //Profile::viewProfile(this,selectedProfileName);
-        Profile::viewProfile(this,selectedProfileName);
+        Profile::viewProfile(this, selectedProfileName);
 
         ui->stackedWidget->setCurrentIndex(13);
     }
@@ -454,7 +465,7 @@ void MainWindow::on_vppButtonBox_clicked(QAbstractButton *button){
 
 
 
-void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton *button) {
+void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton* button) {
     if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
 
         // Call updateProfile function with the selected profile
@@ -511,7 +522,7 @@ void MainWindow::on_alertLogButton_clicked()
     ui->stackedWidget->setCurrentIndex(12);
 }
 
-bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::KeyPress) {
         inactivityTimer->start(15000); // Reset the timer
     }
@@ -556,12 +567,72 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
     ui->stackedWidget->setCurrentIndex(7);
 }
 
-//void MainWindow::on_bolusButton_clicked()
-//{
-//    generateGraph();  // Call the graph generation function when the bolusButton is clicked
-//}
 
 
-//void MainWindow::moveToViewPage(const QString& profileName){
+void MainWindow::displayXYPoints() {
+    // Create a scatter series
+    QtCharts::QScatterSeries* series = new QtCharts::QScatterSeries();
+    series->setName("");
 
-//}
+    // Add points to the series
+    series->append(1, 1);
+    series->append(2, 4);
+    series->append(3, 9);
+    series->append(4, 16);
+
+    // Create a chart
+    QtCharts::QChart* chart = new QtCharts::QChart();
+    chart->addSeries(series);
+    chart->setTitle("XY Points");
+    chart->createDefaultAxes();
+    chart->setMargins(QMargins(10, 10, 10, 10)); // Adjust margins as needed
+
+    // Add axis labels
+    QtCharts::QValueAxis* axisX = new QtCharts::QValueAxis();
+    axisX->setTitleText("Bolus");
+    QFont axisFontX = axisX->titleFont();
+    axisFontX.setPointSize(10); // Adjust font size
+    axisX->setTitleFont(axisFontX);
+    chart->setAxisX(axisX, series);
+    axisX->setLabelsAngle(0); // Ensure labels are horizontal
+    axisX->setTickCount(5);   // Reduce the number of ticks if necessary
+
+    QtCharts::QValueAxis* axisY = new QtCharts::QValueAxis();
+    axisY->setTitleText("Time");
+    QFont axisFontY = axisY->titleFont();
+    axisFontY.setPointSize(10); // Adjust font size
+    axisY->setTitleFont(axisFontY);
+    chart->setAxisY(axisY, series);
+
+    // Create a chart view
+    QtCharts::QChartView* chartView = new QtCharts::QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    // Set the chart view as the scene of graphicsView_2
+    QGraphicsScene* scene = new QGraphicsScene(this);
+    ui->graphicsView_2->setScene(scene);
+    scene->addWidget(chartView);
+
+    // Resize the chart view to fit graphicsView_2 initially
+    chartView->resize(ui->graphicsView_2->size());
+}
+
+
+
+
+
+
+
+
+
+void MainWindow::resizeEvent(QResizeEvent* event) {
+    QMainWindow::resizeEvent(event);
+
+    // Ensure the chart resizes to fit graphicsView_2
+    if (ui->graphicsView_2->scene() && !ui->graphicsView_2->scene()->items().isEmpty()) {
+        QGraphicsProxyWidget* proxyWidget = dynamic_cast<QGraphicsProxyWidget*>(ui->graphicsView_2->scene()->items().first());
+        if (proxyWidget) {
+            proxyWidget->widget()->resize(ui->graphicsView_2->size());
+        }
+    }
+}

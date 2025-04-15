@@ -10,6 +10,12 @@
 #include "QDebug"
 
 
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QScatterSeries>
+#include <QGraphicsScene>
+#include <QGraphicsProxyWidget>
+#include <QtCharts/QValueAxis>
 
 
 QT_BEGIN_NAMESPACE
@@ -55,6 +61,7 @@ public:
 
     void updateClock();
 
+    void displayXYPoints();
 
     // Declare buttons
     QPushButton* createProfileButton;
@@ -141,6 +148,8 @@ private:
     QTimer* inactivityTimer;
     QLabel* clockLabel;  // QLabel to display the time
 
+protected:
+    void resizeEvent(QResizeEvent* event) override;
 
 };
 
