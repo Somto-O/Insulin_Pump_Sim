@@ -1,0 +1,16 @@
+Elijah 21 22 23 24
+Peter 0 0 0 0
+Lebabeus 0 0 0 0
+pilate 89 68 56 56
+Veronica 12 32 53 90
+Andrew 12 24 42 13
+Zealot 90 24 31 22
+Gaius 21 42 89 93
+Gideon 13 42 12 89
+Uriel 31 53 12 53
+Abram 23 1 42 1
+Leah 0 0 0 0
+Ruth 0 0 0 0
+Naa 2 2 1 1
+seth 2 1 4 2
+jonah 2 0 0 0
