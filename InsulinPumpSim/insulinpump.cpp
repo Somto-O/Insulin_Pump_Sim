@@ -8,7 +8,11 @@ InsulinPump::InsulinPump() : status("Idle"), batteryLevel(100.0f),
     // Battery timer
     batteryTimer = new QTimer(this);
     connect(batteryTimer, &QTimer::timeout, this, &InsulinPump::drainBattery);
+<<<<<<< HEAD
     batteryTimer->start(3000); // Drain every 3 seconds
+=======
+    batteryTimer->start(2000); // Drain every 2 seconds
+>>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
 
     // Extended bolus timer
     extendedBolusTimer = new QTimer(this);

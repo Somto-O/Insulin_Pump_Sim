@@ -24,7 +24,11 @@
      </rect>
     </property>
     <property name="currentIndex">
+<<<<<<< HEAD
      <number>10</number>
+=======
+     <number>13</number>
+>>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -2577,8 +2581,90 @@
      <widget class="QPushButton" name="spBackButton">
       <property name="geometry">
        <rect>
+<<<<<<< HEAD
         <x>70</x>
         <y>30</y>
+=======
+        <x>380</x>
+        <y>150</y>
+        <width>301</width>
+        <height>187</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_2">
+       <property name="horizontalSpacing">
+        <number>50</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>15</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="basalLabel_2">
+         <property name="text">
+          <string>Basal</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="spBasal">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="correctionFactorLabel_2">
+         <property name="text">
+          <string>Correction Factor</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="spCFactor">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="carbRatioLabel_2">
+         <property name="text">
+          <string>Carb Ratio</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="spCarbRatio">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="targetBGLabel_2">
+         <property name="text">
+          <string>Target BG</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="spTargetBG">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="spBackButton">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+>>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
         <width>81</width>
         <height>31</height>
        </rect>
@@ -2587,7 +2673,11 @@
        <string>Back</string>
       </property>
      </widget>
+<<<<<<< HEAD
      <widget class="QWidget" name="greyBG_62" native="true">
+=======
+     <widget class="QLabel" name="LABEL">
+>>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
       <property name="geometry">
        <rect>
         <x>790</x>
