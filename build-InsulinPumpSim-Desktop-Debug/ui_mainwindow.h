@@ -245,10 +245,6 @@ public:
     QLabel *spCarbRatio;
     QLabel *targetBGLabel_2;
     QLabel *spTargetBG;
-<<<<<<< HEAD
-=======
-    QPushButton *spBackButton;
->>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
     QLabel *LABEL;
 
     void setupUi(QMainWindow *MainWindow)
@@ -1330,18 +1326,9 @@ public:
 
         formLayout_2->setWidget(3, QFormLayout::FieldRole, spTargetBG);
 
-<<<<<<< HEAD
         LABEL = new QLabel(widget_15);
         LABEL->setObjectName(QString::fromUtf8("LABEL"));
         LABEL->setGeometry(QRect(340, 80, 211, 51));
-=======
-        spBackButton = new QPushButton(specificProfilePage);
-        spBackButton->setObjectName(QString::fromUtf8("spBackButton"));
-        spBackButton->setGeometry(QRect(30, 20, 81, 31));
-        LABEL = new QLabel(specificProfilePage);
-        LABEL->setObjectName(QString::fromUtf8("LABEL"));
-        LABEL->setGeometry(QRect(410, 80, 211, 51));
->>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
         sizePolicy4.setHeightForWidth(LABEL->sizePolicy().hasHeightForWidth());
         LABEL->setSizePolicy(sizePolicy4);
         LABEL->setAlignment(Qt::AlignCenter);
@@ -1356,11 +1343,7 @@ public:
 
         retranslateUi(MainWindow);
 
-<<<<<<< HEAD
         stackedWidget->setCurrentIndex(10);
-=======
-        stackedWidget->setCurrentIndex(13);
->>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1449,12 +1432,9 @@ public:
         dlBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         h1_6->setText(QCoreApplication::translate("MainWindow", "Logs", nullptr));
         h1_6->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
-<<<<<<< HEAD
         powerbutton_27->setText(QString());
         spBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         powerbutton_28->setText(QString());
-=======
->>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
         basalLabel_2->setText(QCoreApplication::translate("MainWindow", "Basal", nullptr));
         spBasal->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         correctionFactorLabel_2->setText(QCoreApplication::translate("MainWindow", "Correction Factor", nullptr));
@@ -1463,10 +1443,6 @@ public:
         spCarbRatio->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         targetBGLabel_2->setText(QCoreApplication::translate("MainWindow", "Target BG", nullptr));
         spTargetBG->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-<<<<<<< HEAD
-=======
-        spBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
->>>>>>> 2dfcd77d197b6a2af314279fe3d822df56609021
         LABEL->setText(QCoreApplication::translate("MainWindow", "Profile Name", nullptr));
         LABEL->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
     } // retranslateUi
