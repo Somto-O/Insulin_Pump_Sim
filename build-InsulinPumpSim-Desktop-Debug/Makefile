@@ -416,8 +416,8 @@ moc_boluscalculator.cpp: ../InsulinPumpSim/boluscalculator.h \
 		../InsulinPumpSim/insulinpump.h \
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
-		../InsulinPumpSim/history.h \
 		../InsulinPumpSim/cgm.h \
+		../InsulinPumpSim/history.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Insulin_Pump_Sim/build-InsulinPumpSim-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Insulin_Pump_Sim/InsulinPumpSim -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../InsulinPumpSim/boluscalculator.h -o moc_boluscalculator.cpp
@@ -430,6 +430,7 @@ moc_cgm.cpp: ../InsulinPumpSim/cgm.h \
 moc_insulinpump.cpp: ../InsulinPumpSim/insulinpump.h \
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		../InsulinPumpSim/history.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -437,6 +438,7 @@ moc_insulinpump.cpp: ../InsulinPumpSim/insulinpump.h \
 
 moc_mainwindow.cpp: ../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Insulin_Pump_Sim/build-InsulinPumpSim-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Insulin_Pump_Sim/InsulinPumpSim -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../InsulinPumpSim/mainwindow.h -o moc_mainwindow.cpp
@@ -444,6 +446,7 @@ moc_mainwindow.cpp: ../InsulinPumpSim/mainwindow.h \
 moc_user.cpp: ../InsulinPumpSim/user.h \
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		../InsulinPumpSim/profile.h \
 		../InsulinPumpSim/history.h \
 		moc_predefs.h \
@@ -475,8 +478,8 @@ boluscalculator.o: ../InsulinPumpSim/boluscalculator.cpp ../InsulinPumpSim/bolus
 		../InsulinPumpSim/insulinpump.h \
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
-		../InsulinPumpSim/history.h \
-		../InsulinPumpSim/cgm.h
+		../InsulinPumpSim/cgm.h \
+		../InsulinPumpSim/history.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o boluscalculator.o ../InsulinPumpSim/boluscalculator.cpp
 
 cgm.o: ../InsulinPumpSim/cgm.cpp ../InsulinPumpSim/cgm.h
@@ -488,12 +491,14 @@ history.o: ../InsulinPumpSim/history.cpp ../InsulinPumpSim/history.h
 insulinpump.o: ../InsulinPumpSim/insulinpump.cpp ../InsulinPumpSim/insulinpump.h \
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		../InsulinPumpSim/history.h \
 		../InsulinPumpSim/systemalerts.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o insulinpump.o ../InsulinPumpSim/insulinpump.cpp
 
 main.o: ../InsulinPumpSim/main.cpp ../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		../InsulinPumpSim/user.h \
 		../InsulinPumpSim/profile.h \
 		../InsulinPumpSim/history.h
@@ -501,6 +506,7 @@ main.o: ../InsulinPumpSim/main.cpp ../InsulinPumpSim/mainwindow.h \
 
 mainwindow.o: ../InsulinPumpSim/mainwindow.cpp ../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		../InsulinPumpSim/profile.h \
 		../InsulinPumpSim/history.h \
 		../InsulinPumpSim/user.h \
@@ -510,6 +516,7 @@ mainwindow.o: ../InsulinPumpSim/mainwindow.cpp ../InsulinPumpSim/mainwindow.h \
 profile.o: ../InsulinPumpSim/profile.cpp ../InsulinPumpSim/profile.h \
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		../InsulinPumpSim/history.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o profile.o ../InsulinPumpSim/profile.cpp
 
@@ -519,6 +526,7 @@ systemalerts.o: ../InsulinPumpSim/systemalerts.cpp ../InsulinPumpSim/systemalert
 user.o: ../InsulinPumpSim/user.cpp ../InsulinPumpSim/user.h \
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
+		../InsulinPumpSim/cgm.h \
 		../InsulinPumpSim/profile.h \
 		../InsulinPumpSim/history.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o user.o ../InsulinPumpSim/user.cpp

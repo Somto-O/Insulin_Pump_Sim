@@ -8,6 +8,7 @@
 #include "mainwindow.h"
 #include "history.h"
 
+
 using namespace std;
 
 class InsulinPump : public QObject

@@ -7,8 +7,10 @@
 
 
 
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
+    , cgm(new CGM)
     , ui(new Ui::MainWindow)
     , insulinPump(new InsulinPump())
 {
@@ -34,6 +36,12 @@ MainWindow::MainWindow(QWidget* parent)
      // Connect battery depletion signal to screen change function
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::changePageToBatteryLow);
 
+    cgm->startMonitoring();
+
+    // Assuming you have a CGM pointer somewhere (you may need to pass it in or instantiate here)
+    connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::handleNewGlucoseReading);
+
+
     // Set up the timer to update every second
     clockTimer = new QTimer(this);
     connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateClock);
@@ -48,8 +56,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     qApp->installEventFilter(this);
 
-    // graph
-    displayXYPoints();
+    //
+    displayGlucoseGraph(72); // Show an empty or initial graph for 6 simulated hours
 }
 
 MainWindow::~MainWindow()
@@ -542,8 +550,6 @@ void MainWindow::setLockScreenState(bool locked) {
 }
 
 
-
-
 void MainWindow::moveToUpdatePage(const QString& profileName) {
 
     // Store the selected profile name for later use
@@ -569,61 +575,67 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
 
 
 
-void MainWindow::displayXYPoints() {
+void MainWindow::displayGlucoseGraph(int maxPoints) {
     // Create a scatter series
     QtCharts::QScatterSeries* series = new QtCharts::QScatterSeries();
-    series->setName("Bolus Data");
+    series->setName("CGM Readings");
+    series->setMarkerSize(7.0);  // smaller points to reduce clutter
 
-    // Add (Time, Bolus) points to the series
-    series->append(1, 1);
-    series->append(2, 4);
-    series->append(3, 9);
-    series->append(4, 16);
+    if (glucoseDataPoints.isEmpty())
+        return;
+
+    // Determine starting index for the graph window
+    int startIndex = qMax(0, glucoseDataPoints.size() - maxPoints);
+
+    // Add only the relevant recent points
+    for (int i = startIndex; i < glucoseDataPoints.size(); ++i)
+        series->append(glucoseDataPoints[i]);
 
     // Create the chart and add the series
     QtCharts::QChart* chart = new QtCharts::QChart();
     chart->addSeries(series);
-    chart->setTitle("XY Points: Time vs Bolus");
+    chart->setTitle("Blood Glucose Over Time");
     chart->setMargins(QMargins(10, 10, 10, 10));
 
-    // Create and configure the X-Axis (Time)
+    // X-axis (Simulated Time in Minutes)
+    int startSimTime = glucoseDataPoints[startIndex].x();
+    int endSimTime = glucoseDataPoints.last().x();
+
     QtCharts::QValueAxis* axisX = new QtCharts::QValueAxis();
-    axisX->setTitleText("Time");
-    QFont axisFontX = axisX->titleFont();
-    axisFontX.setPointSize(10);
-    axisX->setTitleFont(axisFontX);
-    axisX->setLabelsAngle(0);
-    axisX->setTickCount(5);
+    axisX->setTitleText("Time (min)");
+    axisX->setRange(startSimTime, endSimTime);
+    axisX->setLabelFormat("%d");
+    axisX->setTickCount(7);  // reduce clutter
     chart->addAxis(axisX, Qt::AlignBottom);
     series->attachAxis(axisX);
 
-    // Create and configure the Y-Axis (Bolus)
+
+    // Y-axis (Blood Glucose)
     QtCharts::QValueAxis* axisY = new QtCharts::QValueAxis();
-    axisY->setTitleText("Bolus");
-    QFont axisFontY = axisY->titleFont();
-    axisFontY.setPointSize(10);
-    axisY->setTitleFont(axisFontY);
+    axisY->setTitleText("BG Level (mmol/L)");
+    axisY->setRange(3.0, 15.0);  // typical CGM range
+    axisY->setTickCount(7);
+    axisY->setLabelFormat("%.1f");
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
-    // Create a chart view with antialiasing
+    // Chart view setup
     QtCharts::QChartView* chartView = new QtCharts::QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    // Create a scene and embed the chart view in the graphicsView
-    QGraphicsScene* scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
+    // Scene and GraphicsView update
+    QGraphicsScene* scene = ui->graphicsView->scene();
+    if (!scene) {
+        scene = new QGraphicsScene(this);
+        ui->graphicsView->setScene(scene);
+    } else {
+        scene->clear();  // clear previous chart from the scene
+    }
+
     scene->addWidget(chartView);
-
-    // Optional: resize the chart view to match the graphics view size
     chartView->resize(ui->graphicsView->size());
+
 }
-
-
-
-
-
-
 
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
@@ -636,4 +648,21 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
             proxyWidget->widget()->resize(ui->graphicsView_2->size());
         }
     }
+}
+
+
+
+void MainWindow::handleNewGlucoseReading(float level) {
+    // Simulated time increases by 5 minutes every update
+    simulatedMinutesElapsed += 5;
+
+    // Store new point
+    glucoseDataPoints.append(QPointF(simulatedMinutesElapsed, level));
+
+    // Keep only the latest 72 points (6 simulated hours)
+    if (glucoseDataPoints.size() > 72)
+        glucoseDataPoints.removeFirst();
+
+    // Update chart (default to 6hr view)
+    displayGlucoseGraph(72);
 }

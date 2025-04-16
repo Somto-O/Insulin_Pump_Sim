@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include "ui_mainwindow.h"
-
+#include "cgm.h"
 #include "QDebug"
 
 
@@ -61,7 +61,7 @@ public:
 
     void updateClock();
 
-    void displayXYPoints();
+    void displayGlucoseGraph(int maxPoints);
 
     // Declare buttons
     QPushButton* createProfileButton;
@@ -70,6 +70,9 @@ public:
     QPushButton* deleteProfileButton;
 
 private slots:
+
+    void handleNewGlucoseReading(float level);
+
 
    // void on_bolusButton_clicked();
     void on_options_Button_clicked();
@@ -134,10 +137,12 @@ private slots:
 
     void returnToLockPage();
 
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
-
+    QVector<QPointF> glucoseDataPoints;  // stores (simulatedTimeIndex, glucoseLevel)
+    int simulatedMinutesElapsed = 0;
+    CGM* cgm;
     Ui::MainWindow *ui;
     User* user;
     InsulinPump* insulinPump;

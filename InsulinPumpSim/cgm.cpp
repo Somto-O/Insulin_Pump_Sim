@@ -10,7 +10,7 @@ CGM::CGM(QObject* parent)
 
 void CGM::startMonitoring()
 {
-    monitorTimer.start(3000); // simulate glucose readings every 3 seconds
+    monitorTimer.start(1000); // simulate glucose readings every 3 seconds
     qDebug() << "CGM monitoring started.";
 }
 
