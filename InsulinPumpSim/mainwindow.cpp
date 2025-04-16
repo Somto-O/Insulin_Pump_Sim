@@ -14,9 +14,9 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
 
-    // Disable scroll bars for graphicsView_2
-    ui->graphicsView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->graphicsView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    // Disable scroll bars for graphicsView
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     ui->stackedWidget->setCurrentIndex(0);
     setLockScreenState(true);  // Lock everything except 1,2,3 buttons
@@ -572,51 +572,52 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
 void MainWindow::displayXYPoints() {
     // Create a scatter series
     QtCharts::QScatterSeries* series = new QtCharts::QScatterSeries();
-    series->setName("");
+    series->setName("Bolus Data");
 
-    // Add points to the series
+    // Add (Time, Bolus) points to the series
     series->append(1, 1);
     series->append(2, 4);
     series->append(3, 9);
     series->append(4, 16);
 
-    // Create a chart
+    // Create the chart and add the series
     QtCharts::QChart* chart = new QtCharts::QChart();
     chart->addSeries(series);
-    chart->setTitle("XY Points");
-    chart->createDefaultAxes();
-    chart->setMargins(QMargins(10, 10, 10, 10)); // Adjust margins as needed
+    chart->setTitle("XY Points: Time vs Bolus");
+    chart->setMargins(QMargins(10, 10, 10, 10));
 
-    // Add axis labels
+    // Create and configure the X-Axis (Time)
     QtCharts::QValueAxis* axisX = new QtCharts::QValueAxis();
-    axisX->setTitleText("Bolus");
+    axisX->setTitleText("Time");
     QFont axisFontX = axisX->titleFont();
-    axisFontX.setPointSize(10); // Adjust font size
+    axisFontX.setPointSize(10);
     axisX->setTitleFont(axisFontX);
-    chart->setAxisX(axisX, series);
-    axisX->setLabelsAngle(0); // Ensure labels are horizontal
-    axisX->setTickCount(5);   // Reduce the number of ticks if necessary
+    axisX->setLabelsAngle(0);
+    axisX->setTickCount(5);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
 
+    // Create and configure the Y-Axis (Bolus)
     QtCharts::QValueAxis* axisY = new QtCharts::QValueAxis();
-    axisY->setTitleText("Time");
+    axisY->setTitleText("Bolus");
     QFont axisFontY = axisY->titleFont();
-    axisFontY.setPointSize(10); // Adjust font size
+    axisFontY.setPointSize(10);
     axisY->setTitleFont(axisFontY);
-    chart->setAxisY(axisY, series);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
 
-    // Create a chart view
+    // Create a chart view with antialiasing
     QtCharts::QChartView* chartView = new QtCharts::QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    // Set the chart view as the scene of graphicsView_2
+    // Create a scene and embed the chart view in the graphicsView
     QGraphicsScene* scene = new QGraphicsScene(this);
-    ui->graphicsView_2->setScene(scene);
+    ui->graphicsView->setScene(scene);
     scene->addWidget(chartView);
 
-    // Resize the chart view to fit graphicsView_2 initially
-    chartView->resize(ui->graphicsView_2->size());
+    // Optional: resize the chart view to match the graphics view size
+    chartView->resize(ui->graphicsView->size());
 }
-
 
 
 
