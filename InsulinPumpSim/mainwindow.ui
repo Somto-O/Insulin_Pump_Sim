@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -73,7 +73,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>3 Hrs</string>
+          <string>1 Hrs</string>
          </property>
         </widget>
        </item>
@@ -422,7 +422,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>3 Hrs</string>
+          <string>1 Hrs</string>
          </property>
         </widget>
        </item>

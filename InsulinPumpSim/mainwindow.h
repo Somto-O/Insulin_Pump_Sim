@@ -8,6 +8,7 @@
 #include "ui_mainwindow.h"
 #include "cgm.h"
 #include "QDebug"
+#include <QTime>
 
 
 #include <QtCharts/QChart>
@@ -63,13 +64,18 @@ public:
 
     void displayGlucoseGraph(int maxPoints);
 
+    void startInsulinPump();
+
     // Declare buttons
     QPushButton* createProfileButton;
     QPushButton* viewProfileButton;
     QPushButton* updateProfileButton;
     QPushButton* deleteProfileButton;
+    QPushButton* graphViewsButton;
 
 private slots:
+
+    void on_graphViewsButton_clicked();  // handles range switching
 
     void handleNewGlucoseReading(float level);
 
@@ -139,11 +145,14 @@ private slots:
 
     bool eventFilter(QObject *obj, QEvent *event) override;
 
+
+
 private:
-    QVector<QPointF> glucoseDataPoints;  // stores (simulatedTimeIndex, glucoseLevel)
+    Ui::MainWindow *ui;
+    float insulinReservoir = 200.0f; // Initial insulin units available
+    QVector<QPair<QDateTime, float>> glucoseDataPoints;  // timestamp, glucose level
     int simulatedMinutesElapsed = 0;
     CGM* cgm;
-    Ui::MainWindow *ui;
     User* user;
     InsulinPump* insulinPump;
     QString selectedProfileName;
@@ -152,6 +161,16 @@ private:
     QTimer* clockTimer;  // Timer to update the clock
     QTimer* inactivityTimer;
     QLabel* clockLabel;  // QLabel to display the time
+    QTime simulatedClock;
+    QDateTime simulationStartTime;
+    QDateTime currentSimulatedTime;
+    int currentGraphRange = 1;  // 1 = 1h, 3 = 3h, 6 = 6h
+
+
+
+
+
+
 
 protected:
     void resizeEvent(QResizeEvent* event) override;

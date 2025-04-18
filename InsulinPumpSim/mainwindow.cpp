@@ -2,7 +2,10 @@
 #include "profile.h"
 #include "user.h"
 #include "insulinpump.h"
+#include "systemalerts.h"
 #include "QDateTime"
+#include <QtCharts/QDateTimeAxis>
+
 
 
 
@@ -10,54 +13,60 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , cgm(new CGM)
     , ui(new Ui::MainWindow)
-    , insulinPump(new InsulinPump())
+    , simulatedMinutesElapsed(0)
+    , cgm(new CGM)
+    ,insulinPump(new InsulinPump())
+    , simulatedClock(QTime(0, 0))  // Start simulation at 00:00
+    ,simulationStartTime(QDateTime::currentDateTime())
+    ,currentSimulatedTime(simulationStartTime)
 {
     ui->setupUi(this);
 
     // Disable scroll bars for graphicsView
+    ui->graphicsView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     ui->stackedWidget->setCurrentIndex(0);
     setLockScreenState(true);  // Lock everything except 1,2,3 buttons
 
-    // In MainWindow constructor, connect the signal
+    // UI -> Logic connections
     connect(ui->spDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::onProfileSelected);
     connect(ui->spButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_spButtonBox_clicked);
     connect(ui->dppDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::on_dppProfileSelected);
     connect(ui->dppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_dppButtonBox_clicked);
     connect(ui->vppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_vppButtonBox_clicked);
+
+    // Battery updates
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
-    // connect(ui->bolusButton, &QPushButton::clicked, this, &MainWindow::on_bolusButton_clicked);
-
-     // Connect battery depletion signal to screen change function
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::changePageToBatteryLow);
 
+    connect(ui->graphViewsButton, &QPushButton::clicked, this, &MainWindow::on_graphViewsButton_clicked);
+
+
+    // CGM monitoring
+    connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::handleNewGlucoseReading);
     cgm->startMonitoring();
 
-    // Assuming you have a CGM pointer somewhere (you may need to pass it in or instantiate here)
-    connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::handleNewGlucoseReading);
-
-
-    // Set up the timer to update every second
+    // Simulated clock timer
     clockTimer = new QTimer(this);
     connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateClock);
-    clockTimer->start(1000);  // Update every (1 second)
+    clockTimer->start(1000);  // 1 real second = 5 simulated minutes
 
-    // Initial clock update
+    // First clock update
     updateClock();
 
-    // Add this in MainWindow constructor
+    // Lock screen inactivity timer
     inactivityTimer = new QTimer(this);
     connect(inactivityTimer, &QTimer::timeout, this, &MainWindow::returnToLockPage);
 
     qApp->installEventFilter(this);
 
-    //
-    displayGlucoseGraph(72); // Show an empty or initial graph for 6 simulated hours
+    // Initial empty graph setup
+   // displayGlucoseGraph(72);  // simulate 6 hours
 }
 
 MainWindow::~MainWindow()
@@ -76,10 +85,15 @@ void MainWindow::returnToLockPage() {
 
 
 void MainWindow::updateClock() {
-    QString currentTime = QDateTime::currentDateTime().toString("d MMMM yyyy hh:mm AP");
-    ui->clockLabel->setText(currentTime);  // Update the text of the QLabel
-    ui->clockLabel2->setText(currentTime);
+    simulatedMinutesElapsed += 5;
+    currentSimulatedTime = simulationStartTime.addSecs(simulatedMinutesElapsed * 60);
+
+    QString displayTime = currentSimulatedTime.toString("d MMM yyyy hh:mm AP");
+    ui->clockLabel->setText(displayTime);
+    ui->clockLabel2->setText(displayTime);
 }
+
+
 
 
 void MainWindow::updateBatteryDisplay(float newLevel) {
@@ -576,65 +590,65 @@ void MainWindow::moveToUpdatePage(const QString& profileName) {
 
 
 void MainWindow::displayGlucoseGraph(int maxPoints) {
-    // Create a scatter series
+    if (glucoseDataPoints.isEmpty()) return;
+
     QtCharts::QScatterSeries* series = new QtCharts::QScatterSeries();
     series->setName("CGM Readings");
-    series->setMarkerSize(7.0);  // smaller points to reduce clutter
+    series->setMarkerSize(7.0);
 
-    if (glucoseDataPoints.isEmpty())
-        return;
-
-    // Determine starting index for the graph window
     int startIndex = qMax(0, glucoseDataPoints.size() - maxPoints);
+    for (int i = startIndex; i < glucoseDataPoints.size(); ++i) {
+        QDateTime timestamp = glucoseDataPoints[i].first;
+        float value = glucoseDataPoints[i].second;
+        series->append(timestamp.toMSecsSinceEpoch(), value);
+    }
 
-    // Add only the relevant recent points
-    for (int i = startIndex; i < glucoseDataPoints.size(); ++i)
-        series->append(glucoseDataPoints[i]);
-
-    // Create the chart and add the series
     QtCharts::QChart* chart = new QtCharts::QChart();
     chart->addSeries(series);
-    chart->setTitle("Blood Glucose Over Time");
+    chart->setTitle("Blood Glucose Over Time (mmol/L)");
     chart->setMargins(QMargins(10, 10, 10, 10));
 
-    // X-axis (Simulated Time in Minutes)
-    int startSimTime = glucoseDataPoints[startIndex].x();
-    int endSimTime = glucoseDataPoints.last().x();
+    QDateTime endTime = glucoseDataPoints.last().first;
+    QDateTime startTime = endTime.addSecs(-currentGraphRange * 3600);
 
-    QtCharts::QValueAxis* axisX = new QtCharts::QValueAxis();
-    axisX->setTitleText("Time (min)");
-    axisX->setRange(startSimTime, endSimTime);
-    axisX->setLabelFormat("%d");
-    axisX->setTickCount(7);  // reduce clutter
+    QtCharts::QDateTimeAxis* axisX = new QtCharts::QDateTimeAxis();
+    axisX->setTitleText("Time");
+    axisX->setFormat("hh mm AP");
+    axisX->setRange(startTime, endTime);
+
+    // Manually adjust tick count to simulate interval logic
+    if (currentGraphRange == 1) {
+        axisX->setTickCount(2); // 1hr apart: 6 PM, 7 PM
+    } else if (currentGraphRange == 3) {
+        axisX->setTickCount(2); // 3hr apart: 6 PM, 9 PM
+    } else if (currentGraphRange == 6) {
+        axisX->setTickCount(2); // 6hr apart: 6 PM, 12 AM
+    }
+
     chart->addAxis(axisX, Qt::AlignBottom);
     series->attachAxis(axisX);
 
-
-    // Y-axis (Blood Glucose)
     QtCharts::QValueAxis* axisY = new QtCharts::QValueAxis();
     axisY->setTitleText("BG Level (mmol/L)");
-    axisY->setRange(3.0, 15.0);  // typical CGM range
-    axisY->setTickCount(7);
-    axisY->setLabelFormat("%.1f");
+    axisY->setRange(2, 14);
+    axisY->setTickCount(4);
+    axisY->setLabelFormat("%.0f");
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
-    // Chart view setup
     QtCharts::QChartView* chartView = new QtCharts::QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    // Scene and GraphicsView update
     QGraphicsScene* scene = ui->graphicsView->scene();
     if (!scene) {
         scene = new QGraphicsScene(this);
         ui->graphicsView->setScene(scene);
     } else {
-        scene->clear();  // clear previous chart from the scene
+        scene->clear();
     }
 
     scene->addWidget(chartView);
     chartView->resize(ui->graphicsView->size());
-
 }
 
 
@@ -651,18 +665,77 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 }
 
 
-
 void MainWindow::handleNewGlucoseReading(float level) {
-    // Simulated time increases by 5 minutes every update
     simulatedMinutesElapsed += 5;
+    QDateTime simulatedTimestamp = QDateTime::fromSecsSinceEpoch(simulatedMinutesElapsed * 60);
+    glucoseDataPoints.append(qMakePair(currentSimulatedTime, level));
 
-    // Store new point
-    glucoseDataPoints.append(QPointF(simulatedMinutesElapsed, level));
-
-    // Keep only the latest 72 points (6 simulated hours)
     if (glucoseDataPoints.size() > 72)
         glucoseDataPoints.removeFirst();
 
-    // Update chart (default to 6hr view)
-    displayGlucoseGraph(72);
+    // BG response logic
+    if (level >= 10.0f) {
+        qDebug() << "[Auto-Bolus] High BG detected:" << level << "→ Triggering insulin pump.";
+        startInsulinPump();
+    } else if (level <= 3.9f) {
+        qDebug() << "[Alert] Low BG detected:" << level;
+        // Optional: Stop insulin delivery here
+    } else {
+        qDebug() << "[Normal] BG level is within normal range:" << level;
+    }
+
+    // ✅ Calculate it here
+    int maxPoints = (currentGraphRange * 60) / 5;
+    displayGlucoseGraph(maxPoints);
 }
+
+
+
+
+void MainWindow::startInsulinPump() {
+    if (insulinReservoir >= 0.5f) {
+        insulinPump->startDelivery();
+        insulinReservoir -= 0.5f;
+
+        qDebug() << "[Pump] Delivered 0.5 units. Remaining reservoir:" << insulinReservoir;
+
+        // Trigger correction phase in CGM
+        if (cgm->getState() != CGM::State::Correction) {
+            cgm->setState(CGM::State::Correction);
+        }
+
+        // Optional: update UI progress bar or label
+        // ui->insulinProgressBar->setValue(static_cast<int>(insulinReservoir));
+    } else {
+        qDebug() << "[Pump] Insulin reservoir empty!";
+        SystemAlerts::triggerAlert("Insulin reservoir empty!");
+    }
+}
+
+
+
+
+
+void MainWindow::on_graphViewsButton_clicked() {
+    // Cycle through 1 → 3 → 6 → 1
+    if (currentGraphRange == 1)
+        currentGraphRange = 6;
+    else if (currentGraphRange == 6)
+        currentGraphRange = 3;
+    else
+        currentGraphRange = 1;
+
+    QString label = QString::number(currentGraphRange) + " Hrs";
+    ui->graphViewsButton->setText(label);
+    ui->graphViewsButton_2->setText(label);
+
+    int maxPoints = (currentGraphRange * 60) / 5;
+    displayGlucoseGraph(maxPoints);
+}
+
+
+
+
+
+
+

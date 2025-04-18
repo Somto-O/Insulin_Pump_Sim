@@ -1343,7 +1343,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1353,7 +1353,7 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         sensorValue_2->setText(QCoreApplication::translate("MainWindow", "7.9 mmol/l", nullptr));
-        graphViewsButton_2->setText(QCoreApplication::translate("MainWindow", "3 Hrs", nullptr));
+        graphViewsButton_2->setText(QCoreApplication::translate("MainWindow", "1 Hrs", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "INSULIN ON BOARD", nullptr));
         clockLabel->setText(QCoreApplication::translate("MainWindow", "Clock", nullptr));
         unlock1->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
@@ -1364,7 +1364,7 @@ public:
         bolusButton->setText(QCoreApplication::translate("MainWindow", "Bolus", nullptr));
         options_Button->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
         sensorValue->setText(QCoreApplication::translate("MainWindow", "7.9 mmol/l", nullptr));
-        graphViewsButton->setText(QCoreApplication::translate("MainWindow", "3 Hrs", nullptr));
+        graphViewsButton->setText(QCoreApplication::translate("MainWindow", "1 Hrs", nullptr));
         powerbutton->setText(QString());
         clockLabel2->setText(QCoreApplication::translate("MainWindow", "Clock", nullptr));
         h1->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
