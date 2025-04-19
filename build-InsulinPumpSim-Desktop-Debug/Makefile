@@ -398,6 +398,7 @@ compiler_rcc_clean:
 qrc_resource.cpp: ../InsulinPumpSim/resource.qrc \
 		/usr/lib/qt5/bin/rcc \
 		../InsulinPumpSim/styles/styles.qss \
+		../InsulinPumpSim/ui-elements/icons8-power-100.png \
 		../InsulinPumpSim/ui-elements/icons8-power-button-100.png \
 		../InsulinPumpSim/ui-elements/icons8-settings-200.png \
 		../InsulinPumpSim/ui-elements/icons8-water-drop-100.png
@@ -510,7 +511,8 @@ mainwindow.o: ../InsulinPumpSim/mainwindow.cpp ../InsulinPumpSim/mainwindow.h \
 		../InsulinPumpSim/profile.h \
 		../InsulinPumpSim/history.h \
 		../InsulinPumpSim/user.h \
-		../InsulinPumpSim/insulinpump.h
+		../InsulinPumpSim/insulinpump.h \
+		../InsulinPumpSim/systemalerts.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../InsulinPumpSim/mainwindow.cpp
 
 profile.o: ../InsulinPumpSim/profile.cpp ../InsulinPumpSim/profile.h \

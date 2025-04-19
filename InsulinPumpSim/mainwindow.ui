@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>15</number>
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -279,6 +279,32 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="chargeButton">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>widget_3</zorder>
      <zorder>horizontalLayoutWidget_2</zorder>
      <zorder>verticalLayoutWidget_2</zorder>
@@ -293,6 +319,7 @@
      <zorder>greyBG_6</zorder>
      <zorder>greyBG_7</zorder>
      <zorder>greyBG_8</zorder>
+     <zorder>chargeButton</zorder>
     </widget>
     <widget class="QWidget" name="homePage">
      <widget class="QWidget" name="horizontalLayoutWidget">
@@ -553,6 +580,32 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="chargeButton_2">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>widget_2</zorder>
      <zorder>horizontalLayoutWidget</zorder>
      <zorder>graphicsView</zorder>
@@ -561,6 +614,7 @@
      <zorder>options_Button</zorder>
      <zorder>verticalLayoutWidget</zorder>
      <zorder>greyBG_2</zorder>
+     <zorder>chargeButton_2</zorder>
     </widget>
     <widget class="QWidget" name="optionsPage">
      <widget class="QLabel" name="h1">
@@ -776,12 +830,39 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="chargeButton_3">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>greyBG_18</zorder>
      <zorder>greyBG_16</zorder>
      <zorder>widget_4</zorder>
      <zorder>greyBG_17</zorder>
      <zorder>greyBG_15</zorder>
      <zorder>h1</zorder>
+     <zorder>chargeButton_3</zorder>
     </widget>
     <widget class="QWidget" name="myPumpPage">
      <widget class="QPushButton" name="backButton_2">
@@ -952,12 +1033,39 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="chargeButton_4">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>greyBG_19</zorder>
      <zorder>widget_5</zorder>
      <zorder>greyBG_22</zorder>
      <zorder>greyBG_21</zorder>
      <zorder>greyBG_20</zorder>
      <zorder>backButton_2</zorder>
+     <zorder>chargeButton_4</zorder>
     </widget>
     <widget class="QWidget" name="personalProfiles">
      <widget class="QWidget" name="greyBG_26" native="true">
@@ -1147,11 +1255,38 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="chargeButton_5">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>widget_6</zorder>
      <zorder>greyBG_25</zorder>
      <zorder>greyBG_26</zorder>
      <zorder>greyBG_23</zorder>
      <zorder>greyBG_24</zorder>
+     <zorder>chargeButton_5</zorder>
     </widget>
     <widget class="QWidget" name="viewProfilePage">
      <widget class="QWidget" name="widget_7" native="true">
@@ -1309,11 +1444,38 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="chargeButton_6">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>widget_7</zorder>
      <zorder>greyBG_30</zorder>
      <zorder>greyBG_28</zorder>
      <zorder>greyBG_27</zorder>
      <zorder>greyBG_29</zorder>
+     <zorder>chargeButton_6</zorder>
     </widget>
     <widget class="QWidget" name="selectProfilePage">
      <widget class="QPushButton" name="sppBackButton">
@@ -1471,12 +1633,39 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="chargeButton_7">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>greyBG_32</zorder>
      <zorder>greyBG_33</zorder>
      <zorder>greyBG_31</zorder>
      <zorder>greyBG_34</zorder>
      <zorder>widget_8</zorder>
      <zorder>sppBackButton</zorder>
+     <zorder>chargeButton_7</zorder>
     </widget>
     <widget class="QWidget" name="updateProfilePage">
      <widget class="QWidget" name="widget_9" native="true">
@@ -1704,11 +1893,38 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="chargeButton_8">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>greyBG_38</zorder>
      <zorder>greyBG_37</zorder>
      <zorder>greyBG_36</zorder>
      <zorder>widget_9</zorder>
      <zorder>greyBG_35</zorder>
+     <zorder>chargeButton_8</zorder>
     </widget>
     <widget class="QWidget" name="addProfilePage">
      <widget class="QPushButton" name="backButton_4">
@@ -1956,6 +2172,32 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="chargeButton_9">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>greyBG_41</zorder>
      <zorder>widget_10</zorder>
      <zorder>greyBG_40</zorder>
@@ -1963,6 +2205,7 @@
      <zorder>greyBG_39</zorder>
      <zorder>backButton_4</zorder>
      <zorder>formLayoutWidget</zorder>
+     <zorder>chargeButton_9</zorder>
     </widget>
     <widget class="QWidget" name="batteryDeadPage">
      <widget class="QWidget" name="widget_11" native="true">
@@ -2056,6 +2299,32 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="chargeButton_10">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="deleteProfilePage">
      <widget class="QWidget" name="widget_12" native="true">
@@ -2086,7 +2355,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>170</y>
+          <y>160</y>
           <width>131</width>
           <height>121</height>
          </rect>
@@ -2220,6 +2489,32 @@
       <zorder>h1_4</zorder>
       <zorder>greyBG_50</zorder>
       <zorder>dppBackButton</zorder>
+     </widget>
+     <widget class="QPushButton" name="chargeButton_11">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="historyPage">
@@ -2423,6 +2718,32 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="chargeButton_12">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>greyBG_54</zorder>
      <zorder>widget_13</zorder>
      <zorder>greyBG_52</zorder>
@@ -2431,6 +2752,7 @@
      <zorder>verticalLayoutWidget_6</zorder>
      <zorder>hpBackButton</zorder>
      <zorder>h1_5</zorder>
+     <zorder>chargeButton_12</zorder>
     </widget>
     <widget class="QWidget" name="displayLogsPage">
      <widget class="QPushButton" name="dlBackButton">
@@ -2566,12 +2888,39 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="chargeButton_13">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>widget_14</zorder>
      <zorder>greyBG_56</zorder>
      <zorder>greyBG_58</zorder>
      <zorder>greyBG_57</zorder>
      <zorder>greyBG_55</zorder>
      <zorder>dlBackButton</zorder>
+     <zorder>chargeButton_13</zorder>
     </widget>
     <widget class="QWidget" name="specificProfilePage">
      <widget class="QPushButton" name="spBackButton">
@@ -2780,12 +3129,349 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="chargeButton_14">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
      <zorder>widget_15</zorder>
      <zorder>greyBG_62</zorder>
      <zorder>greyBG_61</zorder>
      <zorder>greyBG_60</zorder>
      <zorder>greyBG_59</zorder>
      <zorder>spBackButton</zorder>
+     <zorder>chargeButton_14</zorder>
+    </widget>
+    <widget class="QWidget" name="batteryChargingPage">
+     <widget class="QProgressBar" name="battery_3">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>190</y>
+        <width>341</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>100</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="h1_7">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>100</y>
+        <width>301</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Battery Charging...</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_66" native="true">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>10</y>
+        <width>171</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+      <widget class="QPushButton" name="powerbutton_29">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>170</y>
+         <width>131</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/icons/ui-elements/icons8-power-button-100.png</normaloff>:/icons/ui-elements/icons8-power-button-100.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="power" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="greyBG_65" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>41</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_63" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>-4</y>
+        <width>941</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="chargeButton_15">
+      <property name="geometry">
+       <rect>
+        <x>960</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_64" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>420</y>
+        <width>941</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="widget_16" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>961</width>
+        <height>491</height>
+       </rect>
+      </property>
+      <property name="device" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <zorder>h1_7</zorder>
+     <zorder>battery_3</zorder>
+     <zorder>greyBG_66</zorder>
+     <zorder>greyBG_65</zorder>
+     <zorder>greyBG_63</zorder>
+     <zorder>chargeButton_15</zorder>
+     <zorder>greyBG_64</zorder>
+     <zorder>widget_16</zorder>
+    </widget>
+    <widget class="QWidget" name="batteryLowPage">
+     <widget class="QWidget" name="greyBG_67" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>41</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_68" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>-4</y>
+        <width>941</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="chargeButton_16">
+      <property name="geometry">
+       <rect>
+        <x>960</x>
+        <y>150</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_69" native="true">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>10</y>
+        <width>171</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+      <widget class="QPushButton" name="powerbutton_30">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>170</y>
+         <width>131</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/icons/ui-elements/icons8-power-button-100.png</normaloff>:/icons/ui-elements/icons8-power-button-100.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="power" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget_17" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>961</width>
+        <height>491</height>
+       </rect>
+      </property>
+      <property name="device" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_70" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>420</y>
+        <width>941</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="h1_8">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>100</y>
+        <width>301</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Shutting down...</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="heading" stdset="0">
+       <string>h1</string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="battery_4">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>190</y>
+        <width>341</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

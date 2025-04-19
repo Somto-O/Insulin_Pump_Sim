@@ -171,6 +171,18 @@ QPushButton[power=true] {
     color: #E0E0E0;
 }
 
+QPushButton[charge=true] {
+    background-color: #2A2A2A;
+    border: 2px solid #FFFFFF;
+    color: #E0E0E0;
+}
+
+QPushButton[charge=true]:pressed{
+    background-color: green;
+    border: 2px solid #FFFFFF;
+    color: #E0E0E0;
+}
+
 QPushButton[power=true]:pressed {
     background-color: #003F7F;
     border-color: #0056b3;
