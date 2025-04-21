@@ -276,10 +276,10 @@ public:
     QPushButton *chargeButton_16;
     QWidget *greyBG_69;
     QPushButton *powerbutton_30;
-    QWidget *widget_17;
+    QWidget *ShutDownPage;
     QWidget *greyBG_70;
     QLabel *h1_8;
-    QProgressBar *battery_4;
+    QProgressBar *deadBattery;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -1548,10 +1548,10 @@ public:
         powerbutton_30->setIcon(icon);
         powerbutton_30->setIconSize(QSize(50, 50));
         powerbutton_30->setProperty("power", QVariant(true));
-        widget_17 = new QWidget(batteryLowPage);
-        widget_17->setObjectName(QString::fromUtf8("widget_17"));
-        widget_17->setGeometry(QRect(0, 0, 961, 491));
-        widget_17->setProperty("device", QVariant(true));
+        ShutDownPage = new QWidget(batteryLowPage);
+        ShutDownPage->setObjectName(QString::fromUtf8("ShutDownPage"));
+        ShutDownPage->setGeometry(QRect(0, 0, 961, 491));
+        ShutDownPage->setProperty("device", QVariant(true));
         greyBG_70 = new QWidget(batteryLowPage);
         greyBG_70->setObjectName(QString::fromUtf8("greyBG_70"));
         greyBG_70->setGeometry(QRect(10, 420, 941, 61));
@@ -1560,10 +1560,12 @@ public:
         h1_8->setObjectName(QString::fromUtf8("h1_8"));
         h1_8->setGeometry(QRect(280, 100, 301, 101));
         h1_8->setAlignment(Qt::AlignCenter);
-        battery_4 = new QProgressBar(batteryLowPage);
-        battery_4->setObjectName(QString::fromUtf8("battery_4"));
-        battery_4->setGeometry(QRect(260, 190, 341, 121));
-        battery_4->setValue(0);
+        deadBattery = new QProgressBar(batteryLowPage);
+        deadBattery->setObjectName(QString::fromUtf8("deadBattery"));
+        deadBattery->setGeometry(QRect(260, 190, 341, 121));
+        deadBattery->setLayoutDirection(Qt::RightToLeft);
+        deadBattery->setAutoFillBackground(false);
+        deadBattery->setValue(3);
         stackedWidget->addWidget(batteryLowPage);
         MainWindow->setCentralWidget(centralwidget);
 

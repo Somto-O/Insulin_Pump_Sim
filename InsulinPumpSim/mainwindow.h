@@ -66,6 +66,8 @@ public:
 
     void startInsulinPump();
 
+    //void startBatteryBlink();
+
     // Declare buttons
     QPushButton* createProfileButton;
     QPushButton* viewProfileButton;
@@ -74,6 +76,7 @@ public:
     QPushButton* graphViewsButton;
 
 private slots:
+    void updateSensorDisplay(float mmol);
 
     void on_graphViewsButton_clicked();  // handles range switching
 
@@ -128,7 +131,7 @@ private slots:
 
     void on_deleteProfileButton_clicked();
 
-    void changePageToBatteryLow();
+    //void changePageToBatteryLow();
 
     void on_profilesCreatedLogButton_clicked();
 
@@ -145,7 +148,9 @@ private slots:
 
     bool eventFilter(QObject *obj, QEvent *event) override;
 
+    void goToOffScreen();
 
+    void beginShutdownSequence();
 
 private:
     Ui::MainWindow *ui;
@@ -165,6 +170,15 @@ private:
     QDateTime simulationStartTime;
     QDateTime currentSimulatedTime;
     int currentGraphRange = 1;  // 1 = 1h, 3 = 3h, 6 = 6h
+
+    float batteryLevel;
+
+
+    QTimer* batteryBlinkTimer = nullptr;
+    bool batteryVisible = true;
+
+    void startBatteryBlink();
+
 
 
 

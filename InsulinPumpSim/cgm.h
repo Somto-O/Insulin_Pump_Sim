@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 
+
 class CGM : public QObject
 {
     Q_OBJECT
@@ -25,7 +26,9 @@ signals:
 private slots:
     void monitorGlucose();
 
+
 private:
+
     float sensorData;
     QTimer monitorTimer;
     int disconnectCounter;

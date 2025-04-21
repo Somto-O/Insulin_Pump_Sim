@@ -42,7 +42,11 @@ MainWindow::MainWindow(QWidget* parent)
     // Battery updates
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
-    connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::changePageToBatteryLow);
+    connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::beginShutdownSequence);
+    connect(insulinPump, &InsulinPump::batteryCritical, this, &MainWindow::startBatteryBlink);
+
+    connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::updateSensorDisplay);
+
 
     connect(ui->graphViewsButton, &QPushButton::clicked, this, &MainWindow::on_graphViewsButton_clicked);
 
@@ -59,9 +63,23 @@ MainWindow::MainWindow(QWidget* parent)
     // First clock update
     updateClock();
 
+
+    batteryLevel = insulinPump->getBatteryLevel();
+
+
+
+
+
     // Lock screen inactivity timer
     inactivityTimer = new QTimer(this);
     connect(inactivityTimer, &QTimer::timeout, this, &MainWindow::returnToLockPage);
+
+
+
+
+
+    ui->deadBattery->setTextVisible(false);
+
 
     qApp->installEventFilter(this);
 
@@ -76,12 +94,28 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::returnToLockPage() {
+
+    qDebug() <<  "Battery Level is: " <<  batteryLevel;
+    qDebug() <<  "I AM CAUSING THIS";
     ui->stackedWidget->setCurrentIndex(0);
     b1 = false;
     b2 = false;
 
 }
 
+void MainWindow::beginShutdownSequence() {
+
+
+    ui->stackedWidget->setCurrentIndex(15);  // Shutting down screen
+
+    QTimer::singleShot(3000, this, &MainWindow::goToOffScreen);  // Simulate time passing
+}
+
+
+
+void MainWindow::goToOffScreen() {
+    ui->stackedWidget->setCurrentIndex(9); // Assuming 11 is the "Off" screen
+}
 
 
 void MainWindow::updateClock() {
@@ -93,6 +127,18 @@ void MainWindow::updateClock() {
     ui->clockLabel2->setText(displayTime);
 }
 
+void MainWindow::startBatteryBlink() {
+    if (!batteryBlinkTimer) {
+        batteryBlinkTimer = new QTimer(this);
+    }
+
+    connect(batteryBlinkTimer, &QTimer::timeout, this, [=]() {
+        batteryVisible = !batteryVisible;
+        ui->deadBattery->setVisible(batteryVisible);
+    });
+
+    batteryBlinkTimer->start(300); // Blink every 500 ms
+}
 
 
 
@@ -192,9 +238,9 @@ void MainWindow::updateBatteryDisplay2(float newLevel) {
     }
 }
 
-void MainWindow::changePageToBatteryLow() {
-    ui->stackedWidget->setCurrentIndex(9);
-}
+//void MainWindow::changePageToBatteryLow() {
+//    ui->stackedWidget->setCurrentIndex(9);
+//}
 
 
 
@@ -498,6 +544,8 @@ void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton* button) 
     }
 }
 
+
+
 void MainWindow::on_profilesCreatedLogButton_clicked()
 {
     QStringList logData = History::viewData("ProfileCreated").split("\n", Qt::SkipEmptyParts);
@@ -543,6 +591,8 @@ void MainWindow::on_alertLogButton_clicked()
     ui->dlDisplayBox->addItems(logData);
     ui->stackedWidget->setCurrentIndex(12);
 }
+
+
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::KeyPress) {
@@ -675,21 +725,19 @@ void MainWindow::handleNewGlucoseReading(float level) {
 
     // BG response logic
     if (level >= 10.0f) {
-        qDebug() << "[Auto-Bolus] High BG detected:" << level << "→ Triggering insulin pump.";
+       // qDebug() << "[Auto-Bolus] High BG detected:" << level << "→ Triggering insulin pump.";
         startInsulinPump();
     } else if (level <= 3.9f) {
-        qDebug() << "[Alert] Low BG detected:" << level;
+       // qDebug() << "[Alert] Low BG detected:" << level;
         // Optional: Stop insulin delivery here
     } else {
-        qDebug() << "[Normal] BG level is within normal range:" << level;
+       // qDebug() << "[Normal] BG level is within normal range:" << level;
     }
 
     // ✅ Calculate it here
     int maxPoints = (currentGraphRange * 60) / 5;
     displayGlucoseGraph(maxPoints);
 }
-
-
 
 
 void MainWindow::startInsulinPump() {
@@ -714,8 +762,6 @@ void MainWindow::startInsulinPump() {
 
 
 
-
-
 void MainWindow::on_graphViewsButton_clicked() {
     // Cycle through 1 → 3 → 6 → 1
     if (currentGraphRange == 1)
@@ -734,6 +780,21 @@ void MainWindow::on_graphViewsButton_clicked() {
 }
 
 
+
+void MainWindow::updateSensorDisplay(float mmol) {
+    ui->sensorValue->setText(QString("%1 mmol/L").arg(mmol, 0, 'f', 1));
+
+    // Optional color coding
+    QString color;
+    if (mmol >= 10.0f)
+        color = "red";
+    else if (mmol <= 3.9f)
+        color = "orange";
+    else
+        color = "green";
+
+    ui->sensorValue->setStyleSheet(QString("color: %1;").arg(color));
+}
 
 
 

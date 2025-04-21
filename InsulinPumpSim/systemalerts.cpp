@@ -43,7 +43,7 @@ void SystemAlerts::logAlert(const string& alertMessage)
 // Function to escalate an alert
 void SystemAlerts::escalateAlert(const string& alertMessage) {
     // More aggressive escalation (e.g., critical error popup)
-    QMessageBox::critical(nullptr, "Critical Alert", QString::fromStdString(alertMessage + "\nImmediate action required!"));
+   // QMessageBox::critical(nullptr, "Critical Alert", QString::fromStdString(alertMessage + "\nImmediate action required!"));
 
     // Log the escalation
     logAlert("ESCALATED: " + alertMessage);

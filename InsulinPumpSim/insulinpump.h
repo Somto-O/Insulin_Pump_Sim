@@ -25,11 +25,16 @@ public:
     void stopDelivery();
     void viewStatus();
     void deliverExtendedBolus(float unitsPerHour, int durationHours);
+    float getBatteryLevel() const;
+    float setBatteryLevel(){
+        return batteryLevel =0;
+    }
 
 
 signals:
     void batteryLevelChanged(float newLevel);  // Signal to update UI
     void batteryDepleted(); // Signal for battery = 0
+    void batteryCritical();
 
 private slots:
     void drainBattery();  // Function to decrease battery over time

@@ -1,6 +1,7 @@
 #include "insulinpump.h"
 #include "systemalerts.h"
 #include "mainwindow.h"
+#include "QDebug"
 
 InsulinPump::InsulinPump() : status("Idle"), batteryLevel(100.0f),
     hourlyBolusAmount(0.0f), remainingHours(0)
@@ -8,7 +9,7 @@ InsulinPump::InsulinPump() : status("Idle"), batteryLevel(100.0f),
     // Battery timer
     batteryTimer = new QTimer(this);
     connect(batteryTimer, &QTimer::timeout, this, &InsulinPump::drainBattery);
-    batteryTimer->start(3000); // Drain every 3 seconds
+    batteryTimer->start(1000); // Drain every 3 seconds
 
     // Extended bolus timer
     extendedBolusTimer = new QTimer(this);
@@ -42,8 +43,9 @@ void InsulinPump::viewStatus()
 // Battery drain logic
 void InsulinPump::drainBattery()
 {
+
     if (batteryLevel > 0) {
-        batteryLevel -= 1;
+        batteryLevel -= 10;
         emit batteryLevelChanged(batteryLevel);
 
         if (batteryLevel == 20) {
@@ -51,12 +53,18 @@ void InsulinPump::drainBattery()
         } else if (batteryLevel == 5) {
             SystemAlerts::escalateAlert("Battery critically low! Charge immediately.");
         } else if (batteryLevel == 0) {
+            qDebug() << "this is the batterylevel:" << batteryLevel;
+
             emit batteryDepleted();
             batteryTimer->stop();
+            emit batteryCritical();
             extendedBolusTimer->stop();
             SystemAlerts::escalateAlert("Battery depleted. System shutting down.");
         }
+
+
     }
+
 }
 
 // Extended bolus delivery
@@ -93,4 +101,8 @@ void InsulinPump::deliverHourlyBolus()
         stopDelivery();
         extendedBolusTimer->stop();
     }
+}
+
+float InsulinPump::getBatteryLevel() const{
+    return batteryLevel;
 }

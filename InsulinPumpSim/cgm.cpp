@@ -14,7 +14,7 @@ CGM::CGM(QObject* parent)
 void CGM::startMonitoring()
 {
     monitorTimer.start(1000); // readings every 1 second
-    qDebug() << "CGM monitoring started in state:" << static_cast<int>(currentState);
+   // qDebug() << "CGM monitoring started in state:" << static_cast<int>(currentState);
 }
 
 float CGM::getGlucoseLevel() const
@@ -31,7 +31,7 @@ void CGM::setState(State newState)
 {
     if (newState != currentState) {
         currentState = newState;
-        qDebug() << "CGM state changed to:" << static_cast<int>(currentState);
+      //  qDebug() << "CGM state changed to:" << static_cast<int>(currentState);
         emit stateChanged(currentState);
     }
 }
@@ -63,13 +63,15 @@ void CGM::monitorGlucose()
     }
 
     float mmol = sensorData / 18.0f;  // Convert from mg/dL to mmol/L
-    qDebug() << "[CGM] State:" << static_cast<int>(currentState)
-             << " Glucose:" << mmol << "mmol/L";
+    //qDebug() << "[CGM] State:" << static_cast<int>(currentState)
+         //    << " Glucose:" << mmol << "mmol/L";
+
+
 
     emit glucoseLevelUpdated(mmol);
 
     if (++disconnectCounter >= 5) {
-        qDebug() << "Sensor disconnected!";
+       // qDebug() << "Sensor disconnected!";
         emit sensorDisconnected();
         disconnectCounter = 0;
     }
