@@ -58,7 +58,7 @@ public:
 
     void setLockScreenState(bool locked);
 
-
+    void setupConnections();
 
     void updateClock();
 
