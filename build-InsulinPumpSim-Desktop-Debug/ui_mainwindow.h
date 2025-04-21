@@ -50,7 +50,7 @@ public:
     QPushButton *unlock2;
     QWidget *greyBG_5;
     QWidget *greyBG_6;
-    QPushButton *powerbutton_4;
+    QPushButton *lockPowerButton;
     QWidget *greyBG_7;
     QWidget *greyBG_8;
     QWidget *widget_3;
@@ -117,7 +117,7 @@ public:
     QWidget *widget_6;
     QWidget *verticalLayoutWidget_5;
     QVBoxLayout *verticalLayout_6;
-    QPushButton *pumpSettingsButton;
+    QPushButton *selectProfileButton;
     QPushButton *addProfileButton;
     QPushButton *updateProfileButton;
     QPushButton *deleteProfileButton;
@@ -194,6 +194,7 @@ public:
     QPushButton *chargeButton_9;
     QWidget *batteryDeadPage;
     QWidget *widget_11;
+    QLabel *h1_7;
     QWidget *greyBG_43;
     QWidget *greyBG_44;
     QWidget *greyBG_45;
@@ -262,7 +263,7 @@ public:
     QPushButton *chargeButton_14;
     QWidget *batteryChargingPage;
     QProgressBar *battery_3;
-    QLabel *h1_7;
+    QLabel *batLabel;
     QWidget *greyBG_66;
     QPushButton *powerbutton_29;
     QWidget *greyBG_65;
@@ -280,17 +281,29 @@ public:
     QWidget *greyBG_70;
     QLabel *h1_8;
     QProgressBar *deadBattery;
+    QWidget *activateProfile;
+    QWidget *widget_47;
+    QDialogButtonBox *apButtonBox;
+    QListWidget *apDisplayBox;
+    QLabel *h1_28;
+    QWidget *greyBG_193;
+    QWidget *greyBG_194;
+    QWidget *greyBG_195;
+    QPushButton *chargeButton_49;
+    QWidget *greyBG_196;
+    QPushButton *powerbutton_59;
+    QPushButton *apBackButton;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1059, 553);
+        MainWindow->resize(1097, 582);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        stackedWidget->setGeometry(QRect(-10, 0, 1051, 561));
+        stackedWidget->setGeometry(QRect(0, 0, 1051, 561));
         lockScreen = new QWidget();
         lockScreen->setObjectName(QString::fromUtf8("lockScreen"));
         horizontalLayoutWidget_2 = new QWidget(lockScreen);
@@ -363,14 +376,14 @@ public:
         greyBG_6->setObjectName(QString::fromUtf8("greyBG_6"));
         greyBG_6->setGeometry(QRect(790, 10, 171, 431));
         greyBG_6->setProperty("bodyBG", QVariant(true));
-        powerbutton_4 = new QPushButton(greyBG_6);
-        powerbutton_4->setObjectName(QString::fromUtf8("powerbutton_4"));
-        powerbutton_4->setGeometry(QRect(20, 170, 131, 121));
+        lockPowerButton = new QPushButton(greyBG_6);
+        lockPowerButton->setObjectName(QString::fromUtf8("lockPowerButton"));
+        lockPowerButton->setGeometry(QRect(20, 170, 131, 121));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/icons/ui-elements/icons8-power-button-100.png"), QSize(), QIcon::Normal, QIcon::Off);
-        powerbutton_4->setIcon(icon);
-        powerbutton_4->setIconSize(QSize(50, 50));
-        powerbutton_4->setProperty("power", QVariant(true));
+        lockPowerButton->setIcon(icon);
+        lockPowerButton->setIconSize(QSize(50, 50));
+        lockPowerButton->setProperty("power", QVariant(true));
         greyBG_7 = new QWidget(lockScreen);
         greyBG_7->setObjectName(QString::fromUtf8("greyBG_7"));
         greyBG_7->setGeometry(QRect(20, -4, 941, 21));
@@ -725,12 +738,12 @@ public:
         verticalLayout_6 = new QVBoxLayout(verticalLayoutWidget_5);
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         verticalLayout_6->setContentsMargins(0, 0, 0, 0);
-        pumpSettingsButton = new QPushButton(verticalLayoutWidget_5);
-        pumpSettingsButton->setObjectName(QString::fromUtf8("pumpSettingsButton"));
-        sizePolicy1.setHeightForWidth(pumpSettingsButton->sizePolicy().hasHeightForWidth());
-        pumpSettingsButton->setSizePolicy(sizePolicy1);
+        selectProfileButton = new QPushButton(verticalLayoutWidget_5);
+        selectProfileButton->setObjectName(QString::fromUtf8("selectProfileButton"));
+        sizePolicy1.setHeightForWidth(selectProfileButton->sizePolicy().hasHeightForWidth());
+        selectProfileButton->setSizePolicy(sizePolicy1);
 
-        verticalLayout_6->addWidget(pumpSettingsButton);
+        verticalLayout_6->addWidget(selectProfileButton);
 
         addProfileButton = new QPushButton(verticalLayoutWidget_5);
         addProfileButton->setObjectName(QString::fromUtf8("addProfileButton"));
@@ -1139,6 +1152,10 @@ public:
         widget_11->setObjectName(QString::fromUtf8("widget_11"));
         widget_11->setGeometry(QRect(10, 0, 961, 491));
         widget_11->setProperty("device", QVariant(true));
+        h1_7 = new QLabel(widget_11);
+        h1_7->setObjectName(QString::fromUtf8("h1_7"));
+        h1_7->setGeometry(QRect(210, 180, 371, 81));
+        h1_7->setAlignment(Qt::AlignCenter);
         greyBG_43 = new QWidget(batteryDeadPage);
         greyBG_43->setObjectName(QString::fromUtf8("greyBG_43"));
         greyBG_43->setGeometry(QRect(20, 10, 41, 441));
@@ -1476,11 +1493,12 @@ public:
         battery_3 = new QProgressBar(batteryChargingPage);
         battery_3->setObjectName(QString::fromUtf8("battery_3"));
         battery_3->setGeometry(QRect(260, 190, 341, 121));
+        battery_3->setLayoutDirection(Qt::RightToLeft);
         battery_3->setValue(100);
-        h1_7 = new QLabel(batteryChargingPage);
-        h1_7->setObjectName(QString::fromUtf8("h1_7"));
-        h1_7->setGeometry(QRect(280, 100, 301, 101));
-        h1_7->setAlignment(Qt::AlignCenter);
+        batLabel = new QLabel(batteryChargingPage);
+        batLabel->setObjectName(QString::fromUtf8("batLabel"));
+        batLabel->setGeometry(QRect(280, 100, 301, 101));
+        batLabel->setAlignment(Qt::AlignCenter);
         greyBG_66 = new QWidget(batteryChargingPage);
         greyBG_66->setObjectName(QString::fromUtf8("greyBG_66"));
         greyBG_66->setGeometry(QRect(780, 10, 171, 431));
@@ -1512,9 +1530,10 @@ public:
         widget_16 = new QWidget(batteryChargingPage);
         widget_16->setObjectName(QString::fromUtf8("widget_16"));
         widget_16->setGeometry(QRect(0, 0, 961, 491));
+        widget_16->setLayoutDirection(Qt::RightToLeft);
         widget_16->setProperty("device", QVariant(true));
         stackedWidget->addWidget(batteryChargingPage);
-        h1_7->raise();
+        batLabel->raise();
         battery_3->raise();
         greyBG_66->raise();
         greyBG_65->raise();
@@ -1567,11 +1586,63 @@ public:
         deadBattery->setAutoFillBackground(false);
         deadBattery->setValue(3);
         stackedWidget->addWidget(batteryLowPage);
+        activateProfile = new QWidget();
+        activateProfile->setObjectName(QString::fromUtf8("activateProfile"));
+        widget_47 = new QWidget(activateProfile);
+        widget_47->setObjectName(QString::fromUtf8("widget_47"));
+        widget_47->setGeometry(QRect(0, 4, 961, 491));
+        widget_47->setProperty("device", QVariant(true));
+        apButtonBox = new QDialogButtonBox(widget_47);
+        apButtonBox->setObjectName(QString::fromUtf8("apButtonBox"));
+        apButtonBox->setGeometry(QRect(320, 350, 211, 51));
+        apButtonBox->setLayoutDirection(Qt::LeftToRight);
+        apButtonBox->setOrientation(Qt::Horizontal);
+        apButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        apButtonBox->setCenterButtons(true);
+        apDisplayBox = new QListWidget(widget_47);
+        apDisplayBox->setObjectName(QString::fromUtf8("apDisplayBox"));
+        apDisplayBox->setGeometry(QRect(170, 130, 511, 211));
+        h1_28 = new QLabel(widget_47);
+        h1_28->setObjectName(QString::fromUtf8("h1_28"));
+        h1_28->setGeometry(QRect(240, 40, 371, 81));
+        h1_28->setAlignment(Qt::AlignCenter);
+        greyBG_193 = new QWidget(activateProfile);
+        greyBG_193->setObjectName(QString::fromUtf8("greyBG_193"));
+        greyBG_193->setGeometry(QRect(10, 424, 941, 61));
+        greyBG_193->setProperty("bodyBG", QVariant(true));
+        greyBG_194 = new QWidget(activateProfile);
+        greyBG_194->setObjectName(QString::fromUtf8("greyBG_194"));
+        greyBG_194->setGeometry(QRect(10, 0, 941, 21));
+        greyBG_194->setProperty("bodyBG", QVariant(true));
+        greyBG_195 = new QWidget(activateProfile);
+        greyBG_195->setObjectName(QString::fromUtf8("greyBG_195"));
+        greyBG_195->setGeometry(QRect(10, 14, 41, 441));
+        greyBG_195->setProperty("bodyBG", QVariant(true));
+        chargeButton_49 = new QPushButton(activateProfile);
+        chargeButton_49->setObjectName(QString::fromUtf8("chargeButton_49"));
+        chargeButton_49->setGeometry(QRect(960, 154, 51, 181));
+        chargeButton_49->setIcon(icon1);
+        chargeButton_49->setIconSize(QSize(25, 25));
+        chargeButton_49->setProperty("charge", QVariant(true));
+        greyBG_196 = new QWidget(activateProfile);
+        greyBG_196->setObjectName(QString::fromUtf8("greyBG_196"));
+        greyBG_196->setGeometry(QRect(780, 14, 171, 431));
+        greyBG_196->setProperty("bodyBG", QVariant(true));
+        powerbutton_59 = new QPushButton(greyBG_196);
+        powerbutton_59->setObjectName(QString::fromUtf8("powerbutton_59"));
+        powerbutton_59->setGeometry(QRect(20, 170, 131, 121));
+        powerbutton_59->setIcon(icon);
+        powerbutton_59->setIconSize(QSize(50, 50));
+        powerbutton_59->setProperty("power", QVariant(true));
+        apBackButton = new QPushButton(activateProfile);
+        apBackButton->setObjectName(QString::fromUtf8("apBackButton"));
+        apBackButton->setGeometry(QRect(60, 34, 81, 31));
+        stackedWidget->addWidget(activateProfile);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(15);
+        stackedWidget->setCurrentIndex(9);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1587,7 +1658,7 @@ public:
         unlock1->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
         unlock3->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
         unlock2->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
-        powerbutton_4->setText(QString());
+        lockPowerButton->setText(QString());
         chargeButton->setText(QString());
         label->setText(QCoreApplication::translate("MainWindow", "INSULIN ON BOARD", nullptr));
         bolusButton->setText(QCoreApplication::translate("MainWindow", "Bolus", nullptr));
@@ -1616,7 +1687,7 @@ public:
         pushButton_16->setText(QCoreApplication::translate("MainWindow", "Pump Info", nullptr));
         chargeButton_4->setText(QString());
         powerbutton_17->setText(QString());
-        pumpSettingsButton->setText(QCoreApplication::translate("MainWindow", "Pump Settings", nullptr));
+        selectProfileButton->setText(QCoreApplication::translate("MainWindow", "Select Profile", nullptr));
         addProfileButton->setText(QCoreApplication::translate("MainWindow", "Create Profile", nullptr));
         updateProfileButton->setText(QCoreApplication::translate("MainWindow", "Update Profile", nullptr));
         deleteProfileButton->setText(QCoreApplication::translate("MainWindow", "Delete Profile", nullptr));
@@ -1652,6 +1723,8 @@ public:
         optionsLabel_2->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         powerbutton_22->setText(QString());
         chargeButton_9->setText(QString());
+        h1_7->setText(QString());
+        h1_7->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         powerbutton_24->setText(QString());
         chargeButton_10->setText(QString());
         powerbutton_25->setText(QString());
@@ -1687,14 +1760,19 @@ public:
         LABEL->setText(QCoreApplication::translate("MainWindow", "Profile Name", nullptr));
         LABEL->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         chargeButton_14->setText(QString());
-        h1_7->setText(QCoreApplication::translate("MainWindow", "Battery Charging...", nullptr));
-        h1_7->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
+        batLabel->setText(QCoreApplication::translate("MainWindow", "Battery Charging...", nullptr));
+        batLabel->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
         powerbutton_29->setText(QString());
         chargeButton_15->setText(QString());
         chargeButton_16->setText(QString());
         powerbutton_30->setText(QString());
         h1_8->setText(QCoreApplication::translate("MainWindow", "Shutting down...", nullptr));
         h1_8->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
+        h1_28->setText(QCoreApplication::translate("MainWindow", "Activate Profile", nullptr));
+        h1_28->setProperty("heading", QVariant(QCoreApplication::translate("MainWindow", "h1", nullptr)));
+        chargeButton_49->setText(QString());
+        powerbutton_59->setText(QString());
+        apBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
     } // retranslateUi
 
 };

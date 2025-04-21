@@ -106,3 +106,10 @@ void InsulinPump::deliverHourlyBolus()
 float InsulinPump::getBatteryLevel() const{
     return batteryLevel;
 }
+
+void InsulinPump::resetBattery() {
+    batteryLevel = 100.0f;
+    emit batteryLevelChanged(batteryLevel);
+    batteryTimer->start(1000); // Resume battery drain
+}
+

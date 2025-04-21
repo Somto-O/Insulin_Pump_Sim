@@ -43,7 +43,16 @@ MainWindow::MainWindow(QWidget* parent)
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::beginShutdownSequence);
+    connect(ui->powerbutton_24, &QPushButton::clicked, this, &MainWindow::startPowerOn);
+
+
     connect(insulinPump, &InsulinPump::batteryCritical, this, &MainWindow::startBatteryBlink);
+    connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryLevelValue);
+
+    connect(ui->chargeButton_10, &QPushButton::clicked, this, &MainWindow::startCharging);
+    ui->powerbutton_24->setEnabled(false);
+
+
 
     connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::updateSensorDisplay);
 
@@ -93,20 +102,51 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::returnToLockPage() {
 
-    qDebug() <<  "Battery Level is: " <<  batteryLevel;
-    qDebug() <<  "I AM CAUSING THIS";
+void MainWindow::updateBatteryLevelValue(float level) {
+    currentBatteryLevel = level;
+}
+
+
+void MainWindow::returnToLockPage() {
+    if (currentBatteryLevel <= 0.0f) {
+        qDebug() << "Battery is depleted. Lock screen not shown.";
+        return;
+    }
+
+    qDebug() << "Battery Level is:" << currentBatteryLevel;
+    qDebug() << "I AM CAUSING THIS";
+
     ui->stackedWidget->setCurrentIndex(0);
     b1 = false;
     b2 = false;
-
 }
 
-void MainWindow::beginShutdownSequence() {
 
+void MainWindow::startPowerOn() {
+    ui->h1_7->setText("Powering on...");
+
+    QTimer::singleShot(2000, this, [=]() {
+        ui->h1_7->clear();  // Clear the message before switching
+        // Set internal level and pump level back to full
+        currentBatteryLevel = 100.0f;
+        insulinPump->resetBattery();
+        ui->stackedWidget->setCurrentIndex(0);  // Lock screen
+    });
+}
+
+
+
+
+
+
+void MainWindow::beginShutdownSequence() {
+    if (inactivityTimer->isActive())
+        inactivityTimer->stop();
 
     ui->stackedWidget->setCurrentIndex(15);  // Shutting down screen
+    // Enable the power button now
+    ui->powerbutton_24->setEnabled(false);
 
     QTimer::singleShot(3000, this, &MainWindow::goToOffScreen);  // Simulate time passing
 }
@@ -116,6 +156,43 @@ void MainWindow::beginShutdownSequence() {
 void MainWindow::goToOffScreen() {
     ui->stackedWidget->setCurrentIndex(9); // Assuming 11 is the "Off" screen
 }
+
+void MainWindow::startCharging() {
+    chargingLevel = 0;
+    ui->battery_3->setValue(0);
+    ui->batLabel->setText("Battery charging...");
+    ui->stackedWidget->setCurrentIndex(14);  // Charging screen index
+
+    if (!chargingTimer)
+        chargingTimer = new QTimer(this);
+
+    connect(chargingTimer, &QTimer::timeout, this, &MainWindow::simulateCharging, Qt::UniqueConnection);
+    chargingTimer->start(50); // Fast charging simulation
+}
+
+
+
+void MainWindow::simulateCharging() {
+    chargingLevel += 5;
+    ui->battery_3->setValue(chargingLevel);
+
+    if (chargingLevel >= 100) {
+        chargingTimer->stop();
+        ui->batLabel->setText("Battery charged.");
+
+
+        // Enable the power button now
+        ui->powerbutton_24->setEnabled(true);
+
+
+        // Go to off screen and wait for user to press power
+        QTimer::singleShot(1500, this, [=]() {
+            ui->stackedWidget->setCurrentIndex(9); // Off screen
+        });
+    }
+}
+
+
 
 
 void MainWindow::updateClock() {
@@ -799,4 +876,16 @@ void MainWindow::updateSensorDisplay(float mmol) {
 
 
 
+
+
+void MainWindow::on_selectProfileButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(16);
+}
+
+
+void MainWindow::on_apBackButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
 

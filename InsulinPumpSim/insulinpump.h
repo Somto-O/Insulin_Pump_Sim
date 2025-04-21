@@ -29,6 +29,7 @@ public:
     float setBatteryLevel(){
         return batteryLevel =0;
     }
+    void resetBattery();
 
 
 signals:

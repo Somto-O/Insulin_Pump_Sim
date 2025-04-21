@@ -69,6 +69,7 @@ public:
     //void startBatteryBlink();
 
     // Declare buttons
+    QPushButton* selectProfileButton;
     QPushButton* createProfileButton;
     QPushButton* viewProfileButton;
     QPushButton* updateProfileButton;
@@ -151,6 +152,16 @@ private slots:
     void goToOffScreen();
 
     void beginShutdownSequence();
+    void updateBatteryLevelValue(float level);
+
+    void on_selectProfileButton_clicked();
+
+    void on_apBackButton_clicked();
+
+    void startCharging();
+    void simulateCharging();
+
+    void startPowerOn();
 
 private:
     Ui::MainWindow *ui;
@@ -170,15 +181,14 @@ private:
     QDateTime simulationStartTime;
     QDateTime currentSimulatedTime;
     int currentGraphRange = 1;  // 1 = 1h, 3 = 3h, 6 = 6h
-
+    float currentBatteryLevel = 100.0f;
     float batteryLevel;
-
-
     QTimer* batteryBlinkTimer = nullptr;
     bool batteryVisible = true;
-
     void startBatteryBlink();
 
+    QTimer* chargingTimer = nullptr;
+    int chargingLevel = 0;
 
 
 

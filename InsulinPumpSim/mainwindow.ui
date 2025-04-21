@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1059</width>
-    <height>553</height>
+    <width>1097</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,14 +17,14 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>-10</x>
+      <x>0</x>
       <y>0</y>
       <width>1051</width>
       <height>561</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>15</number>
+     <number>9</number>
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -213,7 +213,7 @@
       <property name="bodyBG" stdset="0">
        <bool>true</bool>
       </property>
-      <widget class="QPushButton" name="powerbutton_4">
+      <widget class="QPushButton" name="lockPowerButton">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -1169,7 +1169,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QPushButton" name="pumpSettingsButton">
+         <widget class="QPushButton" name="selectProfileButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -1177,7 +1177,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Pump Settings</string>
+           <string>Select Profile</string>
           </property>
          </widget>
         </item>
@@ -2220,6 +2220,25 @@
       <property name="device" stdset="0">
        <bool>true</bool>
       </property>
+      <widget class="QLabel" name="h1_7">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>180</y>
+         <width>371</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="heading" stdset="0">
+        <string>h1</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="greyBG_43" native="true">
       <property name="geometry">
@@ -3173,11 +3192,14 @@
         <height>121</height>
        </rect>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
       <property name="value">
        <number>100</number>
       </property>
      </widget>
-     <widget class="QLabel" name="h1_7">
+     <widget class="QLabel" name="batLabel">
       <property name="geometry">
        <rect>
         <x>280</x>
@@ -3309,11 +3331,14 @@
         <height>491</height>
        </rect>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
       <property name="device" stdset="0">
        <bool>true</bool>
       </property>
      </widget>
-     <zorder>h1_7</zorder>
+     <zorder>batLabel</zorder>
      <zorder>battery_3</zorder>
      <zorder>greyBG_66</zorder>
      <zorder>greyBG_65</zorder>
@@ -3476,6 +3501,189 @@
       </property>
       <property name="value">
        <number>3</number>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="activateProfile">
+     <widget class="QWidget" name="widget_47" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>4</y>
+        <width>961</width>
+        <height>491</height>
+       </rect>
+      </property>
+      <property name="device" stdset="0">
+       <bool>true</bool>
+      </property>
+      <widget class="QDialogButtonBox" name="apButtonBox">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>350</y>
+         <width>211</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+       <property name="centerButtons">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="apDisplayBox">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>130</y>
+         <width>511</width>
+         <height>211</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="h1_28">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>40</y>
+         <width>371</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Activate Profile</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="heading" stdset="0">
+        <string>h1</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="greyBG_193" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>424</y>
+        <width>941</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_194" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>941</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_195" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>14</y>
+        <width>41</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="chargeButton_49">
+      <property name="geometry">
+       <rect>
+        <x>960</x>
+        <y>154</y>
+        <width>51</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/ui-elements/icons8-power-100.png</normaloff>:/icons/ui-elements/icons8-power-100.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="charge" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="greyBG_196" native="true">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>14</y>
+        <width>171</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <property name="bodyBG" stdset="0">
+       <bool>true</bool>
+      </property>
+      <widget class="QPushButton" name="powerbutton_59">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>170</y>
+         <width>131</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/icons/ui-elements/icons8-power-button-100.png</normaloff>:/icons/ui-elements/icons8-power-button-100.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="power" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="apBackButton">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>34</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
       </property>
      </widget>
     </widget>
