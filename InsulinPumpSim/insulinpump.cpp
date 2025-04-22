@@ -30,17 +30,39 @@ InsulinPump::InsulinPump()
 // =========================
 
 void InsulinPump::startDelivery() {
-    if (batteryLevel > 10 && insulinReservoir >= 0.5f) {
-        status = "Delivering insulin";
-        insulinReservoir -= 0.5f;  // Use insulin
-        emit reservoirLevelChanged(insulinReservoir);  // Notify UI
-        std::cout << "Delivering 0.5 units. Remaining: " << insulinReservoir << std::endl;
-    } else if (insulinReservoir < 0.5f) {
-        SystemAlerts::escalateAlert("Insulin reservoir empty!");
-    } else {
+    if (batteryLevel <= 10) {
         SystemAlerts::escalateAlert("Battery too low! Unable to deliver insulin.");
+        return;
+    }
+
+    if (insulinReservoir < 0.5f) {
+        SystemAlerts::escalateAlert("Insulin reservoir empty!");
+        return;
+    }
+
+    status = "Delivering insulin";
+    drainReservoir();  // Depletes insulin once per call
+    std::cout << "Insulin delivery triggered." << std::endl;
+}
+
+void InsulinPump::drainReservoir() {
+    if (insulinReservoir > 0.0f) {
+        insulinReservoir -= 2.0f;
+        if (insulinReservoir < 0.0f)
+            insulinReservoir = 0.0f;
+
+        emit reservoirLevelChanged(insulinReservoir);  // Triggers update in MainWindow
+
+        if (insulinReservoir <= 5.0f && insulinReservoir > 0.0f) {
+            SystemAlerts::triggerAlert("Insulin reservoir low!");
+        }
+
+        if (insulinReservoir == 0.0f) {
+            SystemAlerts::escalateAlert("Insulin reservoir depleted!");
+        }
     }
 }
+
 
 void InsulinPump::stopDelivery() {
     status = "Idle";
@@ -72,7 +94,7 @@ void InsulinPump::drainBattery() {
         } else if (batteryLevel == 5) {
             SystemAlerts::escalateAlert("Battery critically low! Charge immediately.");
         } else if (batteryLevel == 0) {
-            qDebug() << "this is the batterylevel:" << batteryLevel;
+            //qDebug() << "this is the batterylevel:" << batteryLevel;
 
             emit batteryDepleted();
             batteryTimer->stop();
@@ -87,6 +109,12 @@ void InsulinPump::resetBattery() {
     batteryLevel = 100.0f;
     emit batteryLevelChanged(batteryLevel);
     batteryTimer->start(1000); // Resume battery drain
+}
+
+void InsulinPump::resetInsulinResrvoir() {
+    insulinReservoir = 100.0f;
+    emit reservoirLevelChanged(insulinReservoir);
+
 }
 
 float InsulinPump::getBatteryLevel() const {

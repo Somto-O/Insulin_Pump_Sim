@@ -119,6 +119,13 @@ QProgressBar#insulinReservoir_2::chunk {
 }
 
 
+QProgressBar#insulinReservoir::chunk,
+QProgressBar#insulinReservoir::chunk {
+    background-color: #2980b9;
+    border-radius: 5px;
+}
+
+
 /*headings*/
 QLabel[heading="h1"]{
     font-size: 24px;

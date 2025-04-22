@@ -46,34 +46,38 @@ void CGM::monitorGlucose()
     constexpr float idleMin = 70.0f;           // 3.9 mmol/L
     constexpr float idleMax = 100.0f;          // 5.6 mmol/L
     constexpr float eatTarget = 180.0f;        // 10 mmol/L
-    constexpr float lowThreshold = 70.0f;      // 3.9 mmol/L
+    constexpr float lowThreshold = 50.0f;      // ~2.8 mmol/L
     constexpr float highThreshold = 100.0f;    // 5.6 mmol/L
     const float step = 7.0f;
 
     switch (currentState) {
     case State::Idle:
-        // Fluctuate normally within healthy range
         sensorData = idleMin + QRandomGenerator::global()->generateDouble() * (idleMax - idleMin);
         break;
 
     case State::Eating:
         sensorData += step;
         if (sensorData >= eatTarget) {
-            setState(State::Correction);  // Begin correction phase after peak
+            setState(State::Correction);
+        }
+        break;
+
+    case State::Fasting:
+        sensorData -= step;
+        if (sensorData <= lowThreshold) {
+            setState(State::Correction);  // Start correction if BG is too low
         }
         break;
 
     case State::Correction:
         if (sensorData > highThreshold) {
-            sensorData = qMax(sensorData - step, highThreshold);  // Correct hyperglycemia
+            sensorData = qMax(sensorData - step, highThreshold);
             if (sensorData <= highThreshold) setState(State::Idle);
-        }
-        else if (sensorData < lowThreshold) {
-            sensorData = qMin(sensorData + 1.0f, lowThreshold);  // Correct hypoglycemia
+        } else if (sensorData < lowThreshold) {
+            sensorData = qMin(sensorData + 1.0f, lowThreshold);
             if (sensorData >= lowThreshold) setState(State::Idle);
-        }
-        else {
-            setState(State::Idle);  // Already within target range
+        } else {
+            setState(State::Idle);
         }
         break;
     }
@@ -88,6 +92,3 @@ void CGM::monitorGlucose()
 }
 
 
-void CGM::simulateLowGlucose() {
-    sensorData = 50.0f;  // Start around 2.8 mmol/L
-}

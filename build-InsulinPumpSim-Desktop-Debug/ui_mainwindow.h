@@ -408,6 +408,7 @@ public:
         insulinReservoir->setEnabled(true);
         insulinReservoir->setGeometry(QRect(650, 20, 121, 31));
         insulinReservoir->setValue(100);
+        insulinReservoir->setTextVisible(false);
         chargeButton = new QPushButton(lockScreen);
         chargeButton->setObjectName(QString::fromUtf8("chargeButton"));
         chargeButton->setGeometry(QRect(970, 150, 51, 181));
@@ -519,6 +520,7 @@ public:
         insulinReservoir_2->setObjectName(QString::fromUtf8("insulinReservoir_2"));
         insulinReservoir_2->setGeometry(QRect(650, 20, 121, 31));
         insulinReservoir_2->setValue(100);
+        insulinReservoir_2->setTextVisible(false);
         greyBG_4->raise();
         greyBG->raise();
         greyBG_3->raise();

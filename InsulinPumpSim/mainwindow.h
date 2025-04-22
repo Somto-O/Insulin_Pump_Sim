@@ -168,6 +168,7 @@ private slots:
 
     void startPowerOn();
 
+    void updateReservoirDisplay(float level);
 
     void setCGMStateToIdle();
     void setCGMStateToEating();

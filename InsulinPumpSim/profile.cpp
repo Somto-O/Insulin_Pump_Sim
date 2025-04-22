@@ -221,7 +221,7 @@ void Profile::activateProfile(MainWindow* mw, const QString& profileName) {
             qDebug() << "Profile activated: " << profileName;
             qDebug() << "active basal rate" <<  activeBasalRate;
             qDebug() << "active carb ration"  <<  activeCarbRatio;
-            qDebug() << "active correection factor"  <<  activeCorrectionFactor;
+            qDebug() << "active correction factor"  <<  activeCorrectionFactor;
             qDebug() << "active target bg" <<  activeTargetBG;
 
             return;

@@ -11,7 +11,7 @@ BolusCalculator::BolusCalculator(CGM* cgm, InsulinPump* pump, QObject* parent)
 
 void BolusCalculator::calculateBolus(float carbIntake, float currentBG, float IOB)
 {
-    // 🔁 Use active profile values
+    // Use active profile values
     float insulinToCarbRatio = Profile::getActiveCarbRatio();
     float correctionFactor = Profile::getActiveCorrectionFactor();
     float targetBG = Profile::getActiveTargetBG();

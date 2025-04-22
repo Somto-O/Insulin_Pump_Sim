@@ -293,6 +293,9 @@
        <property name="value">
         <number>100</number>
        </property>
+       <property name="textVisible">
+        <bool>false</bool>
+       </property>
       </widget>
      </widget>
      <widget class="QPushButton" name="chargeButton">
@@ -588,6 +591,9 @@
        </property>
        <property name="value">
         <number>100</number>
+       </property>
+       <property name="textVisible">
+        <bool>false</bool>
        </property>
       </widget>
       <zorder>greyBG_4</zorder>

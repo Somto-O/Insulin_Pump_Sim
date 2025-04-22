@@ -10,7 +10,7 @@ class CGM : public QObject
     Q_OBJECT
 
 public:
-    enum class State { Idle, Eating, Correction };
+    enum class State { Idle, Eating, Correction, Fasting };
 
     explicit CGM(QObject* parent = nullptr);
     void startMonitoring();
@@ -18,7 +18,6 @@ public:
     float getGlucoseLevel() const;
     State getState() const;
     void setState(State newState);
-    void simulateLowGlucose();
 
 signals:
     void glucoseLevelUpdated(float level);

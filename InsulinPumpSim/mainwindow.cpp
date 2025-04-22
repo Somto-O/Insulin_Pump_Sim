@@ -5,6 +5,8 @@
 #include "systemalerts.h"
 #include "QDateTime"
 #include <QtCharts/QDateTimeAxis>
+#include <QtCharts/QLineSeries>
+
 
 
 
@@ -37,8 +39,8 @@ MainWindow::MainWindow(QWidget* parent)
     // Simulated Clock
     clockTimer = new QTimer(this);
     connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateClock);
-    clockTimer->start(1000);
-    updateClock();
+//    clockTimer->start(1000);
+//    updateClock();
 
     // Inactivity Timer
     inactivityTimer = new QTimer(this);
@@ -57,6 +59,7 @@ MainWindow::~MainWindow()
 
 
 
+
 // ==============================
 // Setup Connections
 // ==============================
@@ -69,7 +72,7 @@ void MainWindow::setupConnections()
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryLevelValue);
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::beginShutdownSequence);
     connect(insulinPump, &InsulinPump::batteryCritical, this, &MainWindow::startBatteryBlink);
-   // connect(insulinPump, &InsulinPump::reservoirLevelChanged, this, &MainWindow::updateReservoirDisplay);
+    connect(insulinPump, &InsulinPump::reservoirLevelChanged, this, &MainWindow::updateReservoirDisplay);
 
 
     // CGM
@@ -103,6 +106,43 @@ void MainWindow::setupConnections()
 
 
 
+void MainWindow::updateReservoirDisplay(float level) {
+    ui->insulinReservoir_2->setValue(static_cast<int>(level));
+    ui->insulinReservoir->setValue(static_cast<int>(level));
+
+    QString style = QString(
+        "QProgressBar#insulinReservoir_2 {"
+        "    border: 2px solid grey;"
+        "    border-radius: 5px;"
+        "    background: lightgray;"
+        "    text-align: center;"
+        "    color: white;"
+        "}"
+        "QProgressBar#insulinReservoir_2::chunk {"
+        "    background-color: #2980b9;"
+        "    border-radius: 5px;"
+        "}"
+    );
+
+    QString style1 = QString(
+        "QProgressBar#insulinReservoir {"
+        "    border: 2px solid grey;"
+        "    border-radius: 5px;"
+        "    background: lightgray;"
+        "    text-align: center;"
+        "    color: white;"
+        "}"
+        "QProgressBar#insulinReservoir::chunk {"
+        "    background-color: #2980b9;"
+        "    border-radius: 5px;"
+        "}");
+    ui->insulinReservoir_2->setStyleSheet(style);
+    ui->insulinReservoir->setStyleSheet(style1);
+}
+
+
+
+
 
 // ==============================
 // Event Filter & Clock
@@ -115,12 +155,17 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
 }
 
 void MainWindow::updateClock() {
+    if (!simulationRunning) return;
+
     simulatedMinutesElapsed += 5;
     currentSimulatedTime = simulationStartTime.addSecs(simulatedMinutesElapsed * 60);
+
     QString displayTime = currentSimulatedTime.toString("d MMM yyyy hh:mm AP");
     ui->clockLabel->setText(displayTime);
     ui->clockLabel2->setText(displayTime);
 }
+
+
 
 void MainWindow::returnToLockPage() {
     if (currentBatteryLevel <= 0.0f) return;
@@ -262,6 +307,7 @@ void MainWindow::startPowerOn() {
         ui->h1_7->clear();
         currentBatteryLevel = 100.0f;
         insulinPump->resetBattery();
+        insulinPump->resetInsulinResrvoir();
         ui->stackedWidget->setCurrentIndex(0);
     });
 }
@@ -307,10 +353,9 @@ void MainWindow::simulateCharging() {
 void MainWindow::handleNewGlucoseReading(float level) {
     if (!simulationRunning) return;
 
-    simulatedMinutesElapsed += 5;
-    currentSimulatedTime = currentSimulatedTime.addSecs(5 * 60);
-    glucoseDataPoints.append(qMakePair(currentSimulatedTime, level));
+    updateClock();  // Sync simulated time + UI clock
 
+    glucoseDataPoints.append(qMakePair(currentSimulatedTime, level));
 
     if (glucoseDataPoints.size() > 72)
         glucoseDataPoints.removeFirst();
@@ -322,6 +367,8 @@ void MainWindow::handleNewGlucoseReading(float level) {
     int maxPoints = (currentGraphRange * 60) / 5;
     displayGlucoseGraph(maxPoints);
 }
+
+
 
 void MainWindow::startInsulinPump() {
     if (insulinPump->getReservoirLevel() >= 0.5f) {
@@ -355,9 +402,8 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
     chart->addSeries(series);
     chart->setTitle("Blood Glucose Over Time (mmol/L)");
     chart->setTitleBrush(QBrush(Qt::white));
-    chart->setMargins(QMargins(10, 10, 10, 10));
+    chart->setMargins(QMargins(0, 0, 0, 0));  // Remove margins for more space
     chart->legend()->setLabelColor(Qt::white);
-
 
     QDateTime endTime = glucoseDataPoints.last().first;
     QDateTime startTime = endTime.addSecs(-currentGraphRange * 3600);
@@ -379,24 +425,43 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
     series->attachAxis(axisX);
     series->attachAxis(axisY);
 
-    // Set dark background for the entire chart
-    chart->setBackgroundBrush(QBrush(QColor("#121212")));
+    // Add red threshold line at 10 mmol/L
+    QtCharts::QLineSeries* redLine = new QtCharts::QLineSeries();
+    redLine->append(startTime.toMSecsSinceEpoch(), 10.0);
+    redLine->append(endTime.toMSecsSinceEpoch(), 10.0);
+    redLine->setColor(Qt::red);
+    redLine->setName("High Threshold");
+    chart->addSeries(redLine);
+    redLine->attachAxis(axisX);
+    redLine->attachAxis(axisY);
 
-    // Set dark background for the plot area
+    // Add orange threshold line at 3.9 mmol/L
+    QtCharts::QLineSeries* orangeLine = new QtCharts::QLineSeries();
+    orangeLine->append(startTime.toMSecsSinceEpoch(), 3.9);
+    orangeLine->append(endTime.toMSecsSinceEpoch(), 3.9);
+    orangeLine->setColor(QColor("orange"));
+    orangeLine->setName("Low Threshold");
+    chart->addSeries(orangeLine);
+    orangeLine->attachAxis(axisX);
+    orangeLine->attachAxis(axisY);
+
+    // Chart appearance
+    chart->setBackgroundBrush(QBrush(QColor("#121212")));
     chart->setPlotAreaBackgroundBrush(QBrush(QColor("#1e1e1e")));
     chart->setPlotAreaBackgroundVisible(true);
 
-    // Customize axes for dark mode
     axisX->setLabelsColor(Qt::white);
     axisX->setTitleBrush(QBrush(Qt::white));
     axisX->setGridLineColor(QColor("#555555"));
 
     axisY->setLabelsColor(Qt::white);
     axisY->setTitleBrush(QBrush(Qt::white));
-    axisY->setGridLineColor(QColor("#555555"));
+    axisY->setGridLineColor(Qt::transparent);  // Hide horizontal grid lines
 
     QtCharts::QChartView* chartView = new QtCharts::QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    chartView->setMinimumSize(ui->graphicsView->size());
 
     QGraphicsScene* scene = ui->graphicsView->scene();
     if (!scene) {
@@ -738,23 +803,21 @@ void MainWindow::startSimulation() {
 void MainWindow::stopSimulation() {
     simulationRunning = false;
     cgm->stopMonitoring();                     // Stop all BG generation
-    qDebug() << "[Simulation] Stopped";
 }
 
 
 void MainWindow::setCGMStateToIdle() {
     cgm->setState(CGM::State::Idle);
-    qDebug() << "[UI] CGM set to IDLE";
 }
 
 void MainWindow::setCGMStateToEating() {
     cgm->setState(CGM::State::Eating);
-    qDebug() << "[UI] CGM set to EATING";
+
 }
 
 void MainWindow::setCGMStateToFasting() {
-    cgm->setState(CGM::State::Correction);
-    cgm->simulateLowGlucose();  // manually drop to simulate hypoglycemia start
+    cgm->setState(CGM::State::Fasting);
+
 }
 
 
