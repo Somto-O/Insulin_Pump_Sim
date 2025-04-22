@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->bolusGraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->bolusGraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // Signal connections
     setupConnections();
@@ -69,6 +71,7 @@ void MainWindow::setupConnections()
     // Battery
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryDisplay2);
+    connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::bolusBatteryDisplay);
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryLevelValue);
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::beginShutdownSequence);
     connect(insulinPump, &InsulinPump::batteryCritical, this, &MainWindow::startBatteryBlink);
@@ -94,6 +97,7 @@ void MainWindow::setupConnections()
 
     // Graph view button
     connect(ui->graphViewsButton, &QPushButton::clicked, this, &MainWindow::on_graphViewsButton_clicked);
+    connect(ui->bolusGraphButton, &QPushButton::clicked, this, &MainWindow::on_bolusGraphButton_clicked);
 
     // Profiles
     connect(ui->spDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::onProfileSelected);
@@ -109,6 +113,7 @@ void MainWindow::setupConnections()
 void MainWindow::updateReservoirDisplay(float level) {
     ui->insulinReservoir_2->setValue(static_cast<int>(level));
     ui->insulinReservoir->setValue(static_cast<int>(level));
+    ui->bolusInsulinReservoir->setValue(static_cast<int>(level));
 
     QString style = QString(
         "QProgressBar#insulinReservoir_2 {"
@@ -136,9 +141,25 @@ void MainWindow::updateReservoirDisplay(float level) {
         "    background-color: #2980b9;"
         "    border-radius: 5px;"
         "}");
+
+    QString style2 = QString(
+        "QProgressBar#bolusInsulinReservoir {"
+        "    border: 2px solid grey;"
+        "    border-radius: 5px;"
+        "    background: lightgray;"
+        "    text-align: center;"
+        "    color: white;"
+        "}"
+        "QProgressBar#bolusInsulinReservoir::chunk {"
+        "    background-color: #2980b9;"
+        "    border-radius: 5px;"
+        "}");
+
     ui->insulinReservoir_2->setStyleSheet(style);
     ui->insulinReservoir->setStyleSheet(style1);
+    ui->bolusInsulinReservoir->setStyleSheet(style2);
 }
+
 
 
 
@@ -161,6 +182,9 @@ void MainWindow::updateClock() {
     QString displayTime = currentSimulatedTime.toString("d MMM yyyy hh:mm AP");
     ui->clockLabel->setText(displayTime);
     ui->clockLabel2->setText(displayTime);
+    ui->bolusClock->setText(displayTime);
+
+
 }
 
 void MainWindow::returnToLockPage() {
@@ -276,6 +300,58 @@ void MainWindow::updateBatteryDisplay2(float newLevel) {
         );
     }
 }
+
+
+
+void MainWindow::bolusBatteryDisplay(float newLevel) {
+    ui->bolusBattery->setValue(static_cast<int>(newLevel)); // Update second QProgressBar
+
+    // Change the color of the chunk (the actual filled part of the progress bar)
+    if (newLevel > 50) {
+        ui->bolusBattery->setStyleSheet("QProgressBar {"
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: 2px lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: green;"
+            "border-radius: 5px;"
+            "}"
+        );
+    }
+    else if (newLevel > 20) {
+        ui->bolusBattery->setStyleSheet("QProgressBar {"
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: orange;"
+            "border-radius: 5px;"
+            "}"
+        );
+    }
+    else {
+        ui->bolusBattery->setStyleSheet("QProgressBar {"
+            "border: 2px solid grey;"
+            "border-radius: 5px;"
+            "background: lightgray;"
+            "text-align: center;"
+            "color: white;"
+            "}"
+            "QProgressBar::chunk {"
+            "background: red;"
+            "border-radius: 5px;"
+            "}"
+        );
+    }
+}
+
+
 
 void MainWindow::startBatteryBlink() {
     if (!batteryBlinkTimer) batteryBlinkTimer = new QTimer(this);
@@ -472,6 +548,7 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
     if (!scene) {
         scene = new QGraphicsScene(this);
         ui->graphicsView->setScene(scene);
+        ui->bolusGraphicsView->setScene(scene);
     } else {
         scene->clear();
     }
@@ -498,6 +575,9 @@ void MainWindow::updateSensorDisplay(float mmol) {
 
     ui->sensorValue_2->setText(QString("%1 mmol/L").arg(mmol, 0, 'f', 1));
     ui->sensorValue_2->setStyleSheet(QString("color: %1;").arg(color));
+
+    ui->bolusSensor->setText(QString("%1 mmol/L").arg(mmol, 0, 'f', 1));
+    ui->bolusSensor->setStyleSheet(QString("color: %1;").arg(color));
 }
 
 void MainWindow::on_graphViewsButton_clicked() {
@@ -505,6 +585,16 @@ void MainWindow::on_graphViewsButton_clicked() {
     QString label = QString::number(currentGraphRange) + " Hrs";
     ui->graphViewsButton->setText(label);
     ui->graphViewsButton_2->setText(label);
+    ui->bolusGraphButton->setText(label);
+
+    int maxPoints = (currentGraphRange * 60) / 5;
+    displayGlucoseGraph(maxPoints);
+}
+
+void MainWindow::on_bolusGraphButton_clicked() {
+    currentGraphRange = (currentGraphRange == 1) ? 6 : (currentGraphRange == 6) ? 3 : 1;
+    QString label = QString::number(currentGraphRange) + " Hrs";
+    ui->bolusGraphButton->setText(label);
 
     int maxPoints = (currentGraphRange * 60) / 5;
     displayGlucoseGraph(maxPoints);
@@ -829,5 +919,53 @@ void MainWindow::setCGMStateToFasting() {
 
 
 
+
+
+
+// ==============================
+// Bolus
+// ==============================
+
+
+void MainWindow::on_bolusOptions_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+
+void MainWindow::on_bolusButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(17);
+}
+
+
+void MainWindow::on_bolusButton_6_clicked()
+{
+    // Step 1: Prompt for Target BG
+    bool ok;
+    double targetBG = QInputDialog::getDouble(
+        this,
+        "Enter Target BG",
+        "Target Blood Glucose (mmol/L):",
+        5.0,      // Default value
+        1.0,      // Minimum
+        20.0,     // Maximum
+        1,        // Decimal precision
+        &ok
+    );
+
+    if (!ok) {
+        // User cancelled
+        return;
+    }
+
+    // Optional: Log or use the value
+    qDebug() << "[User Input] Target BG:" << targetBG;
+
+    // Step 2: Show confirmation of bolus delivery
+    QMessageBox::information(this, "Bolus Delivery", "Delivering bolus...");
+
+    insulinPump->drainReservoir();
+}
 
 

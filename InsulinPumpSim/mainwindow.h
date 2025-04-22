@@ -133,6 +133,7 @@ private slots:
 
     void updateBatteryDisplay(float newLevel);
     void updateBatteryDisplay2(float newLevel);
+    void bolusBatteryDisplay(float newLevel);
 
     void on_deleteProfileButton_clicked();
     QString on_apProfileSelected();
@@ -178,6 +179,13 @@ private slots:
     void stopSimulation();
 
 
+
+    void on_bolusOptions_clicked();
+
+    void on_bolusButton_clicked();
+    void on_bolusGraphButton_clicked();
+
+    void on_bolusButton_6_clicked();
 
 private:
     Ui::MainWindow *ui;

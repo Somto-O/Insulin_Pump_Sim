@@ -43,10 +43,14 @@ signals:
     void reservoirLevelChanged(float level);
 
 
+public slots:
+
+     void drainReservoir();
+
 private slots:
     void drainBattery();  // Function to decrease battery over time
     void deliverHourlyBolus(); // Handles hourly extended delivery
-    void drainReservoir();
+
 
 
 private:

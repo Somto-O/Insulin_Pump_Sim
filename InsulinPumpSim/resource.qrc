@@ -4,6 +4,7 @@
         <file>ui-elements/icons8-water-drop-100.png</file>
         <file>ui-elements/icons8-power-button-100.png</file>
         <file>ui-elements/icons8-power-100.png</file>
+        <file>ui-elements/icons8-close-100.png</file>
     </qresource>
     <qresource prefix="/styles">
         <file>styles/styles.qss</file>

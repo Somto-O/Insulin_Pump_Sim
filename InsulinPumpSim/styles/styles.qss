@@ -125,6 +125,12 @@ QProgressBar#insulinReservoir::chunk {
     border-radius: 5px;
 }
 
+QProgressBar#bolusInsulinReservoir::chunk,
+QProgressBar#bolusInsulinReservoir::chunk {
+    background-color: #2980b9;
+    border-radius: 5px;
+}
+
 
 /*headings*/
 QLabel[heading="h1"]{

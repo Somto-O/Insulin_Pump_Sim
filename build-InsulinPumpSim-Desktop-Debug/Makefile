@@ -399,6 +399,7 @@ qrc_resource.cpp: ../InsulinPumpSim/resource.qrc \
 		/usr/lib/qt5/bin/rcc \
 		../InsulinPumpSim/styles/styles.qss \
 		../InsulinPumpSim/ui-elements/icons8-power-100.png \
+		../InsulinPumpSim/ui-elements/icons8-close-100.png \
 		../InsulinPumpSim/ui-elements/icons8-power-button-100.png \
 		../InsulinPumpSim/ui-elements/icons8-settings-200.png \
 		../InsulinPumpSim/ui-elements/icons8-water-drop-100.png
