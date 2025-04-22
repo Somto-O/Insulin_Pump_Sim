@@ -22,10 +22,10 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
 
     // Initial UI Setup
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(9);
     setLockScreenState(true);
     ui->deadBattery->setTextVisible(false);
-    ui->powerbutton_24->setEnabled(false);
+//    ui->powerbutton_24->setEnabled(false);
 
     // Disable scrollbars for graphs
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -39,8 +39,8 @@ MainWindow::MainWindow(QWidget* parent)
     // Simulated Clock
     clockTimer = new QTimer(this);
     connect(clockTimer, &QTimer::timeout, this, &MainWindow::updateClock);
-//    clockTimer->start(1000);
-//    updateClock();
+    clockTimer->start(1000);  // Updates every second
+
 
     // Inactivity Timer
     inactivityTimer = new QTimer(this);
@@ -155,8 +155,6 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
 }
 
 void MainWindow::updateClock() {
-    if (!simulationRunning) return;
-
     simulatedMinutesElapsed += 5;
     currentSimulatedTime = simulationStartTime.addSecs(simulatedMinutesElapsed * 60);
 
@@ -164,8 +162,6 @@ void MainWindow::updateClock() {
     ui->clockLabel->setText(displayTime);
     ui->clockLabel2->setText(displayTime);
 }
-
-
 
 void MainWindow::returnToLockPage() {
     if (currentBatteryLevel <= 0.0f) return;
@@ -302,14 +298,24 @@ void MainWindow::goToOffScreen() {
 }
 
 void MainWindow::startPowerOn() {
+    if(currentBatteryLevel ==100){
     ui->h1_7->setText("Powering on...");
-    QTimer::singleShot(2000, this, [=]() {
+    QTimer::singleShot(1000, this, [=]() {
         ui->h1_7->clear();
         currentBatteryLevel = 100.0f;
-        insulinPump->resetBattery();
         insulinPump->resetInsulinResrvoir();
         ui->stackedWidget->setCurrentIndex(0);
     });
+    } else {
+            insulinPump->resetBattery();
+            ui->h1_7->setText("Powering on...");
+            QTimer::singleShot(2000, this, [=]() {
+                ui->h1_7->clear();
+                currentBatteryLevel = 100.0f;
+                insulinPump->resetInsulinResrvoir();
+                ui->stackedWidget->setCurrentIndex(0);
+            });
+    }
 }
 
 
@@ -353,8 +359,7 @@ void MainWindow::simulateCharging() {
 void MainWindow::handleNewGlucoseReading(float level) {
     if (!simulationRunning) return;
 
-    updateClock();  // Sync simulated time + UI clock
-
+    // Use current simulated time from updateClock()
     glucoseDataPoints.append(qMakePair(currentSimulatedTime, level));
 
     if (glucoseDataPoints.size() > 72)
@@ -796,13 +801,15 @@ void MainWindow::on_unlock3_clicked() {
 
 void MainWindow::startSimulation() {
     simulationRunning = true;
+    clockTimer->start();
     cgm->startMonitoring();                    // Start CGM readings
     qDebug() << "[Simulation] Started";
 }
 
 void MainWindow::stopSimulation() {
     simulationRunning = false;
-    cgm->stopMonitoring();                     // Stop all BG generation
+    cgm->stopMonitoring();  // Stop all BG generation
+    clockTimer->stop();
 }
 
 

@@ -15,7 +15,7 @@ InsulinPump::InsulinPump()
     // Battery drain setup
     batteryTimer = new QTimer(this);
     connect(batteryTimer, &QTimer::timeout, this, &InsulinPump::drainBattery);
-    batteryTimer->start(3000); // Drain every 3 seconds
+    batteryTimer->start(4000); // Drain every 4 seconds
 
     // Extended bolus delivery setup
     extendedBolusTimer = new QTimer(this);
