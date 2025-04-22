@@ -3,47 +3,66 @@
 #include "mainwindow.h"
 #include "QDebug"
 
-InsulinPump::InsulinPump() : status("Idle"), batteryLevel(100.0f),
-    hourlyBolusAmount(0.0f), remainingHours(0)
+
+
+// =========================
+// Constructor
+// =========================
+
+InsulinPump::InsulinPump()
+    : status("Idle"), batteryLevel(100.0f), hourlyBolusAmount(0.0f), remainingHours(0)
 {
-    // Battery timer
+    // Battery drain setup
     batteryTimer = new QTimer(this);
     connect(batteryTimer, &QTimer::timeout, this, &InsulinPump::drainBattery);
     batteryTimer->start(3000); // Drain every 3 seconds
 
-    // Extended bolus timer
+    // Extended bolus delivery setup
     extendedBolusTimer = new QTimer(this);
     connect(extendedBolusTimer, &QTimer::timeout, this, &InsulinPump::deliverHourlyBolus);
 }
 
-// Immediate delivery
-void InsulinPump::startDelivery()
-{
-    if (batteryLevel > 10) {
+
+
+
+// =========================
+// Insulin Delivery Methods
+// =========================
+
+void InsulinPump::startDelivery() {
+    if (batteryLevel > 10 && insulinReservoir >= 0.5f) {
         status = "Delivering insulin";
-        std::cout << "Insulin pump is " << status.toStdString() << "..." << std::endl;
+        insulinReservoir -= 0.5f;  // Use insulin
+        emit reservoirLevelChanged(insulinReservoir);  // Notify UI
+        std::cout << "Delivering 0.5 units. Remaining: " << insulinReservoir << std::endl;
+    } else if (insulinReservoir < 0.5f) {
+        SystemAlerts::escalateAlert("Insulin reservoir empty!");
     } else {
-        QString alert = "Battery too low! Unable to deliver insulin.";
-        SystemAlerts::escalateAlert(alert.toStdString());
+        SystemAlerts::escalateAlert("Battery too low! Unable to deliver insulin.");
     }
 }
 
-void InsulinPump::stopDelivery()
-{
+void InsulinPump::stopDelivery() {
     status = "Idle";
     std::cout << "Insulin pump has stopped delivering insulin." << std::endl;
 }
 
-void InsulinPump::viewStatus()
-{
+void InsulinPump::viewStatus() {
     std::cout << "Pump Status: " << status.toStdString() << std::endl;
     std::cout << "Battery Level: " << batteryLevel << "%" << std::endl;
 }
 
-// Battery drain logic
-void InsulinPump::drainBattery()
-{
+float InsulinPump::getReservoirLevel() const {
+    return insulinReservoir;
+}
 
+
+
+// =========================
+// Battery Handling
+// =========================
+
+void InsulinPump::drainBattery() {
     if (batteryLevel > 0) {
         batteryLevel -= 1;
         emit batteryLevelChanged(batteryLevel);
@@ -61,15 +80,27 @@ void InsulinPump::drainBattery()
             extendedBolusTimer->stop();
             SystemAlerts::escalateAlert("Battery depleted. System shutting down.");
         }
-
-
     }
-
 }
 
-// Extended bolus delivery
-void InsulinPump::deliverExtendedBolus(float unitsPerHour, int durationHours)
-{
+void InsulinPump::resetBattery() {
+    batteryLevel = 100.0f;
+    emit batteryLevelChanged(batteryLevel);
+    batteryTimer->start(1000); // Resume battery drain
+}
+
+float InsulinPump::getBatteryLevel() const {
+    return batteryLevel;
+}
+
+
+
+
+// =========================
+// Extended Bolus Delivery
+// =========================
+
+void InsulinPump::deliverExtendedBolus(float unitsPerHour, int durationHours) {
     if (batteryLevel <= 10) {
         SystemAlerts::escalateAlert("Battery too low for extended delivery!");
         return;
@@ -81,12 +112,11 @@ void InsulinPump::deliverExtendedBolus(float unitsPerHour, int durationHours)
     std::cout << "Starting extended bolus: " << unitsPerHour
               << " units/hour for " << durationHours << " hours." << std::endl;
 
-    // Simulate hourly delivery with compressed time for testing (5 seconds = 1 hour)
+    // Simulate compressed delivery (5s = 1 hour)
     extendedBolusTimer->start(5000);
 }
 
-void InsulinPump::deliverHourlyBolus()
-{
+void InsulinPump::deliverHourlyBolus() {
     if (remainingHours <= 0 || batteryLevel <= 10) {
         extendedBolusTimer->stop();
         stopDelivery();
@@ -103,13 +133,6 @@ void InsulinPump::deliverHourlyBolus()
     }
 }
 
-float InsulinPump::getBatteryLevel() const{
-    return batteryLevel;
-}
 
-void InsulinPump::resetBattery() {
-    batteryLevel = 100.0f;
-    emit batteryLevelChanged(batteryLevel);
-    batteryTimer->start(1000); // Resume battery drain
-}
+
 

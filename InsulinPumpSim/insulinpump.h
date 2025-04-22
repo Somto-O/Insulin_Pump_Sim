@@ -30,12 +30,15 @@ public:
         return batteryLevel =0;
     }
     void resetBattery();
+    float getReservoirLevel() const;
+
 
 
 signals:
     void batteryLevelChanged(float newLevel);  // Signal to update UI
     void batteryDepleted(); // Signal for battery = 0
     void batteryCritical();
+    void reservoirLevelChanged(float level);
 
 private slots:
     void drainBattery();  // Function to decrease battery over time
@@ -48,7 +51,7 @@ private:
     QString status;
     float batteryLevel;
     QTimer *batteryTimer;  // Timer for automatic battery drain
-    
+    float insulinReservoir = 200.0f; // Initial insulin units available
     QTimer* extendedBolusTimer;   // Timer for hourly bolus delivery
     float hourlyBolusAmount;
     int remainingHours;

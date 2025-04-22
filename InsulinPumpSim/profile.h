@@ -49,12 +49,26 @@ public:
     static void deleteProfile(MainWindow* mw, const QString& profileName);
     static void viewProfile(MainWindow* mw, const QString& profileName);
     static void displayProfiles(MainWindow* mw);
-
+    static void activateProfile(MainWindow* mw, const QString& profileName);
     static void saveProfiles();
     static void loadProfiles(MainWindow* mw);
 
+    static void setActiveBasalRate(float rate);
+    static void setActiveCarbRatio(float ratio);
+    static void setActiveCorrectionFactor(float factor);
+    static void setActiveTargetBG(float target);
+    static void setActiveProfileName(const QString& name);
+
+    static float getActiveBasalRate();
+    static float getActiveCarbRatio();
+    static float getActiveCorrectionFactor();
+    static float getActiveTargetBG();
+    static QString getActiveProfileName();
+
+
+
 private:
-    // variables
+    // per-profile data
     string name;
     float basalRate;
     float carbohydrateRatio;
@@ -62,8 +76,16 @@ private:
     float targetBG;
     MainWindow* mainWindow;
 
-    // static variables
+    // shared active profile values
+    static float activeBasalRate;
+    static float activeCarbRatio;
+    static float activeCorrectionFactor;
+    static float activeTargetBG;
+    static QString activeProfileName;
+
     static vector<Profile*> profiles;
+
+
 };
 
 #endif // PROFILE_H

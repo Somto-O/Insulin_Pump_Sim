@@ -42,6 +42,7 @@ public:
     void setSelectedProfileName(const QString& profileName);
     QString onProfileSelected();
     QString on_dppProfileSelected();
+
     void openUpdateProfilePage();
     void updateProfileList();
 
@@ -53,8 +54,10 @@ public:
     void populateProfileList();
     void populateDeleteList();
     void populateViewList();
+    void populateActivateProfileList();
     void on_spButtonBox_clicked(QAbstractButton *button);
     void on_dppButtonBox_clicked(QAbstractButton *button);
+    void on_apButtonBox_clicked(QAbstractButton* button);
 
     void setLockScreenState(bool locked);
 
@@ -77,6 +80,10 @@ public:
     QPushButton* graphViewsButton;
 
 private slots:
+
+
+    void updateReservoirDisplay(float level);
+
     void updateSensorDisplay(float mmol);
 
     void on_graphViewsButton_clicked();  // handles range switching
@@ -131,6 +138,7 @@ private slots:
     void updateBatteryDisplay2(float newLevel);
 
     void on_deleteProfileButton_clicked();
+    QString on_apProfileSelected();
 
     //void changePageToBatteryLow();
 
@@ -163,9 +171,11 @@ private slots:
 
     void startPowerOn();
 
+
+
 private:
     Ui::MainWindow *ui;
-    float insulinReservoir = 200.0f; // Initial insulin units available
+
     QVector<QPair<QDateTime, float>> glucoseDataPoints;  // timestamp, glucose level
     int simulatedMinutesElapsed = 0;
     CGM* cgm;
@@ -189,6 +199,8 @@ private:
 
     QTimer* chargingTimer = nullptr;
     int chargingLevel = 0;
+
+
 
 
 

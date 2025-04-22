@@ -70,6 +70,8 @@ void MainWindow::setupConnections()
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryLevelValue);
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::beginShutdownSequence);
     connect(insulinPump, &InsulinPump::batteryCritical, this, &MainWindow::startBatteryBlink);
+    connect(insulinPump, &InsulinPump::reservoirLevelChanged, this, &MainWindow::updateReservoirDisplay);
+
 
     // CGM
     connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::updateSensorDisplay);
@@ -88,6 +90,7 @@ void MainWindow::setupConnections()
     connect(ui->dppDisplayBox, &QListWidget::itemSelectionChanged, this, &MainWindow::on_dppProfileSelected);
     connect(ui->dppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_dppButtonBox_clicked);
     connect(ui->vppButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_vppButtonBox_clicked);
+    connect(ui->apButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::on_apButtonBox_clicked);
 }
 
 
@@ -312,10 +315,8 @@ void MainWindow::handleNewGlucoseReading(float level) {
 }
 
 void MainWindow::startInsulinPump() {
-    if (insulinReservoir >= 0.5f) {
-        insulinPump->startDelivery();
-        insulinReservoir -= 0.5f;
-
+    if (insulinPump->getReservoirLevel() >= 0.5f) {
+        insulinPump->startDelivery();  // This should handle the internal decrement + emit
         if (cgm->getState() != CGM::State::Correction) {
             cgm->setState(CGM::State::Correction);
         }
@@ -323,6 +324,7 @@ void MainWindow::startInsulinPump() {
         SystemAlerts::triggerAlert("Insulin reservoir empty!");
     }
 }
+
 
 void MainWindow::displayGlucoseGraph(int maxPoints) {
     if (glucoseDataPoints.isEmpty()) return;
@@ -393,6 +395,9 @@ void MainWindow::updateSensorDisplay(float mmol) {
     ui->sensorValue->setText(QString("%1 mmol/L").arg(mmol, 0, 'f', 1));
     QString color = (mmol >= 10.0f) ? "red" : (mmol <= 3.9f) ? "orange" : "green";
     ui->sensorValue->setStyleSheet(QString("color: %1;").arg(color));
+
+    ui->sensorValue_2->setText(QString("%1 mmol/L").arg(mmol, 0, 'f', 1));
+    ui->sensorValue_2->setStyleSheet(QString("color: %1;").arg(color));
 }
 
 void MainWindow::on_graphViewsButton_clicked() {
@@ -404,6 +409,27 @@ void MainWindow::on_graphViewsButton_clicked() {
     int maxPoints = (currentGraphRange * 60) / 5;
     displayGlucoseGraph(maxPoints);
 }
+
+void MainWindow::updateReservoirDisplay(float level) {
+    ui->insulinReservoir->setValue(static_cast<int>(level));
+
+    QString style = QString(
+        "QProgressBar#insulinReservoir {"
+        "    border: 2px solid grey;"
+        "    border-radius: 5px;"
+        "    background: lightgray;"
+        "    text-align: center;"
+        "    color: white;"
+        "}"
+        "QProgressBar#insulinReservoir::chunk {"
+        "    background-color: blue;"
+        "    border-radius: 5px;"
+        "}"
+    );
+    ui->insulinReservoir->setStyleSheet(style);
+}
+
+
 
 
 
@@ -427,6 +453,11 @@ QString MainWindow::onProfileSelected() {
 
 QString MainWindow::on_dppProfileSelected() {
     QString selectedItem = ui->dppDisplayBox->currentItem()->text();
+    return selectedItem;
+}
+
+QString MainWindow::on_apProfileSelected() {
+    QString selectedItem = ui->apDisplayBox->currentItem()->text();
     return selectedItem;
 }
 
@@ -467,6 +498,17 @@ void MainWindow::populateViewList() {
     }
 }
 
+void MainWindow::populateActivateProfileList() {
+    ui->apDisplayBox->clear();
+    for (Profile* profile : Profile::getProfiles()) {
+        QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(profile->getName()));
+        ui->apDisplayBox->addItem(item);
+    }
+    if (ui->apDisplayBox->count() == 0) {
+        QMessageBox::information(this, "No Profiles", "No profiles available.");
+    }
+}
+
 
 
 // ==============================
@@ -481,7 +523,7 @@ void MainWindow::on_addProfileButton_clicked() { ui->stackedWidget->setCurrentIn
 void MainWindow::on_updateProfileButton_clicked() { populateProfileList(); ui->stackedWidget->setCurrentIndex(6); }
 void MainWindow::on_deleteProfileButton_clicked() { populateDeleteList(); ui->stackedWidget->setCurrentIndex(10); }
 void MainWindow::on_viewProfilesButton_clicked() { populateViewList(); ui->stackedWidget->setCurrentIndex(5); }
-void MainWindow::on_selectProfileButton_clicked() { ui->stackedWidget->setCurrentIndex(16); }
+void MainWindow::on_selectProfileButton_clicked() {populateActivateProfileList();  ui->stackedWidget->setCurrentIndex(16); }
 void MainWindow::moveToUpdatePage(const QString& profileName) {
 
     // Store the selected profile name for later use
@@ -589,6 +631,17 @@ void MainWindow::on_uppConfirmProfileButtonBox_clicked(QAbstractButton* button) 
     if (ui->uppConfirmProfileButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
         Profile::updateProfile(this, selectedProfileName);
         History::logEvent("ProfileUpdated", selectedProfileName, "");
+    }
+}
+
+void MainWindow::on_apButtonBox_clicked(QAbstractButton* button){
+    if (ui->apButtonBox->buttonRole(button) == QDialogButtonBox::AcceptRole) {
+        QListWidgetItem* selectedItem = ui->apDisplayBox->currentItem();
+        QString selectedProfileName = selectedItem->text();
+        setSelectedProfileName(selectedProfileName);
+        Profile::activateProfile(this, selectedProfileName);
+
+        ui->stackedWidget->setCurrentIndex(4);
     }
 }
 

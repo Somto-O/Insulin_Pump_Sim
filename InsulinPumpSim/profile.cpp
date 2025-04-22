@@ -4,6 +4,12 @@
 
 // static variables
 vector<Profile*> Profile::profiles;
+// Define static member variables
+float Profile::activeBasalRate = 0.0f;
+float Profile::activeCarbRatio = 0.0f;
+float Profile::activeCorrectionFactor = 0.0f;
+float Profile::activeTargetBG = 0.0f;
+QString Profile::activeProfileName = "";
 
 // constructor
 Profile::Profile(MainWindow* mw,string n, float bRate, float carbRatio,float cFactor, float targetbg):
@@ -47,8 +53,6 @@ void Profile::createProfile(MainWindow* mw)
     }
 
 }
-
-
 
 
 void Profile::updateProfile(MainWindow* mw, const QString& profileName) {
@@ -204,7 +208,49 @@ void Profile::loadProfiles(MainWindow* mw)
     file.close();
 }
 
+void Profile::activateProfile(MainWindow* mw, const QString& profileName) {
+    for (Profile* profile : profiles) {
+        if (profile->getName() == profileName.toStdString()) {
+            setActiveProfileName(profileName);
+            setActiveBasalRate(profile->getBasalRate());
+            setActiveCarbRatio(profile->getCarbRatio());
+            setActiveCorrectionFactor(profile->getCorrectionFactor());
+            setActiveTargetBG(profile->getTargetBG());
 
+            viewProfile(mw, profileName);
+            qDebug() << "Profile activated: " << profileName;
+            return;
+        }
+    }
+    QMessageBox::warning(mw, "Activate Profile", "Profile not found.");
+}
+
+
+void Profile::setActiveBasalRate(float rate) {
+    activeBasalRate = rate;
+}
+
+void Profile::setActiveCarbRatio(float ratio) {
+    activeCarbRatio = ratio;
+}
+
+void Profile::setActiveCorrectionFactor(float factor) {
+    activeCorrectionFactor = factor;
+}
+
+void Profile::setActiveTargetBG(float target) {
+    activeTargetBG = target;
+}
+
+void Profile::setActiveProfileName(const QString& name) {
+    activeProfileName = name;
+}
+
+float Profile::getActiveBasalRate() { return activeBasalRate; }
+float Profile::getActiveCarbRatio() { return activeCarbRatio; }
+float Profile::getActiveCorrectionFactor() { return activeCorrectionFactor; }
+float Profile::getActiveTargetBG() { return activeTargetBG; }
+QString Profile::getActiveProfileName() { return activeProfileName; }
 
 
 

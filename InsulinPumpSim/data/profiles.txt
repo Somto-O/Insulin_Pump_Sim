@@ -12,5 +12,5 @@ Abram 23 1 42 1
 Leah 0 0 0 0
 Ruth 0 0 0 0
 Naa 2 2 1 1
-seth 2 1 4 2
 jonah 2 0 0 0
+profile 1 30 23 0 99
