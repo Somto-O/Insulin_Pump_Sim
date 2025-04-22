@@ -81,9 +81,6 @@ public:
 
 private slots:
 
-
-    void updateReservoirDisplay(float level);
-
     void updateSensorDisplay(float mmol);
 
     void on_graphViewsButton_clicked();  // handles range switching
@@ -172,6 +169,14 @@ private slots:
     void startPowerOn();
 
 
+    void setCGMStateToIdle();
+    void setCGMStateToEating();
+    void setCGMStateToFasting();
+
+    void startSimulation();
+    void stopSimulation();
+
+
 
 private:
     Ui::MainWindow *ui;
@@ -199,6 +204,9 @@ private:
 
     QTimer* chargingTimer = nullptr;
     int chargingLevel = 0;
+
+    bool simulationRunning = false;
+
 
 
 

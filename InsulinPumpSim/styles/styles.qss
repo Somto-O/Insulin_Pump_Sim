@@ -112,6 +112,12 @@ QProgressBar::chunk {
 
 }
 
+QProgressBar#insulinReservoir::chunk,
+QProgressBar#insulinReservoir_2::chunk {
+    background-color: #2980b9;
+    border-radius: 5px;
+}
+
 
 /*headings*/
 QLabel[heading="h1"]{
@@ -205,4 +211,6 @@ QProgressBar#deadBattery::chunk {
     border-radius: 2px;
     margin: 1px;
 }
+
+
 

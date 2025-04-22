@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>16</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="lockScreen">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -57,7 +57,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>7.9 mmol/l</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -321,44 +321,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_6">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_5">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
      <zorder>widget_3</zorder>
      <zorder>horizontalLayoutWidget_2</zorder>
      <zorder>verticalLayoutWidget_2</zorder>
@@ -374,8 +336,6 @@
      <zorder>greyBG_7</zorder>
      <zorder>greyBG_8</zorder>
      <zorder>chargeButton</zorder>
-     <zorder>unlock1_6</zorder>
-     <zorder>unlock1_5</zorder>
     </widget>
     <widget class="QWidget" name="homePage">
      <widget class="QWidget" name="horizontalLayoutWidget">
@@ -489,7 +449,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>7.9 mmol/l</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -676,44 +636,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_7">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_8">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
      <zorder>widget_2</zorder>
      <zorder>horizontalLayoutWidget</zorder>
      <zorder>graphicsView</zorder>
@@ -723,8 +645,6 @@
      <zorder>verticalLayoutWidget</zorder>
      <zorder>greyBG_2</zorder>
      <zorder>chargeButton_2</zorder>
-     <zorder>unlock1_7</zorder>
-     <zorder>unlock1_8</zorder>
     </widget>
     <widget class="QWidget" name="optionsPage">
      <widget class="QLabel" name="h1">
@@ -966,44 +886,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_9">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_10">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
      <zorder>greyBG_18</zorder>
      <zorder>greyBG_16</zorder>
      <zorder>widget_4</zorder>
@@ -1011,8 +893,6 @@
      <zorder>greyBG_15</zorder>
      <zorder>h1</zorder>
      <zorder>chargeButton_3</zorder>
-     <zorder>unlock1_9</zorder>
-     <zorder>unlock1_10</zorder>
     </widget>
     <widget class="QWidget" name="myPumpPage">
      <widget class="QPushButton" name="backButton_2">
@@ -1209,44 +1089,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_11">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_12">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
      <zorder>greyBG_19</zorder>
      <zorder>widget_5</zorder>
      <zorder>greyBG_22</zorder>
@@ -1254,8 +1096,6 @@
      <zorder>greyBG_20</zorder>
      <zorder>backButton_2</zorder>
      <zorder>chargeButton_4</zorder>
-     <zorder>unlock1_11</zorder>
-     <zorder>unlock1_12</zorder>
     </widget>
     <widget class="QWidget" name="personalProfiles">
      <widget class="QWidget" name="greyBG_26" native="true">
@@ -1471,52 +1311,12 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_13">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_14">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
      <zorder>widget_6</zorder>
      <zorder>greyBG_25</zorder>
      <zorder>greyBG_26</zorder>
      <zorder>greyBG_23</zorder>
      <zorder>greyBG_24</zorder>
      <zorder>chargeButton_5</zorder>
-     <zorder>unlock1_13</zorder>
-     <zorder>unlock1_14</zorder>
     </widget>
     <widget class="QWidget" name="viewProfilePage">
      <widget class="QWidget" name="widget_7" native="true">
@@ -1700,52 +1500,12 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_15">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_16">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
      <zorder>widget_7</zorder>
      <zorder>greyBG_30</zorder>
      <zorder>greyBG_28</zorder>
      <zorder>greyBG_27</zorder>
      <zorder>greyBG_29</zorder>
      <zorder>chargeButton_6</zorder>
-     <zorder>unlock1_15</zorder>
-     <zorder>unlock1_16</zorder>
     </widget>
     <widget class="QWidget" name="selectProfilePage">
      <widget class="QPushButton" name="sppBackButton">
@@ -1929,44 +1689,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_17">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_18">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
      <zorder>greyBG_32</zorder>
      <zorder>greyBG_33</zorder>
      <zorder>greyBG_31</zorder>
@@ -1974,8 +1696,6 @@
      <zorder>widget_8</zorder>
      <zorder>sppBackButton</zorder>
      <zorder>chargeButton_7</zorder>
-     <zorder>unlock1_17</zorder>
-     <zorder>unlock1_18</zorder>
     </widget>
     <widget class="QWidget" name="updateProfilePage">
      <widget class="QWidget" name="widget_9" native="true">
@@ -2229,52 +1949,12 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_19">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_20">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
      <zorder>greyBG_38</zorder>
      <zorder>greyBG_37</zorder>
      <zorder>greyBG_36</zorder>
      <zorder>widget_9</zorder>
      <zorder>greyBG_35</zorder>
      <zorder>chargeButton_8</zorder>
-     <zorder>unlock1_19</zorder>
-     <zorder>unlock1_20</zorder>
     </widget>
     <widget class="QWidget" name="addProfilePage">
      <widget class="QPushButton" name="backButton_4">
@@ -2548,44 +2228,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_21">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_22">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
      <zorder>greyBG_41</zorder>
      <zorder>widget_10</zorder>
      <zorder>greyBG_40</zorder>
@@ -2594,8 +2236,6 @@
      <zorder>backButton_4</zorder>
      <zorder>formLayoutWidget</zorder>
      <zorder>chargeButton_9</zorder>
-     <zorder>unlock1_21</zorder>
-     <zorder>unlock1_22</zorder>
     </widget>
     <widget class="QWidget" name="batteryDeadPage">
      <widget class="QWidget" name="widget_11" native="true">
@@ -2732,44 +2372,6 @@
       </property>
       <property name="charge" stdset="0">
        <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_23">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_24">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
       </property>
      </widget>
     </widget>
@@ -2961,44 +2563,6 @@
       </property>
       <property name="charge" stdset="0">
        <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_25">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_26">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
       </property>
      </widget>
     </widget>
@@ -3229,44 +2793,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_27">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_28">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
      <zorder>greyBG_54</zorder>
      <zorder>widget_13</zorder>
      <zorder>greyBG_52</zorder>
@@ -3276,8 +2802,6 @@
      <zorder>hpBackButton</zorder>
      <zorder>h1_5</zorder>
      <zorder>chargeButton_12</zorder>
-     <zorder>unlock1_27</zorder>
-     <zorder>unlock1_28</zorder>
     </widget>
     <widget class="QWidget" name="displayLogsPage">
      <widget class="QPushButton" name="dlBackButton">
@@ -3439,44 +2963,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_29">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_30">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
      <zorder>widget_14</zorder>
      <zorder>greyBG_56</zorder>
      <zorder>greyBG_58</zorder>
@@ -3484,8 +2970,6 @@
      <zorder>greyBG_55</zorder>
      <zorder>dlBackButton</zorder>
      <zorder>chargeButton_13</zorder>
-     <zorder>unlock1_29</zorder>
-     <zorder>unlock1_30</zorder>
     </widget>
     <widget class="QWidget" name="specificProfilePage">
      <widget class="QPushButton" name="spBackButton">
@@ -3720,44 +3204,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_31">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_32">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
      <zorder>widget_15</zorder>
      <zorder>greyBG_62</zorder>
      <zorder>greyBG_61</zorder>
@@ -3765,8 +3211,6 @@
      <zorder>greyBG_59</zorder>
      <zorder>spBackButton</zorder>
      <zorder>chargeButton_14</zorder>
-     <zorder>unlock1_31</zorder>
-     <zorder>unlock1_32</zorder>
     </widget>
     <widget class="QWidget" name="batteryChargingPage">
      <widget class="QProgressBar" name="battery_3">
@@ -3924,44 +3368,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_33">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_34">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
      <zorder>batLabel</zorder>
      <zorder>battery_3</zorder>
      <zorder>greyBG_66</zorder>
@@ -3970,8 +3376,6 @@
      <zorder>chargeButton_15</zorder>
      <zorder>greyBG_64</zorder>
      <zorder>widget_16</zorder>
-     <zorder>unlock1_33</zorder>
-     <zorder>unlock1_34</zorder>
     </widget>
     <widget class="QWidget" name="batteryLowPage">
      <widget class="QWidget" name="greyBG_67" native="true">
@@ -4127,44 +3531,6 @@
       </property>
       <property name="value">
        <number>3</number>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_35">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_36">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
       </property>
      </widget>
     </widget>
@@ -4350,45 +3716,102 @@
        <string>Back</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="unlock1_37">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Start Simulation</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="unlock1_38">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>510</y>
-        <width>232</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Stop Simulation</string>
-      </property>
-     </widget>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="fastingButton">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>510</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Fasting</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="stopSimulationButton">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>510</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Stop Simulation</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="startSimulationButton">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>510</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Start Simulation</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="eatingButton">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>510</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Eating</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="idleButton">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>510</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Idle</string>
+    </property>
    </widget>
   </widget>
  </widget>

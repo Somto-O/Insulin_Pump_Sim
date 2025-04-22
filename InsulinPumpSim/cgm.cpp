@@ -17,6 +17,11 @@ void CGM::startMonitoring()
    // qDebug() << "CGM monitoring started in state:" << static_cast<int>(currentState);
 }
 
+void CGM::stopMonitoring() {
+    monitorTimer.stop();
+    qDebug() << "[CGM] Monitoring stopped.";
+}
+
 float CGM::getGlucoseLevel() const
 {
     return sensorData;
@@ -38,41 +43,51 @@ void CGM::setState(State newState)
 
 void CGM::monitorGlucose()
 {
-    constexpr float idleMin = 70.0f;
-    constexpr float idleMax = 100.0f;
-    constexpr float eatMax = 125.0f;
-    constexpr float corrMin = 70.0f;
-    const float step = 1.0f;
+    constexpr float idleMin = 70.0f;           // 3.9 mmol/L
+    constexpr float idleMax = 100.0f;          // 5.6 mmol/L
+    constexpr float eatTarget = 180.0f;        // 10 mmol/L
+    constexpr float lowThreshold = 70.0f;      // 3.9 mmol/L
+    constexpr float highThreshold = 100.0f;    // 5.6 mmol/L
+    const float step = 7.0f;
 
     switch (currentState) {
     case State::Idle:
+        // Fluctuate normally within healthy range
         sensorData = idleMin + QRandomGenerator::global()->generateDouble() * (idleMax - idleMin);
         break;
+
     case State::Eating:
-        sensorData = qMin(sensorData + step, eatMax);
-        if (sensorData > 110.0f) {
-            setState(State::Correction);
+        sensorData += step;
+        if (sensorData >= eatTarget) {
+            setState(State::Correction);  // Begin correction phase after peak
         }
         break;
+
     case State::Correction:
-        sensorData = qMax(sensorData - step, corrMin);
-        if (sensorData < idleMax) {
-            setState(State::Idle);
+        if (sensorData > highThreshold) {
+            sensorData = qMax(sensorData - step, highThreshold);  // Correct hyperglycemia
+            if (sensorData <= highThreshold) setState(State::Idle);
+        }
+        else if (sensorData < lowThreshold) {
+            sensorData = qMin(sensorData + 1.0f, lowThreshold);  // Correct hypoglycemia
+            if (sensorData >= lowThreshold) setState(State::Idle);
+        }
+        else {
+            setState(State::Idle);  // Already within target range
         }
         break;
     }
 
-    float mmol = sensorData / 18.0f;  // Convert from mg/dL to mmol/L
-    //qDebug() << "[CGM] State:" << static_cast<int>(currentState)
-         //    << " Glucose:" << mmol << "mmol/L";
-
-
-
+    float mmol = sensorData / 18.0f;
     emit glucoseLevelUpdated(mmol);
 
     if (++disconnectCounter >= 5) {
-       // qDebug() << "Sensor disconnected!";
         emit sensorDisconnected();
         disconnectCounter = 0;
     }
+}
+
+
+void CGM::simulateLowGlucose() {
+    sensorData = 50.0f;  // Start around 2.8 mmol/L
 }

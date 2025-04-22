@@ -1,4 +1,5 @@
 #include "boluscalculator.h"
+#include "profile.h"
 #include <QDebug>
 
 BolusCalculator::BolusCalculator(CGM* cgm, InsulinPump* pump, QObject* parent)
@@ -7,8 +8,14 @@ BolusCalculator::BolusCalculator(CGM* cgm, InsulinPump* pump, QObject* parent)
 {
 }
 
+
 void BolusCalculator::calculateBolus(float carbIntake, float currentBG, float IOB)
 {
+    // 🔁 Use active profile values
+    float insulinToCarbRatio = Profile::getActiveCarbRatio();
+    float correctionFactor = Profile::getActiveCorrectionFactor();
+    float targetBG = Profile::getActiveTargetBG();
+
     float carbBolus = carbIntake / insulinToCarbRatio;
     float correctionBolus = (currentBG - targetBG) / correctionFactor;
     float totalBolus = carbBolus + correctionBolus;
@@ -23,6 +30,11 @@ void BolusCalculator::calculateBolus(float carbIntake, float currentBG, float IO
     immediateBolus = immediateBolusFraction * totalBolusRequired;
     extendedBolus = extendedBolusFraction * totalBolusRequired;
     bolusRatePerHour = extendedBolus / bolusDuration;
+
+    qDebug() << "[BolusCalc] Active Profile:";
+    qDebug() << "ICR:" << insulinToCarbRatio
+             << " CF:" << correctionFactor
+             << " Target BG:" << targetBG;
 
     qDebug() << "Total Bolus Required:" << totalBolusRequired << "units";
     qDebug() << "Immediate Bolus:" << immediateBolus << "units";

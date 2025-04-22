@@ -480,7 +480,8 @@ boluscalculator.o: ../InsulinPumpSim/boluscalculator.cpp ../InsulinPumpSim/bolus
 		../InsulinPumpSim/mainwindow.h \
 		ui_mainwindow.h \
 		../InsulinPumpSim/cgm.h \
-		../InsulinPumpSim/history.h
+		../InsulinPumpSim/history.h \
+		../InsulinPumpSim/profile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o boluscalculator.o ../InsulinPumpSim/boluscalculator.cpp
 
 cgm.o: ../InsulinPumpSim/cgm.cpp ../InsulinPumpSim/cgm.h

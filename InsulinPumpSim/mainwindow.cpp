@@ -45,7 +45,6 @@ MainWindow::MainWindow(QWidget* parent)
     connect(inactivityTimer, &QTimer::timeout, this, &MainWindow::returnToLockPage);
 
     qApp->installEventFilter(this);
-    cgm->startMonitoring();
     batteryLevel = insulinPump->getBatteryLevel();
 }
 
@@ -70,12 +69,21 @@ void MainWindow::setupConnections()
     connect(insulinPump, &InsulinPump::batteryLevelChanged, this, &MainWindow::updateBatteryLevelValue);
     connect(insulinPump, &InsulinPump::batteryDepleted, this, &MainWindow::beginShutdownSequence);
     connect(insulinPump, &InsulinPump::batteryCritical, this, &MainWindow::startBatteryBlink);
-    connect(insulinPump, &InsulinPump::reservoirLevelChanged, this, &MainWindow::updateReservoirDisplay);
+   // connect(insulinPump, &InsulinPump::reservoirLevelChanged, this, &MainWindow::updateReservoirDisplay);
 
 
     // CGM
     connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::updateSensorDisplay);
     connect(cgm, &CGM::glucoseLevelUpdated, this, &MainWindow::handleNewGlucoseReading);
+
+    //Simulation
+    connect(ui->idleButton, &QPushButton::clicked, this, &MainWindow::setCGMStateToIdle);
+    connect(ui->eatingButton, &QPushButton::clicked, this, &MainWindow::setCGMStateToEating);
+    connect(ui->fastingButton, &QPushButton::clicked, this, &MainWindow::setCGMStateToFasting);
+    connect(ui->startSimulationButton, &QPushButton::clicked, this, &MainWindow::startSimulation);
+    connect(ui->stopSimulationButton, &QPushButton::clicked, this, &MainWindow::stopSimulation);
+
+
 
     // Charging & Power
     connect(ui->chargeButton_10, &QPushButton::clicked, this, &MainWindow::startCharging);
@@ -102,7 +110,7 @@ void MainWindow::setupConnections()
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::KeyPress)
-        inactivityTimer->start(15000);
+        inactivityTimer->start(30000);
     return QMainWindow::eventFilter(obj, event);
 }
 
@@ -297,17 +305,18 @@ void MainWindow::simulateCharging() {
 // ==============================
 
 void MainWindow::handleNewGlucoseReading(float level) {
+    if (!simulationRunning) return;
+
     simulatedMinutesElapsed += 5;
-    QDateTime simulatedTimestamp = QDateTime::fromSecsSinceEpoch(simulatedMinutesElapsed * 60);
+    currentSimulatedTime = currentSimulatedTime.addSecs(5 * 60);
     glucoseDataPoints.append(qMakePair(currentSimulatedTime, level));
+
 
     if (glucoseDataPoints.size() > 72)
         glucoseDataPoints.removeFirst();
 
     if (level >= 10.0f) {
         startInsulinPump();
-    } else if (level <= 3.9f) {
-        // Optionally stop insulin delivery here
     }
 
     int maxPoints = (currentGraphRange * 60) / 5;
@@ -331,6 +340,8 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
 
     QtCharts::QScatterSeries* series = new QtCharts::QScatterSeries();
     series->setName("CGM Readings");
+    series->setBrush(QBrush("#00bcd4"));
+    series->setBorderColor(Qt::transparent);
     series->setMarkerSize(7.0);
 
     int startIndex = qMax(0, glucoseDataPoints.size() - maxPoints);
@@ -343,7 +354,10 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
     QtCharts::QChart* chart = new QtCharts::QChart();
     chart->addSeries(series);
     chart->setTitle("Blood Glucose Over Time (mmol/L)");
+    chart->setTitleBrush(QBrush(Qt::white));
     chart->setMargins(QMargins(10, 10, 10, 10));
+    chart->legend()->setLabelColor(Qt::white);
+
 
     QDateTime endTime = glucoseDataPoints.last().first;
     QDateTime startTime = endTime.addSecs(-currentGraphRange * 3600);
@@ -364,6 +378,22 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisX);
     series->attachAxis(axisY);
+
+    // Set dark background for the entire chart
+    chart->setBackgroundBrush(QBrush(QColor("#121212")));
+
+    // Set dark background for the plot area
+    chart->setPlotAreaBackgroundBrush(QBrush(QColor("#1e1e1e")));
+    chart->setPlotAreaBackgroundVisible(true);
+
+    // Customize axes for dark mode
+    axisX->setLabelsColor(Qt::white);
+    axisX->setTitleBrush(QBrush(Qt::white));
+    axisX->setGridLineColor(QColor("#555555"));
+
+    axisY->setLabelsColor(Qt::white);
+    axisY->setTitleBrush(QBrush(Qt::white));
+    axisY->setGridLineColor(QColor("#555555"));
 
     QtCharts::QChartView* chartView = new QtCharts::QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -408,25 +438,6 @@ void MainWindow::on_graphViewsButton_clicked() {
 
     int maxPoints = (currentGraphRange * 60) / 5;
     displayGlucoseGraph(maxPoints);
-}
-
-void MainWindow::updateReservoirDisplay(float level) {
-    ui->insulinReservoir->setValue(static_cast<int>(level));
-
-    QString style = QString(
-        "QProgressBar#insulinReservoir {"
-        "    border: 2px solid grey;"
-        "    border-radius: 5px;"
-        "    background: lightgray;"
-        "    text-align: center;"
-        "    color: white;"
-        "}"
-        "QProgressBar#insulinReservoir::chunk {"
-        "    background-color: blue;"
-        "    border-radius: 5px;"
-        "}"
-    );
-    ui->insulinReservoir->setStyleSheet(style);
 }
 
 
@@ -642,6 +653,7 @@ void MainWindow::on_apButtonBox_clicked(QAbstractButton* button){
         Profile::activateProfile(this, selectedProfileName);
 
         ui->stackedWidget->setCurrentIndex(4);
+
     }
 }
 
@@ -709,6 +721,41 @@ void MainWindow::on_unlock3_clicked() {
     setLockScreenState(true);
 }
 
+
+
+
+
+// ==============================
+// Simulation
+// ==============================
+
+void MainWindow::startSimulation() {
+    simulationRunning = true;
+    cgm->startMonitoring();                    // Start CGM readings
+    qDebug() << "[Simulation] Started";
+}
+
+void MainWindow::stopSimulation() {
+    simulationRunning = false;
+    cgm->stopMonitoring();                     // Stop all BG generation
+    qDebug() << "[Simulation] Stopped";
+}
+
+
+void MainWindow::setCGMStateToIdle() {
+    cgm->setState(CGM::State::Idle);
+    qDebug() << "[UI] CGM set to IDLE";
+}
+
+void MainWindow::setCGMStateToEating() {
+    cgm->setState(CGM::State::Eating);
+    qDebug() << "[UI] CGM set to EATING";
+}
+
+void MainWindow::setCGMStateToFasting() {
+    cgm->setState(CGM::State::Correction);
+    cgm->simulateLowGlucose();  // manually drop to simulate hypoglycemia start
+}
 
 
 

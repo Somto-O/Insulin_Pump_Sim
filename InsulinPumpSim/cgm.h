@@ -14,9 +14,11 @@ public:
 
     explicit CGM(QObject* parent = nullptr);
     void startMonitoring();
+    void stopMonitoring();
     float getGlucoseLevel() const;
     State getState() const;
     void setState(State newState);
+    void simulateLowGlucose();
 
 signals:
     void glucoseLevelUpdated(float level);
