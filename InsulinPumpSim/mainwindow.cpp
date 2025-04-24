@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget* parent)
     ui->stackedWidget->setCurrentIndex(9);
     setLockScreenState(true);
     ui->deadBattery->setTextVisible(false);
-//    ui->powerbutton_24->setEnabled(false);
 
     // Disable scrollbars for graphs
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -207,8 +206,6 @@ void MainWindow::updateBatteryLevelValue(float level) {
 
 void MainWindow::updateBatteryDisplay(float newLevel) {
     ui->battery->setValue(static_cast<int>(newLevel)); // Update QProgressBar
-
-    // Change the color of the chunk (the actual filled part of the progress bar)
     if (newLevel > 50) {
         ui->battery->setStyleSheet("QProgressBar {"
             "border: 2px solid grey;"
@@ -254,9 +251,8 @@ void MainWindow::updateBatteryDisplay(float newLevel) {
 }
 
 void MainWindow::updateBatteryDisplay2(float newLevel) {
-    ui->battery_2->setValue(static_cast<int>(newLevel)); // Update second QProgressBar
+    ui->battery_2->setValue(static_cast<int>(newLevel));
 
-    // Change the color of the chunk (the actual filled part of the progress bar)
     if (newLevel > 50) {
         ui->battery_2->setStyleSheet("QProgressBar {"
             "border: 2px solid grey;"
@@ -304,9 +300,8 @@ void MainWindow::updateBatteryDisplay2(float newLevel) {
 
 
 void MainWindow::bolusBatteryDisplay(float newLevel) {
-    ui->bolusBattery->setValue(static_cast<int>(newLevel)); // Update second QProgressBar
+    ui->bolusBattery->setValue(static_cast<int>(newLevel));
 
-    // Change the color of the chunk (the actual filled part of the progress bar)
     if (newLevel > 50) {
         ui->bolusBattery->setStyleSheet("QProgressBar {"
             "border: 2px solid grey;"
@@ -431,18 +426,33 @@ void MainWindow::simulateCharging() {
 // ==============================
 // Glucose Monitoring & Graph
 // ==============================
-
 void MainWindow::handleNewGlucoseReading(float level) {
     if (!simulationRunning) return;
 
-    // Use current simulated time from updateClock()
     glucoseDataPoints.append(qMakePair(currentSimulatedTime, level));
-
     if (glucoseDataPoints.size() > 72)
         glucoseDataPoints.removeFirst();
 
+    // Log reading every 30 simulated minutes
+    if ((simulatedMinutesElapsed - lastLoggedMinute) >= 30) {
+        QString timestamp = currentSimulatedTime.toString("d MMM yyyy hh:mm:ss AP");
+        SystemAlerts::logAlert(
+            ("CGM Reading: " + QString::number(level, 'f', 1) + " mmol/L at " + timestamp).toStdString()
+        );
+        lastLoggedMinute = simulatedMinutesElapsed; // Update tracker
+    }
+
+    // Always log warnings
+    QString timestamp = currentSimulatedTime.toString("d MMM yyyy hh:mm:ss AP");
     if (level >= 10.0f) {
+        SystemAlerts::logAlert(
+            ("WARNING: High BG detected (" + QString::number(level, 'f', 1) + " mmol/L) at " + timestamp).toStdString()
+        );
         startInsulinPump();
+    } else if (level <= 3.9f) {
+        SystemAlerts::logAlert(
+            ("WARNING: Low BG detected (" + QString::number(level, 'f', 1) + " mmol/L) at " + timestamp).toStdString()
+        );
     }
 
     int maxPoints = (currentGraphRange * 60) / 5;
@@ -451,9 +461,12 @@ void MainWindow::handleNewGlucoseReading(float level) {
 
 
 
+
+
+
 void MainWindow::startInsulinPump() {
     if (insulinPump->getReservoirLevel() >= 0.5f) {
-        insulinPump->startDelivery();  // This should handle the internal decrement + emit
+        insulinPump->startDelivery();
         if (cgm->getState() != CGM::State::Correction) {
             cgm->setState(CGM::State::Correction);
         }
@@ -483,7 +496,7 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
     chart->addSeries(series);
     chart->setTitle("Blood Glucose Over Time (mmol/L)");
     chart->setTitleBrush(QBrush(Qt::white));
-    chart->setMargins(QMargins(0, 0, 0, 0));  // Remove margins for more space
+    chart->setMargins(QMargins(0, 0, 0, 0));
     chart->legend()->setLabelColor(Qt::white);
 
     QDateTime endTime = glucoseDataPoints.last().first;
@@ -537,7 +550,7 @@ void MainWindow::displayGlucoseGraph(int maxPoints) {
 
     axisY->setLabelsColor(Qt::white);
     axisY->setTitleBrush(QBrush(Qt::white));
-    axisY->setGridLineColor(Qt::transparent);  // Hide horizontal grid lines
+    axisY->setGridLineColor(Qt::transparent);
 
     QtCharts::QChartView* chartView = new QtCharts::QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -589,6 +602,7 @@ void MainWindow::on_graphViewsButton_clicked() {
 
     int maxPoints = (currentGraphRange * 60) / 5;
     displayGlucoseGraph(maxPoints);
+
 }
 
 void MainWindow::on_bolusGraphButton_clicked() {
@@ -892,8 +906,8 @@ void MainWindow::on_unlock3_clicked() {
 void MainWindow::startSimulation() {
     simulationRunning = true;
     clockTimer->start();
-    cgm->startMonitoring();                    // Start CGM readings
-    qDebug() << "[Simulation] Started";
+    cgm->startMonitoring();    // Start CGM readings
+
 }
 
 void MainWindow::stopSimulation() {
@@ -941,7 +955,6 @@ void MainWindow::on_bolusButton_clicked()
 
 void MainWindow::on_bolusButton_6_clicked()
 {
-    // Step 1: Prompt for Target BG
     bool ok;
     double targetBG = QInputDialog::getDouble(
         this,
@@ -959,7 +972,7 @@ void MainWindow::on_bolusButton_6_clicked()
         return;
     }
 
-    // Optional: Log or use the value
+
     qDebug() << "[User Input] Target BG:" << targetBG;
 
     // Step 2: Show confirmation of bolus delivery

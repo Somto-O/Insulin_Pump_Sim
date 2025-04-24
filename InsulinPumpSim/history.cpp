@@ -70,10 +70,10 @@ QString History::viewData(const QString& logType)
         fileName = "alerts.log";
     }
     else if (logType == "AllHistory") {
-        return mergeAndSortLogs();  // mergeAndSortLogs will be updated next
+        return mergeAndSortLogs();
     }
     else {
-        return "Invalid log type.";
+        return "Invalid     log type.";
     }
 
     QString filePath = QCoreApplication::applicationDirPath() + "/../InsulinPumpSim/data/" + fileName;
@@ -104,7 +104,6 @@ QString History::mergeAndSortLogs()
             while (!in.atEnd()) {
                 QString line = in.readLine();
 
-                // Extract timestamp (Assumes the format "[4 April 2025 2:30:15 PM]")
                 QRegularExpression re(R"(\[(\d{1,2} \w+ \d{4} \d{1,2}:\d{2}:\d{2} [AP]M)])");
                 QRegularExpressionMatch match = re.match(line);
                 if (match.hasMatch()) {

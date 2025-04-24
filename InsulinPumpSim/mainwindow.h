@@ -204,13 +204,13 @@ private:
     QTime simulatedClock;
     QDateTime simulationStartTime;
     QDateTime currentSimulatedTime;
-    int currentGraphRange = 1;  // 1 = 1h, 3 = 3h, 6 = 6h
+    int currentGraphRange = 1;
     float currentBatteryLevel = 100.0f;
     float batteryLevel;
     QTimer* batteryBlinkTimer = nullptr;
     bool batteryVisible = true;
     void startBatteryBlink();
-
+    int lastLoggedMinute = 0;
     QTimer* chargingTimer = nullptr;
     int chargingLevel = 0;
 

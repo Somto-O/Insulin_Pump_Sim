@@ -35,11 +35,6 @@ public slots:
 
 
 
-private slots:
-
-
-
-
 private:
     void handleCreateProfile();
     void handleViewProfile();

@@ -37,7 +37,6 @@ vector<Profile*>& Profile::getProfiles() {
 // functions
 void Profile::createProfile(MainWindow* mw)
 {
-    // Retrieve values from the UI fields (these values have already been validated)
     QString name = mw->getUI()->nameInput->text();
     float basalRate = mw->getUI()->basalInput->value();
     float carbRatio = mw->getUI()->carbRatioInput->value();
@@ -146,14 +145,13 @@ void Profile::viewProfile(MainWindow* mw, const QString& profileName) {
     float targetBG = selectedProfilePtr->getTargetBG();
 
     // Update the fields on the MainWindow
-    mw->getUI()->LABEL->setText(name);  // Assuming vppNameInput is a QLabel or QLineEdit
+    mw->getUI()->LABEL->setText(name);
     mw->getUI()->spBasal->setText(QString::number(basalRate));
     mw->getUI()->spCarbRatio->setText(QString::number(carbRatio));
     mw->getUI()->spCFactor->setText(QString::number(correctionFactor));
     mw->getUI()->spTargetBG->setText(QString::number(targetBG));
 
-    // Optionally switch to the view page if needed
-    mw->getUI()->stackedWidget->setCurrentIndex(13);  // Change 13 to the index of your view page
+    mw->getUI()->stackedWidget->setCurrentIndex(13);
 }
 
 

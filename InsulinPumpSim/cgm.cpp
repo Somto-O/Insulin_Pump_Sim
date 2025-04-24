@@ -19,7 +19,7 @@ void CGM::startMonitoring()
 
 void CGM::stopMonitoring() {
     monitorTimer.stop();
-    qDebug() << "[CGM] Monitoring stopped.";
+   // qDebug() << "[CGM] Monitoring stopped.";
 }
 
 float CGM::getGlucoseLevel() const
@@ -43,11 +43,11 @@ void CGM::setState(State newState)
 
 void CGM::monitorGlucose()
 {
-    constexpr float idleMin = 70.0f;           // 3.9 mmol/L
-    constexpr float idleMax = 100.0f;          // 5.6 mmol/L
-    constexpr float eatTarget = 180.0f;        // 10 mmol/L
-    constexpr float lowThreshold = 50.0f;      // ~2.8 mmol/L
-    constexpr float highThreshold = 100.0f;    // 5.6 mmol/L
+    constexpr float idleMin = 70.0f;
+    constexpr float idleMax = 100.0f;
+    constexpr float eatTarget = 180.0f;
+    constexpr float lowThreshold = 50.0f;
+    constexpr float highThreshold = 100.0f;
     const float step = 7.0f;
 
     switch (currentState) {

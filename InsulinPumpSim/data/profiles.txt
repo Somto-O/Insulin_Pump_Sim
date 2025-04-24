@@ -13,4 +13,5 @@ Leah 0 0 0 0
 Ruth 0 0 0 0
 Naa 2 2 1 1
 jonah 2 0 0 0
-profile 1 30 23 0 99
+profile 1 30 23 0
+profile 3 4 2 1

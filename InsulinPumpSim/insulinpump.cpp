@@ -15,7 +15,7 @@ InsulinPump::InsulinPump()
     // Battery drain setup
     batteryTimer = new QTimer(this);
     connect(batteryTimer, &QTimer::timeout, this, &InsulinPump::drainBattery);
-    batteryTimer->start(4000); // Drain every 4 seconds
+    batteryTimer->start(5000); // Drain every 5 seconds
 
     // Extended bolus delivery setup
     extendedBolusTimer = new QTimer(this);
@@ -42,7 +42,6 @@ void InsulinPump::startDelivery() {
 
     status = "Delivering insulin";
     drainReservoir();  // Depletes insulin once per call
-    std::cout << "Insulin delivery triggered." << std::endl;
 }
 
 void InsulinPump::drainReservoir() {
@@ -91,8 +90,10 @@ void InsulinPump::drainBattery() {
 
         if (batteryLevel == 20) {
             SystemAlerts::triggerAlert("Battery low! Please charge soon.");
+
         } else if (batteryLevel == 5) {
             SystemAlerts::escalateAlert("Battery critically low! Charge immediately.");
+
         } else if (batteryLevel == 0) {
             //qDebug() << "this is the batterylevel:" << batteryLevel;
 
@@ -101,6 +102,7 @@ void InsulinPump::drainBattery() {
             emit batteryCritical();
             extendedBolusTimer->stop();
             SystemAlerts::escalateAlert("Battery depleted. System shutting down.");
+
         }
     }
 }
